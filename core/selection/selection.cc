@@ -353,23 +353,29 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			muNr3++;
 
-			if(fabs(mu_staco_eta->at(index)) > 2.7f) {
+			if(fabs(mu_staco_d0_exPV->at(index)) > 1.0f) {
 				goto __error;
 			}
 
 			muNr4++;
 
-			if(mu_staco_pt->at(index) < __mu_staco_pt) {
+			if(fabs(mu_staco_eta->at(index)) > 2.7f) {
 				goto __error;
 			}
 
 			muNr5++;
 
-			if(mu_staco_expectBLayerHit->at(index) != 0 && mu_staco_nBLHits->at(index) <= 0) {
+			if(mu_staco_pt->at(index) < __mu_staco_pt) {
 				goto __error;
 			}
 
 			muNr6++;
+
+			if(mu_staco_expectBLayerHit->at(index) != 0 && mu_staco_nBLHits->at(index) <= 0) {
+				goto __error;
+			}
+
+			muNr7++;
 #ifdef __YEAR2011
 			if(mu_staco_nPixHits->at(index) + mu_staco_nPixelDeadSensors->at(index) < 2) {
 				goto __error;
@@ -380,7 +386,7 @@ Bool_t TLeptonAnalysis::checkObject(
 				goto __error;
 			}
 #endif
-			muNr7++;
+			muNr8++;
 #ifdef __YEAR2011
 			if(mu_staco_nSCTHits->at(index) + mu_staco_nSCTDeadSensors->at(index) < 6) {
 				goto __error;
@@ -391,13 +397,13 @@ Bool_t TLeptonAnalysis::checkObject(
 				goto __error;
 			}
 #endif
-			muNr8++;
+			muNr9++;
 
 			if(mu_staco_nPixHoles->at(index) + mu_staco_nSCTHoles->at(index) > 2) {
 				goto __error;
 			}
 
-			muNr9++;
+			muNr10++;
 
 			n = mu_staco_nTRTHits->at(index) + mu_staco_nTRTOutliers->at(index);
 
@@ -412,12 +418,6 @@ Bool_t TLeptonAnalysis::checkObject(
 				if(n > 5 && mu_staco_nTRTOutliers->at(index) > 0.9f * n) {
 					goto __error;
 				}
-			}
-
-			muNr10++;
-
-			if(fabs(mu_staco_d0_exPV->at(index)) > 1.0f) {
-				goto __error;
 			}
 
 			muNr11++;
@@ -440,6 +440,7 @@ Bool_t TLeptonAnalysis::checkObject(
 			}
 
 			muNr3++;
+			muNr4++;
 
 			if(fabs(mu_staco_eta->at(index)) < 2.5f
 			   ||
@@ -448,19 +449,18 @@ Bool_t TLeptonAnalysis::checkObject(
 				goto __error;
 			}
 
-			muNr4++;
+			muNr5++;
 
 			if(mu_staco_pt->at(index) < __mu_staco_pt) {
 				goto __error;
 			}
 
-			muNr5++;
+			muNr6++;
 
 			if((mu_staco_nCSCEtaHits->at(index) + mu_staco_nCSCPhiHits->at(index)) <= 0 || mu_staco_nMDTEMHits->at(index) <= 0 || mu_staco_nMDTEOHits->at(index) <= 0) {
 				goto __error;
 			}
 
-			muNr6++;
 			muNr7++;
 			muNr8++;
 			muNr9++;
@@ -488,23 +488,29 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			muNr3++;
 
-			if(fabs(mu_calo_eta->at(index)) > 0.1f) {
+			if(fabs(mu_calo_d0_exPV->at(index)) > 1.0f) {
 				goto __error;
 			}
 
 			muNr4++;
 
-			if(mu_calo_pt->at(index) < __mu_calo_pt) {
+			if(fabs(mu_calo_eta->at(index)) > 0.1f) {
 				goto __error;
 			}
 
 			muNr5++;
 
-			if(mu_calo_expectBLayerHit->at(index) != 0 && mu_calo_nBLHits->at(index) <= 0) {
+			if(mu_calo_pt->at(index) < __mu_calo_pt) {
 				goto __error;
 			}
 
 			muNr6++;
+
+			if(mu_calo_expectBLayerHit->at(index) != 0 && mu_calo_nBLHits->at(index) <= 0) {
+				goto __error;
+			}
+
+			muNr7++;
 #ifdef __YEAR2011
 			if(mu_calo_nPixHits->at(index) + mu_calo_nPixelDeadSensors->at(index) < 2) {
 				goto __error;
@@ -515,7 +521,7 @@ Bool_t TLeptonAnalysis::checkObject(
 				goto __error;
 			}
 #endif
-			muNr7++;
+			muNr8++;
 #ifdef __YEAR2011
 			if(mu_calo_nSCTHits->at(index) + mu_calo_nSCTDeadSensors->at(index) < 6) {
 				goto __error;
@@ -526,23 +532,17 @@ Bool_t TLeptonAnalysis::checkObject(
 				goto __error;
 			}
 #endif
-			muNr8++;
+			muNr9++;
 
 			if(mu_calo_nPixHoles->at(index) + mu_calo_nSCTHoles->at(index) > 2) {
 				goto __error;
 			}
 
-			muNr9++;
+			muNr10++;
 
 			n = mu_calo_nTRTHits->at(index) + mu_calo_nTRTOutliers->at(index);
 
 			if(n > 5 && mu_calo_nTRTOutliers->at(index) > n * 0.9) {
-				goto __error;
-			}
-
-			muNr10++;
-
-			if(fabs(mu_calo_d0_exPV->at(index)) > 1.0f) {
 				goto __error;
 			}
 
