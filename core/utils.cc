@@ -93,11 +93,8 @@ TLeptonClass getLeptonClass(TLeptonType type)
 			result = CLASS_ELECTRON;
 			break;
 
-		case TYPE_MUON_STACO:
-			result = CLASS_MUON;
-			break;
-
-		case TYPE_MUON_CALO:
+		case TYPE_MUON_CB_PLUS_ST:
+		case TYPE_MUON_STANDALONE:
 			result = CLASS_MUON;
 			break;
 

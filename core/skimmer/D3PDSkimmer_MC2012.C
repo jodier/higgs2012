@@ -2,7 +2,7 @@ void D3PDSkimmer_MC2012(void)
 {
 	TChain *chain = new TChain("physics");
 
-	chain->Add("NTUP_HSG2.00814271._000001.root");
+	chain->Add("/afs/cern.ch/atlas/groups/HSG2/NTUP_HSG2.00814271._000001.root");
 
 	/*-----------------------------------------------------------------*/
 
@@ -54,6 +54,7 @@ void D3PDSkimmer_MC2012(void)
 	chain->SetBranchStatus("el_phis2", 1);
 	chain->SetBranchStatus("el_Etcone20", 1);
 	chain->SetBranchStatus("el_Etcone30", 1);
+	chain->SetBranchStatus("el_ED_median", 1);
 	chain->SetBranchStatus("el_loosePP", 1);
 	chain->SetBranchStatus("el_medium", 1);
 	chain->SetBranchStatus("el_n", 1);

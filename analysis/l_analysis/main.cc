@@ -39,17 +39,20 @@ extern Float_t getMassCut(Float_t H_mass);
 
 void TLeptonFinder::Loop(void)
 {
-	Int_t elStacoNr = 0;
-	Int_t muStacoNr = 0;
+	Int_t elIndexNr;
+	Int_t muCB_PLUS_STIndexNr;
+	Int_t muStandAloneIndexNr;
+	Int_t muCaloIndexNr;
 
-	Int_t elStacoIndexNr;
-	Int_t muStacoIndexNr;
+	Int_t elIndexArray[1024];
+	Int_t muCB_PLUS_STIndexArray[1024];
+	Int_t muStandAloneIndexArray[1024];
+	Int_t muCaloIndexArray[1024];
 
-	Int_t elStacoIndexArray[1024];
-	Int_t muStacoIndexArray[1024];
-
-	TLeptonType elStacoTypeArray[1024];
-	TLeptonType muStacoTypeArray[1024];
+	TLeptonType elTypeArray[1024];
+	TLeptonType muCB_PLUS_STTypeArray[1024];
+	TLeptonType muStandAloneTypeArray[1024];
+	TLeptonType muCaloTypeArray[1024];
 
 	Float_t __el_et = core::configFltLookup("higgs_el_et");
 	Float_t __mu_staco_pt = core::configFltLookup("higgs_mu_staco_pt");
@@ -94,8 +97,6 @@ void TLeptonFinder::Loop(void)
 #else
 		Bool_t isOkVertex = (nPV3 > 0) && (larError != 2);
 #endif
-
-
 		/*---------------------------------------------------------*/
 		/* TRIGGERS						   */
 		/*---------------------------------------------------------*/
@@ -103,241 +104,209 @@ void TLeptonFinder::Loop(void)
 		Bool_t isOkElTrigger = getElTrigger();
 		Bool_t isOkMuTrigger = getMuTrigger();
 
-		//std::cout << "RunNumber" << RunNumber << std::endl;
-
 		/*---------------------------------------------------------*/
 		/* SELECTIONS						   */
 		/*---------------------------------------------------------*/
 
-		elStacoIndexNr = 0;
-		muStacoIndexNr = 0;
+		elIndexNr = 0;
+		muCB_PLUS_STIndexNr = 0;
+		muStandAloneIndexNr = 0;
+		muCaloIndexNr = 0;
 
 		if((isOkElTrigger != false || isOkMuTrigger != false) && isOkVertex != false)
 		{
+			/*--------------------------------------*/
+			/* STACO MUONS				*/
+			/*--------------------------------------*/
+
 			for(Int_t i = 0; i < mu_staco_n; i++)
 			{
-				if(checkObject(i, TYPE_MUON_STACO, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
+				if(checkObject(i, TYPE_MUON_CB_PLUS_ST, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
 				{
-					muStacoIndexArray[muStacoIndexNr] = i;
-					muStacoTypeArray[muStacoIndexNr] = TYPE_MUON_STACO;
+					muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = i;
+					muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = TYPE_MUON_CB_PLUS_ST;
 
-					if(isOkMuTrigger) {
-						muStacoNr++;
-					}
-					muStacoIndexNr++;
+					muCB_PLUS_STIndexNr++;
+				}
+
+				if(checkObject(i, TYPE_MUON_STANDALONE, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
+				{
+					muStandAloneIndexArray[muStandAloneIndexNr] = i;
+					muStandAloneTypeArray[muStandAloneIndexNr] = TYPE_MUON_STANDALONE;
+
+					muStandAloneIndexNr++;
 				}
 			}
+
+			/*--------------------------------------*/
+			/* CALO MUONS				*/
+			/*--------------------------------------*/
+
+			for(Int_t i = 0; i < mu_calo_n; i++)
+			{
+				if(checkObject(i, TYPE_MUON_CALO, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
+				{
+					muCaloIndexArray[muCaloIndexNr] = i;
+					muCaloTypeArray[muCaloIndexNr] = TYPE_MUON_CALO;
+
+					muCaloIndexNr++;
+				}
+			}
+
+			/*--------------------------------------*/
+			/* CALO - CB_PLUS_ST OVERLAP		*/
+			/*--------------------------------------*/
+
+			muNr13 = muNr12;
+
+			Int_t tmp1 = muCB_PLUS_STIndexNr;
+
+			for(Int_t i = 0; i < muCaloIndexNr; i++)
+			{
+				Bool_t isOk = true;
+
+				Int_t index = muCaloIndexArray[i];
+
+				Float_t calo_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(index)));
+				Float_t calo_phi = mu_calo_id_phi->at(index);
+
+				for(Int_t j = 0; j < tmp1; j++)
+				{
+					Int_t xedni = muCB_PLUS_STIndexArray[j];
+
+					Float_t cb_plus_st_eta;
+					Float_t cb_plus_st_phi;
+
+					switch(muCB_PLUS_STTypeArray[j])
+					{
+						case TYPE_MUON_CB_PLUS_ST:
+						case TYPE_MUON_STANDALONE:
+							cb_plus_st_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(xedni)));
+							cb_plus_st_phi = mu_staco_id_phi->at(xedni);
+							break;
+
+						case TYPE_MUON_CALO:
+							cb_plus_st_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(xedni)));
+							cb_plus_st_phi = mu_calo_id_phi->at(xedni);
+							break;
+
+						default:
+							std::cout << "Oula !!!" << std::endl;
+
+							exit(1);
+					}
+
+					if(__dR2(calo_eta, cb_plus_st_eta, calo_phi, cb_plus_st_phi) < 0.1f * 0.1f)
+					{
+						isOk = false;
+
+						muNr13--;
+
+						break;
+					}
+				}
+
+				if(isOk != false)
+				{
+					muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = muCaloIndexArray[i];
+					muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = muCaloTypeArray[i];
+
+					muCB_PLUS_STIndexNr++;
+				}
+			}
+
+			/*--------------------------------------*/
+			/* STANDALONE - CB_PLUS_ST OVERLAP	*/
+			/*--------------------------------------*/
+
+			muNr14 = muNr13;
+
+			Int_t tmp2 = muCB_PLUS_STIndexNr;
+
+			for(Int_t i = 0; i < muStandAloneIndexNr; i++)
+			{
+				Bool_t isOk = true;
+
+				Int_t index = muStandAloneIndexArray[i];
+
+				Float_t standalone_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(index)));
+				Float_t standalone_phi = mu_staco_id_phi->at(index);
+
+				for(Int_t j = 0; j < tmp2; j++)
+				{
+					Int_t xedni = muCB_PLUS_STIndexArray[j];
+
+					Float_t cb_plus_st_eta;
+					Float_t cb_plus_st_phi;
+
+					switch(muCB_PLUS_STTypeArray[j])
+					{
+						case TYPE_MUON_CB_PLUS_ST:
+						case TYPE_MUON_STANDALONE:
+							cb_plus_st_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(xedni)));
+							cb_plus_st_phi = mu_staco_id_phi->at(xedni);
+							break;
+
+						case TYPE_MUON_CALO:
+							cb_plus_st_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(xedni)));
+							cb_plus_st_phi = mu_calo_id_phi->at(xedni);
+							break;
+
+						default:
+							std::cout << "Oula !!!" << std::endl;
+
+							exit(1);
+					}
+
+					if(__dR2(standalone_eta, cb_plus_st_eta, standalone_phi, cb_plus_st_phi) < 0.2f * 0.2f)
+					{
+						isOk = false;
+
+						muNr14--;
+
+						break;
+					}
+				}
+
+				if(isOk != false)
+				{
+					muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = muStandAloneIndexArray[i];
+					muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = muStandAloneTypeArray[i];
+
+					muCB_PLUS_STIndexNr++;
+				}
+			}
+
+			/*--------------------------------------*/
+			/* ELECTRONS				*/
+			/*--------------------------------------*/
 
 			for(Int_t i = 0; i < el_n; i++)
 			{
 				if(checkObject(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
 				{
-					if(checkOverlapping(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt, muStacoIndexNr, muStacoIndexArray, muStacoTypeArray) != false)
+					if(checkOverlapping(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt, muCB_PLUS_STIndexNr, muCB_PLUS_STIndexArray, muCB_PLUS_STTypeArray) != false)
 					{
-						elStacoIndexArray[elStacoIndexNr] = i;
-						elStacoTypeArray[elStacoIndexNr] = TYPE_ELECTRON;
+						elIndexArray[elIndexNr] = i;
+						elTypeArray[elIndexNr] = TYPE_ELECTRON;
 
-						if(isOkElTrigger) {
-							elStacoNr++;
-						}
-						elStacoIndexNr++;
-					}
-				}
-			}
-		}
-
-		/*---------------------------------------------------------*/
-		/* Loop electron (staco)				   */
-		/*---------------------------------------------------------*/
-
-		m_l[0].n = elStacoIndexNr;
-
-		for(Int_t i = 0; i < elStacoIndexNr; i++)
-		{
-			Int_t index = elStacoIndexArray[i];
-
-			/**/
-
-			m_l[0].RunNumber = RunNumber;
-			m_l[0].EventNumber = EventNumber;
-			m_l[0].LumiBlock = lbn;
-
-			m_l[0].nPV2 = nPV2;
-			m_l[0].nIntPerXing = averageIntPerXing;
-
-			m_l[0].elTrigger = isOkElTrigger;
-			m_l[0].muTrigger = isOkMuTrigger;
-
-			/**/
-
-			m_l[0].l_z0[i] = el_trackz0pvunbiased->at(index);
-			m_l[0].l_d0[i] = el_trackd0pvunbiased->at(index);
-
-			m_l[0].weight1[i] = eventGetWeight1();
-			m_l[0].weight2[i] = eventGetWeight2();
-			m_l[0].weight3[i] = eventGetWeight3(index, TYPE_ELECTRON);
-
-			m_l[0].l_tight[i] = el_tight->at(index) != 0;
-
-			m_l[0].l_triggerMatch[i] = triggerMatch(index, TYPE_ELECTRON);
-
-			m_l[0].l_charge[i] = el_charge->at(index);
-			m_l[0].l_e[i] = el_cl_E->at(index);
-			m_l[0].l_pt[i] = electronGetEt(index);
-			m_l[0].l_eta[i] = electronGetEtaDirection(index);
-			m_l[0].l_phi[i] = electronGetPhiDirection(index);
-#ifdef __YEAR2011
-			m_l[0].l_clIso20[i] = CaloIsoCorrection::GetNPVCorrectedIsolation(nPV2, el_etas2->at(index), 20, __isMC, el_Etcone20->at(index), CaloIsoCorrection::ELECTRON) / electronGetEt(index);
-#endif
-#ifdef __YEAR2012
-			m_l[0].l_clIso20[i] = CaloIsoCorrection::GetNPVCorrectedIsolation(nPV2, el_etas2->at(index), 20, __isMC, el_Etcone20->at(index), CaloIsoCorrection::ELECTRON) / electronGetEt(index);
-#endif
-			m_l[0].l_tkIso20[i] = el_ptcone20->at(index) / electronGetEt(index);
-#if defined( __YEAR2012) && defined(__IS_MC)
-			m_l[0].l_d0sigma[i] = fabs((el_trackd0pvunbiased->at(index) - 2.0e-3f) / el_tracksigd0pvunbiased->at(index));
-#else
-			m_l[0].l_d0sigma[i] = fabs((el_trackd0pvunbiased->at(index) - 0.0000f) / el_tracksigd0pvunbiased->at(index));
-#endif
-			for(Int_t j = i + 1; j < elStacoIndexNr; j++)
-			{
-				Int_t index2 = elStacoIndexArray[j];
-#ifdef __YEAR2011
-				if(sqrtf(__dR2(el_tracketa->at(index), el_tracketa->at(index2), el_trackphi->at(index), el_trackphi->at(index2))) < 0.20f)
-				{
-					m_l[0].l_tkIso20[i] -= el_trackpt->at(index2) / m_l[0].l_pt[i];
-				}
-
-				if(sqrtf(__dR2(el_tracketa->at(index), el_tracketa->at(index2), el_trackphi->at(index), el_trackphi->at(index2))) < 0.18f)
-				{
-					m_l[0].l_clIso20[i] -= electronGetEt(index2) / m_l[0].l_pt[i];
-				}
-#endif
-#ifdef __YEAR2012
-				if(sqrtf(__dR2(el_etas2->at(index), el_etas2->at(index2), el_phis2->at(index), el_phis2->at(index2))) < 0.20f)
-				{
-					m_l[0].l_tkIso20[i] -= el_trackpt->at(index2) / m_l[0].l_pt[i];
-				}
-
-				if(sqrtf(__dR2(el_etas2->at(index), el_etas2->at(index2), el_phis2->at(index), el_phis2->at(index2))) < 0.18f)
-				{
-					m_l[0].l_clIso20[i] -= electronGetEt(index2) / m_l[0].l_pt[i];
-				}
-#endif
-			}
-
-			m_l[0].l_f1[i] = el_f1->at(index);
-			m_l[0].l_rphi[i] = el_rphi->at(index);
-			m_l[0].l_nBlayerHits[i] = el_nBLHits->at(index);
-			m_l[0].l_nPixelHits[i] = el_nPixHits->at(index);
-			m_l[0].l_rTRT[i] = (el_nTRTHits->at(index) + el_nTRTOutliers->at(index)) > 0 ? float(el_nTRTHighTHits->at(index) + el_nTRTHighTOutliers->at(index)) / float(el_nTRTHits->at(index) + el_nTRTOutliers->at(index)) : 0.0f;
-
-			/**/
-#ifdef __IS_MC
-			m_l[0].l_type[i] = el_type->at(index);
-			m_l[0].l_origin[i] = el_origin->at(index);
-			m_l[0].l_typebkg[i] = el_typebkg->at(index);
-			m_l[0].l_originbkg[i] = el_originbkg->at(index);
-			m_l[0].l_truth_type[i] = el_truth_type->at(index);
-			m_l[0].l_truth_mothertype[i] = el_truth_mothertype->at(index);
-#else
-			m_l[0].l_type[i] = -999999;
-			m_l[0].l_origin[i] = -999999;
-			m_l[0].l_typebkg[i] = -999999;
-			m_l[0].l_originbkg[i]= -999999;
-			m_l[0].l_truth_type[i] = -999999;
-			m_l[0].l_truth_mothertype[i] = -999999;
-#endif
-		}
-
-		/*---------------------------------------------------------*/
-		/* Loop Muon (STACO)					   */
-		/*---------------------------------------------------------*/
-
-		m_l[1].n = muStacoIndexNr;
-
-		for(Int_t i = 0; i < muStacoIndexNr; i++)
-		{
-			Int_t index = muStacoIndexArray[i];
-
-			/**/
-
-			m_l[1].RunNumber = RunNumber;
-			m_l[1].EventNumber = EventNumber;
-			m_l[1].LumiBlock = lbn;
-
-			m_l[1].nPV2 = nPV2;
-			m_l[1].nIntPerXing = averageIntPerXing;
-
-			m_l[1].elTrigger = isOkElTrigger;
-			m_l[1].muTrigger = isOkMuTrigger;
-
-			/**/
-
-			m_l[1].l_z0[i] = mu_staco_z0_exPV->at(index);
-			m_l[1].l_d0[i] = mu_staco_d0_exPV->at(index);
-
-			m_l[1].weight1[i] = eventGetWeight1();
-			m_l[1].weight2[i] = eventGetWeight2();
-			m_l[1].weight3[i] = eventGetWeight3(index, TYPE_MUON_STACO);
-
-			m_l[1].l_tight[i] = mu_staco_tight->at(index) != 0;
-			m_l[1].l_triggerMatch[i] = triggerMatch(index, TYPE_MUON_STACO);
-
-			m_l[1].l_charge[i] = mu_staco_charge->at(index);
-			m_l[1].l_e[i] = mu_staco_E->at(index);
-			m_l[1].l_pt[i] = mu_staco_pt->at(index);
-			m_l[1].l_eta[i] = mu_staco_eta->at(index);
-			m_l[1].l_phi[i] = mu_staco_phi->at(index);
-
-			m_l[1].l_clIso20[i] = mu_staco_etcone20->at(index) / mu_staco_pt->at(index);
-			m_l[1].l_tkIso20[i] = mu_staco_ptcone20->at(index) / mu_staco_pt->at(index);
-#if defined( __YEAR2012) && defined(__IS_MC)
-			m_l[1].l_d0sigma[i] = fabs((mu_staco_trackIPEstimate_d0_unbiasedpvunbiased->at(index) - 2.0e-3f) / mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased->at(index));
-#else
-			m_l[1].l_d0sigma[i] = fabs((mu_staco_trackIPEstimate_d0_unbiasedpvunbiased->at(index) - 0.0000f) / mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased->at(index));
-#endif
-			if(mu_staco_isStandAloneMuon->at(index) != false)
-			{
-				for(Int_t j = i + 1; j < muStacoIndexNr; j++)
-				{
-					Int_t index2 = muStacoIndexArray[j];
-
-					if(mu_staco_isStandAloneMuon->at(index2) != false)
-					{
-						if(sqrtf(__dR2(mu_staco_eta->at(index), mu_staco_eta->at(index2), mu_staco_phi->at(index), mu_staco_phi->at(index2))) < 0.20f)
-						{
-							m_l[1].l_tkIso20[i] -= ((mu_staco_id_qoverp_exPV->at(index2) != 0.0f) ? sinf(mu_staco_id_theta_exPV->at(index2)) / fabs(mu_staco_id_qoverp_exPV->at(index2)) : 0.0f) / m_l[1].l_pt[i];
-						}
+						elIndexNr++;
 					}
 				}
 			}
 
-			m_l[1].l_f1[i] = -999999;
-			m_l[1].l_rphi[i] = -999999;
-			m_l[1].l_nBlayerHits[i] = -999999;
-			m_l[1].l_nPixelHits[i] = -999999;
-			m_l[1].l_rTRT[i] = -999999;
-
-			/**/
-
-			m_l[1].l_type[i] = -999999;
-			m_l[1].l_origin[i] = -999999;
-			m_l[1].l_typebkg[i] = -999999;
-			m_l[1].l_originbkg[i] = -999999;
-#ifdef __IS_MC
-			m_l[1].l_truth_type[i] = mu_staco_truth_type->at(index);
-			m_l[1].l_truth_mothertype[i] = mu_staco_truth_mothertype->at(index);
-#else
-			m_l[1].l_truth_type[i] = -999999;
-			m_l[1].l_truth_mothertype[i] = -999999;
-#endif
+			/*--------------------------------------*/
 		}
 
 		/*---------------------------------------------------------*/
 
-		if(elStacoIndexNr >= 2
+
+
+		/*---------------------------------------------------------*/
+
+		if((((((elIndexNr))))) >= 2
 		   ||
-		   muStacoIndexNr >= 2
+		   muCB_PLUS_STIndexNr >= 2
 		 ) {
 			m_tree1.Fill();
 			m_tree2.Fill();
@@ -346,8 +315,44 @@ void TLeptonFinder::Loop(void)
 		/*---------------------------------------------------------*/
 	}
 
-	std::cout << "elStacoNr: " << elStacoNr << "    " << std::endl;
-	std::cout << "muStacoNr: " << muStacoNr << "    " << std::endl;
+	std::cout << "#############################################################################" << std::endl;
+	std::cout << "# ELECTRON STACO                                                            #" << std::endl;
+	std::cout << "#############################################################################" << std::endl;
+
+	std::cout << "before any cut   : " << elNr0 << std::endl;
+	std::cout << "after vertex     : " << elNr1 << std::endl;
+	std::cout << "after trigger    : " << elNr2 << std::endl;
+	std::cout << "after author=1||3: " << elNr3 << std::endl;
+	std::cout << "after loose++    : " << elNr4 << std::endl;
+	std::cout << "after |η|<2.47   : " << elNr5 << std::endl;
+	std::cout << "after pt>7       : " << elNr6 << std::endl;
+	std::cout << "after OQ         : " << elNr7 << std::endl;
+	std::cout << "after z0         : " << elNr8 << std::endl;
+	std::cout << "after e-e overlap: " << elNr9 << std::endl;
+	std::cout << "after e-e overlap: " << elNr10 << std::endl;
+	std::cout << "after e-µ overlap: " << elNr11 << std::endl;
+
+	std::cout << "#############################################################################" << std::endl;
+	std::cout << "# MUON STACO                                                                #" << std::endl;
+	std::cout << "#############################################################################" << std::endl;
+
+	std::cout << "before any cut     : " << muNr0 << std::endl;
+	std::cout << "after vertex       : " << muNr1 << std::endl;
+	std::cout << "after trigger      : " << muNr2 << std::endl;
+	std::cout << "after author=6||7  : " << muNr3 << std::endl;
+	std::cout << "after |η|<2.5      : " << muNr4 << std::endl;
+	std::cout << "after pt>6         : " << muNr5 << std::endl;
+	std::cout << "after b-Layer      : " << muNr6 << std::endl;
+	std::cout << "after Pix          : " << muNr7 << std::endl;
+	std::cout << "after SCT          : " << muNr8 << std::endl;
+	std::cout << "after holes        : " << muNr9 << std::endl;
+	std::cout << "after TRT/outliers : " << muNr10 << std::endl;
+	std::cout << "after d0           : " << muNr11 << std::endl;
+	std::cout << "after z0           : " << muNr12 << std::endl;
+	std::cout << "after calo overlap : " << muNr13 << std::endl;
+	std::cout << "after stand overlap: " << muNr14 << std::endl;
+
+	std::cout << "#############################################################################" << std::endl;
 }
 
 /*-------------------------------------------------------------------------*/

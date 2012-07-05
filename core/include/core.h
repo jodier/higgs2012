@@ -145,7 +145,9 @@ typedef enum TLeptonType
 {
 	TYPE_ELECTRON
 	,
-	TYPE_MUON_STACO
+	TYPE_MUON_CB_PLUS_ST
+	,
+	TYPE_MUON_STANDALONE
 	,
 	TYPE_MUON_CALO
 
@@ -164,6 +166,39 @@ class TLeptonAnalysis: public TNTuple
 
 	UInt_t elTrigger;
 	UInt_t muTrigger;
+
+	/*-----------------------------------------------------------------*/
+	/* COUNTERS							   */
+	/*-----------------------------------------------------------------*/
+
+	UInt_t elNr0;
+	UInt_t elNr1;
+	UInt_t elNr2;
+	UInt_t elNr3;
+	UInt_t elNr4;
+	UInt_t elNr5;
+	UInt_t elNr6;
+	UInt_t elNr7;
+	UInt_t elNr8;
+	UInt_t elNr9;
+	UInt_t elNr10;
+	UInt_t elNr11;
+
+	UInt_t muNr0;
+	UInt_t muNr1;
+	UInt_t muNr2;
+	UInt_t muNr3;
+	UInt_t muNr4;
+	UInt_t muNr5;
+	UInt_t muNr6;
+	UInt_t muNr7;
+	UInt_t muNr8;
+	UInt_t muNr9;
+	UInt_t muNr10;
+	UInt_t muNr11;
+	UInt_t muNr12;
+	UInt_t muNr13;
+	UInt_t muNr14;
 
 	/*-----------------------------------------------------------------*/
 	/* TOOLS							   */
@@ -209,6 +244,38 @@ class TLeptonAnalysis: public TNTuple
 
 	TLeptonAnalysis(TChain *chain): TNTuple(chain), elTrigger(0), muTrigger(0)
 	{
+		/*---------------------------------------------------------*/
+		/* COUNTERS						   */
+		/*---------------------------------------------------------*/
+
+		elNr0 = 0;
+		elNr1 = 0;
+		elNr2 = 0;
+		elNr3 = 0;
+		elNr4 = 0;
+		elNr5 = 0;
+		elNr6 = 0;
+		elNr7 = 0;
+		elNr8 = 0;
+		elNr9 = 0;
+		elNr10 = 0;
+		elNr11 = 0;
+
+		muNr0 = 0;
+		muNr1 = 0;
+		muNr2 = 0;
+		muNr3 = 0;
+		muNr4 = 0;
+		muNr5 = 0;
+		muNr6 = 0;
+		muNr7 = 0;
+		muNr8 = 0;
+		muNr9 = 0;
+		muNr10 = 0;
+		muNr11 = 0;
+		muNr12 = 0;
+		muNr13 = 0;
+
 		/*---------------------------------------------------------*/
 		/* PILEUP REWEIGHTING					   */
 		/*---------------------------------------------------------*/

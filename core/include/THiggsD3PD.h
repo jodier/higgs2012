@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Wed Jul  4 10:49:29 2012 by ROOT version 5.32/01
+// Wed Jul  4 13:45:35 2012 by ROOT version 5.32/01
 // from TTree physics/physics
 // found on file: result.root
 //////////////////////////////////////////////////////////
@@ -113,6 +113,7 @@ public :
    std::vector<float>   *el_trackd0pvunbiased;
    std::vector<float>   *el_trackz0pvunbiased;
    std::vector<float>   *el_tracksigd0pvunbiased;
+   std::vector<float>   *el_ED_median;
    std::vector<int>     *el_EF_index;
    Int_t           mu_muid_n;
    std::vector<float>   *mu_muid_E;
@@ -372,6 +373,7 @@ public :
    TBranch        *b_el_trackd0pvunbiased;   //!
    TBranch        *b_el_trackz0pvunbiased;   //!
    TBranch        *b_el_tracksigd0pvunbiased;   //!
+   TBranch        *b_el_ED_median;   //!
    TBranch        *b_el_EF_index;   //!
    TBranch        *b_mu_muid_n;   //!
    TBranch        *b_mu_muid_E;   //!
@@ -677,6 +679,7 @@ void THiggsD3PD::Init(TTree *tree)
    el_trackd0pvunbiased = 0;
    el_trackz0pvunbiased = 0;
    el_tracksigd0pvunbiased = 0;
+   el_ED_median = 0;
    el_EF_index = 0;
    mu_muid_E = 0;
    mu_muid_pt = 0;
@@ -932,6 +935,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("el_trackd0pvunbiased", &el_trackd0pvunbiased, &b_el_trackd0pvunbiased);
    fChain->SetBranchAddress("el_trackz0pvunbiased", &el_trackz0pvunbiased, &b_el_trackz0pvunbiased);
    fChain->SetBranchAddress("el_tracksigd0pvunbiased", &el_tracksigd0pvunbiased, &b_el_tracksigd0pvunbiased);
+   fChain->SetBranchAddress("el_ED_median", &el_ED_median, &b_el_ED_median);
    fChain->SetBranchAddress("el_EF_index", &el_EF_index, &b_el_EF_index);
    fChain->SetBranchAddress("mu_muid_n", &mu_muid_n, &b_mu_muid_n);
    fChain->SetBranchAddress("mu_muid_E", &mu_muid_E, &b_mu_muid_E);
