@@ -486,17 +486,25 @@ Bool_t TLeptonAnalysis::checkObject(
 				goto __error;
 			}
 
+			muNr3++;
+
 			if(fabs(mu_calo_eta->at(index)) > 0.1f) {
 				goto __error;
 			}
+
+			muNr4++;
 
 			if(mu_calo_pt->at(index) < __mu_calo_pt) {
 				goto __error;
 			}
 
+			muNr5++;
+
 			if(mu_calo_expectBLayerHit->at(index) != 0 && mu_calo_nBLHits->at(index) <= 0) {
 				goto __error;
 			}
+
+			muNr6++;
 #ifdef __YEAR2011
 			if(mu_calo_nPixHits->at(index) + mu_calo_nPixelDeadSensors->at(index) < 2) {
 				goto __error;
@@ -507,6 +515,7 @@ Bool_t TLeptonAnalysis::checkObject(
 				goto __error;
 			}
 #endif
+			muNr7++;
 #ifdef __YEAR2011
 			if(mu_calo_nSCTHits->at(index) + mu_calo_nSCTDeadSensors->at(index) < 6) {
 				goto __error;
@@ -517,9 +526,13 @@ Bool_t TLeptonAnalysis::checkObject(
 				goto __error;
 			}
 #endif
+			muNr8++;
+
 			if(mu_calo_nPixHoles->at(index) + mu_calo_nSCTHoles->at(index) > 2) {
 				goto __error;
 			}
+
+			muNr9++;
 
 			n = mu_calo_nTRTHits->at(index) + mu_calo_nTRTOutliers->at(index);
 
@@ -527,13 +540,19 @@ Bool_t TLeptonAnalysis::checkObject(
 				goto __error;
 			}
 
+			muNr10++;
+
 			if(fabs(mu_calo_d0_exPV->at(index)) > 1.0f) {
 				goto __error;
 			}
 
+			muNr11++;
+
 			if(fabs(mu_calo_z0_exPV->at(index)) > 10.0f) {
 				goto __error;
 			}
+
+			muNr12++;
 
 			break;
 
