@@ -1,2 +1,2 @@
-/afs/cern.ch/atlas/groups/HSG2/NTUP_HSG2.00814271._000001.root
+/home/jodier/Bureau/H130_2012/NTUP_HSG2.00814271._000001.root
 

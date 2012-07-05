@@ -113,189 +113,199 @@ void TLeptonFinder::Loop(void)
 		muStandAloneIndexNr = 0;
 		muCaloIndexNr = 0;
 
-		if((isOkElTrigger != false || isOkMuTrigger != false) && isOkVertex != false)
+		elNr0 += el_n;
+		muNr0 += mu_staco_n + mu_calo_n;
+
+		if(isOkVertex != false)
 		{
-			/*--------------------------------------*/
-			/* STACO MUONS				*/
-			/*--------------------------------------*/
+			elNr1 += el_n;
+			muNr1 += mu_staco_n + mu_calo_n;
 
-			for(Int_t i = 0; i < mu_staco_n; i++)
-			{
-				if(checkObject(i, TYPE_MUON_CB_PLUS_ST, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
+			if(isOkElTrigger != false
+			   ||
+			   isOkMuTrigger != false
+			 ) {
+				elNr2 += el_n;
+				muNr2 += mu_staco_n + mu_calo_n;
+
+				/*--------------------------------------*/
+				/* STACO MUONS				*/
+				/*--------------------------------------*/
+
+				for(Int_t i = 0; i < mu_staco_n; i++)
 				{
-					muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = i;
-					muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = TYPE_MUON_CB_PLUS_ST;
-
-					muCB_PLUS_STIndexNr++;
-				}
-
-				if(checkObject(i, TYPE_MUON_STANDALONE, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
-				{
-					muStandAloneIndexArray[muStandAloneIndexNr] = i;
-					muStandAloneTypeArray[muStandAloneIndexNr] = TYPE_MUON_STANDALONE;
-
-					muStandAloneIndexNr++;
-				}
-			}
-
-			/*--------------------------------------*/
-			/* CALO MUONS				*/
-			/*--------------------------------------*/
-
-			for(Int_t i = 0; i < mu_calo_n; i++)
-			{
-				if(checkObject(i, TYPE_MUON_CALO, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
-				{
-					muCaloIndexArray[muCaloIndexNr] = i;
-					muCaloTypeArray[muCaloIndexNr] = TYPE_MUON_CALO;
-
-					muCaloIndexNr++;
-				}
-			}
-
-			/*--------------------------------------*/
-			/* CALO - CB_PLUS_ST OVERLAP		*/
-			/*--------------------------------------*/
-
-			muNr13 = muNr12;
-
-			Int_t tmp1 = muCB_PLUS_STIndexNr;
-
-			for(Int_t i = 0; i < muCaloIndexNr; i++)
-			{
-				Bool_t isOk = true;
-
-				Int_t index = muCaloIndexArray[i];
-
-				Float_t calo_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(index)));
-				Float_t calo_phi = mu_calo_id_phi->at(index);
-
-				for(Int_t j = 0; j < tmp1; j++)
-				{
-					Int_t xedni = muCB_PLUS_STIndexArray[j];
-
-					Float_t cb_plus_st_eta;
-					Float_t cb_plus_st_phi;
-
-					switch(muCB_PLUS_STTypeArray[j])
+					if(checkObject(i, TYPE_MUON_CB_PLUS_ST, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
 					{
-						case TYPE_MUON_CB_PLUS_ST:
-						case TYPE_MUON_STANDALONE:
-							cb_plus_st_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(xedni)));
-							cb_plus_st_phi = mu_staco_id_phi->at(xedni);
+						muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = i;
+						muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = TYPE_MUON_CB_PLUS_ST;
+
+						muCB_PLUS_STIndexNr++;
+					}
+
+					if(checkObject(i, TYPE_MUON_STANDALONE, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
+					{
+						muStandAloneIndexArray[muStandAloneIndexNr] = i;
+						muStandAloneTypeArray[muStandAloneIndexNr] = TYPE_MUON_STANDALONE;
+
+						muStandAloneIndexNr++;
+					}
+				}
+
+				/*--------------------------------------*/
+				/* CALO MUONS				*/
+				/*--------------------------------------*/
+
+				for(Int_t i = 0; i < mu_calo_n; i++)
+				{
+					if(checkObject(i, TYPE_MUON_CALO, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
+					{
+						muCaloIndexArray[muCaloIndexNr] = i;
+						muCaloTypeArray[muCaloIndexNr] = TYPE_MUON_CALO;
+
+						muCaloIndexNr++;
+					}
+				}
+
+				/*--------------------------------------*/
+				/* CALO - CB_PLUS_ST OVERLAP		*/
+				/*--------------------------------------*/
+
+				Int_t tmp1 = muCB_PLUS_STIndexNr;
+
+				for(Int_t i = 0; i < muCaloIndexNr; i++)
+				{
+					Bool_t isOk = true;
+
+					Int_t index = muCaloIndexArray[i];
+
+					Float_t calo_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(index)));
+					Float_t calo_phi = mu_calo_id_phi->at(index);
+
+					for(Int_t j = 0; j < tmp1; j++)
+					{
+						Int_t xedni = muCB_PLUS_STIndexArray[j];
+
+						Float_t cb_plus_st_eta;
+						Float_t cb_plus_st_phi;
+
+						switch(muCB_PLUS_STTypeArray[j])
+						{
+							case TYPE_MUON_CB_PLUS_ST:
+							case TYPE_MUON_STANDALONE:
+								cb_plus_st_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(xedni)));
+								cb_plus_st_phi = mu_staco_id_phi->at(xedni);
+								break;
+
+							case TYPE_MUON_CALO:
+								cb_plus_st_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(xedni)));
+								cb_plus_st_phi = mu_calo_id_phi->at(xedni);
+								break;
+
+							default:
+								std::cout << "Oula !!!" << std::endl;
+
+								exit(1);
+						}
+
+						if(__dR2(calo_eta, cb_plus_st_eta, calo_phi, cb_plus_st_phi) < 0.1f * 0.1f)
+						{
+							isOk = false;
+
+							muNr13--;
+
 							break;
+						}
+					}
 
-						case TYPE_MUON_CALO:
-							cb_plus_st_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(xedni)));
-							cb_plus_st_phi = mu_calo_id_phi->at(xedni);
+					if(isOk != false)
+					{
+						muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = muCaloIndexArray[i];
+						muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = muCaloTypeArray[i];
+
+						muCB_PLUS_STIndexNr++;
+					}
+				}
+
+				/*--------------------------------------*/
+				/* STANDALONE - CB_PLUS_ST OVERLAP	*/
+				/*--------------------------------------*/
+
+				Int_t tmp2 = muCB_PLUS_STIndexNr;
+
+				for(Int_t i = 0; i < muStandAloneIndexNr; i++)
+				{
+					Bool_t isOk = true;
+
+					Int_t index = muStandAloneIndexArray[i];
+
+					Float_t standalone_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(index)));
+					Float_t standalone_phi = mu_staco_id_phi->at(index);
+
+					for(Int_t j = 0; j < tmp2; j++)
+					{
+						Int_t xedni = muCB_PLUS_STIndexArray[j];
+
+						Float_t cb_plus_st_eta;
+						Float_t cb_plus_st_phi;
+
+						switch(muCB_PLUS_STTypeArray[j])
+						{
+							case TYPE_MUON_CB_PLUS_ST:
+							case TYPE_MUON_STANDALONE:
+								cb_plus_st_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(xedni)));
+								cb_plus_st_phi = mu_staco_id_phi->at(xedni);
+								break;
+
+							case TYPE_MUON_CALO:
+								cb_plus_st_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(xedni)));
+								cb_plus_st_phi = mu_calo_id_phi->at(xedni);
+								break;
+
+							default:
+								std::cout << "Oula !!!" << std::endl;
+
+								exit(1);
+						}
+
+						if(__dR2(standalone_eta, cb_plus_st_eta, standalone_phi, cb_plus_st_phi) < 0.2f * 0.2f)
+						{
+							isOk = false;
+
+							muNr14--;
+
 							break;
-
-						default:
-							std::cout << "Oula !!!" << std::endl;
-
-							exit(1);
+						}
 					}
 
-					if(__dR2(calo_eta, cb_plus_st_eta, calo_phi, cb_plus_st_phi) < 0.1f * 0.1f)
+					if(isOk != false)
 					{
-						isOk = false;
+						muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = muStandAloneIndexArray[i];
+						muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = muStandAloneTypeArray[i];
 
-						muNr13--;
-
-						break;
+						muCB_PLUS_STIndexNr++;
 					}
 				}
 
-				if(isOk != false)
-				{
-					muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = muCaloIndexArray[i];
-					muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = muCaloTypeArray[i];
+				/*--------------------------------------*/
+				/* ELECTRONS				*/
+				/*--------------------------------------*/
 
-					muCB_PLUS_STIndexNr++;
+				for(Int_t i = 0; i < el_n; i++)
+				{
+					if(checkObject(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
+					{
+						if(checkOverlapping(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt, muCB_PLUS_STIndexNr, muCB_PLUS_STIndexArray, muCB_PLUS_STTypeArray) != false)
+						{
+							elIndexArray[elIndexNr] = i;
+							elTypeArray[elIndexNr] = TYPE_ELECTRON;
+
+							elIndexNr++;
+						}
+					}
 				}
+
+				/*--------------------------------------*/
 			}
-
-			/*--------------------------------------*/
-			/* STANDALONE - CB_PLUS_ST OVERLAP	*/
-			/*--------------------------------------*/
-
-			muNr14 = muNr13;
-
-			Int_t tmp2 = muCB_PLUS_STIndexNr;
-
-			for(Int_t i = 0; i < muStandAloneIndexNr; i++)
-			{
-				Bool_t isOk = true;
-
-				Int_t index = muStandAloneIndexArray[i];
-
-				Float_t standalone_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(index)));
-				Float_t standalone_phi = mu_staco_id_phi->at(index);
-
-				for(Int_t j = 0; j < tmp2; j++)
-				{
-					Int_t xedni = muCB_PLUS_STIndexArray[j];
-
-					Float_t cb_plus_st_eta;
-					Float_t cb_plus_st_phi;
-
-					switch(muCB_PLUS_STTypeArray[j])
-					{
-						case TYPE_MUON_CB_PLUS_ST:
-						case TYPE_MUON_STANDALONE:
-							cb_plus_st_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(xedni)));
-							cb_plus_st_phi = mu_staco_id_phi->at(xedni);
-							break;
-
-						case TYPE_MUON_CALO:
-							cb_plus_st_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(xedni)));
-							cb_plus_st_phi = mu_calo_id_phi->at(xedni);
-							break;
-
-						default:
-							std::cout << "Oula !!!" << std::endl;
-
-							exit(1);
-					}
-
-					if(__dR2(standalone_eta, cb_plus_st_eta, standalone_phi, cb_plus_st_phi) < 0.2f * 0.2f)
-					{
-						isOk = false;
-
-						muNr14--;
-
-						break;
-					}
-				}
-
-				if(isOk != false)
-				{
-					muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = muStandAloneIndexArray[i];
-					muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = muStandAloneTypeArray[i];
-
-					muCB_PLUS_STIndexNr++;
-				}
-			}
-
-			/*--------------------------------------*/
-			/* ELECTRONS				*/
-			/*--------------------------------------*/
-
-			for(Int_t i = 0; i < el_n; i++)
-			{
-				if(checkObject(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
-				{
-					if(checkOverlapping(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt, muCB_PLUS_STIndexNr, muCB_PLUS_STIndexArray, muCB_PLUS_STTypeArray) != false)
-					{
-						elIndexArray[elIndexNr] = i;
-						elTypeArray[elIndexNr] = TYPE_ELECTRON;
-
-						elIndexNr++;
-					}
-				}
-			}
-
-			/*--------------------------------------*/
 		}
 
 		/*---------------------------------------------------------*/
@@ -335,6 +345,9 @@ void TLeptonFinder::Loop(void)
 	std::cout << "#############################################################################" << std::endl;
 	std::cout << "# MUON STACO                                                                #" << std::endl;
 	std::cout << "#############################################################################" << std::endl;
+
+	muNr13 += muNr12;
+	muNr14 += muNr13;
 
 	std::cout << "before any cut     : " << muNr0 << std::endl;
 	std::cout << "after vertex       : " << muNr1 << std::endl;
