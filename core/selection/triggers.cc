@@ -249,17 +249,19 @@ UInt_t TLeptonAnalysis::triggerMatch(
 	std::string chain2_A = "";
 	std::string chain2_B = "";
 
-	bool res1;
-	bool res2;
-
-	bool symmetric_A = true;
-	bool symmetric_B = true;
-
-	std::pair<bool, bool> Res1;
-	std::pair<bool, bool> Res2;
+	Int_t n;
 
 	TLorentzVector tlv1;
 	TLorentzVector tlv2;
+
+	Bool_t res1;
+	Bool_t res2;
+
+	Bool_t symmetric_A = true;
+	Bool_t symmetric_B = true;
+
+	std::pair<bool, bool> Res1;
+	std::pair<bool, bool> Res2;
 #ifndef __IS_MC
 	char lumiPeriod = getlumiPeriod(RunNumber);
 #endif
@@ -526,75 +528,8 @@ UInt_t TLeptonAnalysis::triggerMatch(
 					mu_staco_E->at(index)
 				);
 
-				for(Int_t xedni = 0; xedni < mu_staco_n; xedni++)
-				{
-					if(index != xedni)
-					{
-						tlv2.SetPtEtaPhiE(
-							mu_staco_pt->at(xedni),
-							mu_staco_eta->at(xedni),
-							mu_staco_phi->at(xedni),
-							mu_staco_E->at(xedni)
-						);
-
-						if(chain2_A.length() > 0)
-						{
-							m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_A, Res1, Res2);
-
-							if(symmetric_A != false)
-							{
-								if(Res1.first != false
-								   &&
-								   Res2.first != false
-								 ) {
-									result |= (1 << 1);
-
-									break;
-								}
-							}
-							else
-							{
-								if((Res1.first != false && Res2.second != false)
-								   ||
-								   (Res1.second != false && Res2.first != false)
-								 ) {
-									result |= (1 << 1);
-
-									break;
-								}
-							}
-						}
-
-						if(chain2_B.length() > 0)
-						{
-							m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_B, Res1, Res2);
-
-							if(symmetric_B != false)
-							{
-								if(Res1.first != false
-								   &&
-								   Res2.first != false
-								 ) {
-									result |= (1 << 1);
-
-									break;
-								}
-							}
-							else
-							{
-								if((Res1.first != false && Res2.second != false)
-								   ||
-								   (Res1.second != false && Res2.first != false)
-								 ) {
-									result |= (1 << 1);
-
-									break;
-								}
-							}
-						}
-					}
-				}
-			 }
+				n = mu_staco_n;
+			}
 			else
 			{
 				if((chain1_A.length() > 0 && m_muTriggerMatching->match(mu_calo_eta->at(index), mu_calo_phi->at(index), chain1_A) != false)
@@ -611,9 +546,23 @@ UInt_t TLeptonAnalysis::triggerMatch(
 					mu_calo_E->at(index)
 				);
 
-				for(Int_t xedni = 0; xedni < mu_calo_n; xedni++)
+				n = mu_calo_n;
+			}
+
+			for(Int_t xedni = 0; xedni < n; xedni++)
+			{
+				if(index != xedni)
 				{
-					if(index != xedni)
+					if(type != TYPE_MUON_CALO)
+					{
+						tlv2.SetPtEtaPhiE(
+							mu_staco_pt->at(xedni),
+							mu_staco_eta->at(xedni),
+							mu_staco_phi->at(xedni),
+							mu_staco_E->at(xedni)
+						);
+					}
+					else
 					{
 						tlv2.SetPtEtaPhiE(
 							mu_calo_pt->at(xedni),
@@ -621,60 +570,60 @@ UInt_t TLeptonAnalysis::triggerMatch(
 							mu_calo_phi->at(xedni),
 							mu_calo_E->at(xedni)
 						);
+					}
 
-						if(chain2_A.length() > 0)
+					if(chain2_A.length() > 0)
+					{
+						m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_A, Res1, Res2);
+
+						if(symmetric_A != false)
 						{
-							m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_A, Res1, Res2);
+							if(Res1.first != false
+							   &&
+							   Res2.first != false
+							 ) {
+								result |= (1 << 1);
 
-							if(symmetric_A != false)
-							{
-								if(Res1.first != false
-								   &&
-								   Res2.first != false
-								 ) {
-									result |= (1 << 1);
-
-									break;
-								}
-							}
-							else
-							{
-								if((Res1.first != false && Res2.second != false)
-								   ||
-								   (Res1.second != false && Res2.first != false)
-								 ) {
-									result |= (1 << 1);
-
-									break;
-								}
+								break;
 							}
 						}
-
-						if(chain2_B.length() > 0)
+						else
 						{
-							m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_B, Res1, Res2);
+							if((Res1.first != false && Res2.second != false)
+							   ||
+							   (Res1.second != false && Res2.first != false)
+							 ) {
+								result |= (1 << 1);
 
-							if(symmetric_B != false)
-							{
-								if(Res1.first != false
-								   &&
-								   Res2.first != false
-								 ) {
-									result |= (1 << 1);
-
-									break;
-								}
+								break;
 							}
-							else
-							{
-								if((Res1.first != false && Res2.second != false)
-								   ||
-								   (Res1.second != false && Res2.first != false)
-								 ) {
-									result |= (1 << 1);
+						}
+					}
 
-									break;
-								}
+					if(chain2_B.length() > 0)
+					{
+						m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_B, Res1, Res2);
+
+						if(symmetric_B != false)
+						{
+							if(Res1.first != false
+							   &&
+							   Res2.first != false
+							 ) {
+								result |= (1 << 1);
+
+								break;
+							}
+						}
+						else
+						{
+							if((Res1.first != false && Res2.second != false)
+							   ||
+							   (Res1.second != false && Res2.first != false)
+							 ) {
+								result |= (1 << 1);
+
+								break;
 							}
 						}
 					}

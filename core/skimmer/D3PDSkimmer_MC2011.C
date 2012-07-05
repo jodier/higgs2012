@@ -2,7 +2,7 @@ void D3PDSkimmer_MC2011(void)
 {
 	TChain *chain = new TChain("physics");
 
-	chain->Add("NTUP_HSG2.00814271._000001.root");
+	chain->Add("");
 
 	/*-----------------------------------------------------------------*/
 
@@ -32,6 +32,7 @@ void D3PDSkimmer_MC2011(void)
 	chain->SetBranchStatus("mc_children", 1);
 	chain->SetBranchStatus("mc_child_index", 1);
 	chain->SetBranchStatus("mc_channel_number", 1);
+	chain->SetBranchStatus("mc_vx_z", 1);
 
 	/*-----------------------------------------------------------------*/
 

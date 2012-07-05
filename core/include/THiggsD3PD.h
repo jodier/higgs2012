@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Thu Jul  5 15:02:02 2012 by ROOT version 5.32/01
+// Thu Jul  5 16:57:05 2012 by ROOT version 5.34/00
 // from TTree physics/physics
 // found on file: result.root
 //////////////////////////////////////////////////////////
@@ -257,6 +257,7 @@ public :
    Int_t           mc_n;
    std::vector<int>     *mc_pdgId;
    std::vector<std::vector<int> > *mc_children;
+   std::vector<float>   *mc_vx_z;
    std::vector<std::vector<int> > *mc_child_index;
    UInt_t          trig_DB_SMK;
    std::vector<float>   *trig_L1_mu_eta;
@@ -518,6 +519,7 @@ public :
    TBranch        *b_mc_n;   //!
    TBranch        *b_mc_pdgId;   //!
    TBranch        *b_mc_children;   //!
+   TBranch        *b_mc_vx_z;   //!
    TBranch        *b_mc_child_index;   //!
    TBranch        *b_trig_DB_SMK;   //!
    TBranch        *b_trig_L1_mu_eta;   //!
@@ -820,6 +822,7 @@ void THiggsD3PD::Init(TTree *tree)
    mcevt_weight = 0;
    mc_pdgId = 0;
    mc_children = 0;
+   mc_vx_z = 0;
    mc_child_index = 0;
    trig_L1_mu_eta = 0;
    trig_L1_mu_phi = 0;
@@ -1082,6 +1085,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mc_n", &mc_n, &b_mc_n);
    fChain->SetBranchAddress("mc_pdgId", &mc_pdgId, &b_mc_pdgId);
    fChain->SetBranchAddress("mc_children", &mc_children, &b_mc_children);
+   fChain->SetBranchAddress("mc_vx_z", &mc_vx_z, &b_mc_vx_z);
    fChain->SetBranchAddress("mc_child_index", &mc_child_index, &b_mc_child_index);
    fChain->SetBranchAddress("trig_DB_SMK", &trig_DB_SMK, &b_trig_DB_SMK);
    fChain->SetBranchAddress("trig_L1_mu_eta", &trig_L1_mu_eta, &b_trig_L1_mu_eta);

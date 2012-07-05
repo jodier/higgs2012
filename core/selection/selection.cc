@@ -171,9 +171,13 @@ Float_t TLeptonAnalysis::eventGetWeight1(void)
 Float_t TLeptonAnalysis::eventGetWeight2(void)
 {
 #ifdef __IS_MC
-	return m_pileupReweighting->GetCombinedWeight(RunNumber, mc_channel_number, averageIntPerXing);
+	Float_t weight = m_pileupReweighting->GetCombinedWeight(RunNumber, mc_channel_number, averageIntPerXing);
+  #ifdef __YEAR2012
+	weight *= m_VertexPositionReweighting->GetWeight(mc_vx_z->at(2));
+  #endif
+	return weight;
 #else
-	return 1.000000000000000000000000000000000000000000000000000000000000000000000000000000000000f;
+	return 1.000f;
 #endif
 }
 
@@ -431,7 +435,7 @@ Bool_t TLeptonAnalysis::checkObject(
 			break;
 
 		/*---------------------------------------------------------*/
-		/* TYPE_MUON_CB_PLUS_ST					   */
+		/* TYPE_MUON_STANDALONE					   */
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_STANDALONE:
@@ -457,7 +461,12 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			muNr6++;
 
-			if((mu_staco_nCSCEtaHits->at(index) + mu_staco_nCSCPhiHits->at(index)) <= 0 || mu_staco_nMDTEMHits->at(index) <= 0 || mu_staco_nMDTEOHits->at(index) <= 0) {
+			if((mu_staco_nCSCEtaHits->at(index) + mu_staco_nCSCPhiHits->at(index)) <= 0
+			   ||
+			   mu_staco_nMDTEMHits->at(index) <= 0
+			   ||
+			   mu_staco_nMDTEOHits->at(index) <= 0
+			 ) {
 				goto __error;
 			}
 
@@ -648,8 +657,6 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 				Float_t dEta = fabs(el_cl_eta->at(index) - el_cl_eta->at(xedni));
 				Float_t dPhi = fabs(el_cl_phi->at(index) - el_cl_phi->at(xedni));
 
-				while(dPhi >= +M_PI) dPhi -= 2.0 * M_PI;
-
 				if(dEta < 3.0f * 0.025f
 				   &&
 				   dPhi < 5.0f * 0.025f
@@ -663,7 +670,6 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 				}
 			}
 		}
-
 #endif
 		elNr10++;
 

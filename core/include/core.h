@@ -124,6 +124,7 @@ namespace core
 
 #include <egammaAnalysisUtils/EnergyRescaler.h>
 #include <egammaAnalysisUtils/egammaSFclass.h>
+#include <egammaAnalysisUtils/VertexPositionReweightingTool.h>
 
 #include <TrigMuonEfficiency/TriggerNavigationVariables.h>
 #include <TrigMuonEfficiency/ElectronTriggerMatching.h>
@@ -203,7 +204,9 @@ class TLeptonAnalysis: public TNTuple
 	/*-----------------------------------------------------------------*/
 	/* TOOLS							   */
 	/*-----------------------------------------------------------------*/
-
+#if defined( __YEAR2012) && defined(__IS_MC)
+	VertexPositionReweightingTool *m_VertexPositionReweighting;
+#endif
 	Root::TPileupReweighting *m_pileupReweighting;
 
 	MuonSmear::SmearingClass *m_stacoSM;
@@ -276,6 +279,12 @@ class TLeptonAnalysis: public TNTuple
 		muNr12 = 0;
 		muNr13 = 0;
 
+		/*---------------------------------------------------------*/
+		/* VERTEX POSITION REWEIGHTING				   */
+		/*---------------------------------------------------------*/
+#if defined( __YEAR2012) && defined(__IS_MC)
+		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a);
+#endif
 		/*---------------------------------------------------------*/
 		/* PILEUP REWEIGHTING					   */
 		/*---------------------------------------------------------*/
@@ -387,6 +396,9 @@ class TLeptonAnalysis: public TNTuple
 
 	~TLeptonAnalysis(void)
 	{
+#if defined( __YEAR2012) && defined(__IS_MC)
+		delete m_VertexPositionReweighting;
+#endif
 		delete m_pileupReweighting;
 
 		delete m_stacoSM;

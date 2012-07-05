@@ -602,10 +602,10 @@ void TLeptonFinder::Loop(void)
 	std::cout << "before any cut   : " << elNr0 << std::endl;
 	std::cout << "after vertex     : " << elNr1 << std::endl;
 	std::cout << "after trigger    : " << elNr2 << std::endl;
-	std::cout << "after author=1||3: " << elNr3 << std::endl;
-	std::cout << "after loose++    : " << elNr4 << std::endl;
-	std::cout << "after |η|<2.47   : " << elNr5 << std::endl;
-	std::cout << "after pt>7       : " << elNr6 << std::endl;
+	std::cout << "after author     : " << elNr3 << std::endl;
+	std::cout << "after isEM       : " << elNr4 << std::endl;
+	std::cout << "after |η|        : " << elNr5 << std::endl;
+	std::cout << "after pt         : " << elNr6 << std::endl;
 	std::cout << "after OQ         : " << elNr7 << std::endl;
 	std::cout << "after z0         : " << elNr8 << std::endl;
 	std::cout << "after e-e overlap: " << elNr9 << std::endl;
@@ -622,10 +622,10 @@ void TLeptonFinder::Loop(void)
 	std::cout << "before any cut     : " << muNr0 << std::endl;
 	std::cout << "after vertex       : " << muNr1 << std::endl;
 	std::cout << "after trigger      : " << muNr2 << std::endl;
-	std::cout << "after author=6||7  : " << muNr3 << std::endl;
+	std::cout << "after author       : " << muNr3 << std::endl;
 	std::cout << "after d0           : " << muNr4 << std::endl;
-	std::cout << "after |η|<2.5      : " << muNr5 << std::endl;
-	std::cout << "after pt>6         : " << muNr6 << std::endl;
+	std::cout << "after |η|          : " << muNr5 << std::endl;
+	std::cout << "after pt           : " << muNr6 << std::endl;
 	std::cout << "after b-Layer      : " << muNr7 << std::endl;
 	std::cout << "after Pix          : " << muNr8 << std::endl;
 	std::cout << "after SCT          : " << muNr9 << std::endl;
