@@ -192,8 +192,8 @@ void TLeptonFinder::Loop(void)
 						{
 							case TYPE_MUON_CB_PLUS_ST:
 							case TYPE_MUON_STANDALONE:
-								cb_plus_st_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(xedni)));
-								cb_plus_st_phi = mu_staco_id_phi->at(xedni);
+								cb_plus_st_eta = mu_staco_eta->at(xedni);
+								cb_plus_st_phi = mu_staco_phi->at(xedni);
 								break;
 
 							case TYPE_MUON_CALO:
@@ -238,8 +238,8 @@ void TLeptonFinder::Loop(void)
 
 					Int_t index = muStandAloneIndexArray[i];
 
-					Float_t standalone_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(index)));
-					Float_t standalone_phi = mu_staco_id_phi->at(index);
+					Float_t standalone_eta = mu_staco_eta->at(index);
+					Float_t standalone_phi = mu_staco_phi->at(index);
 
 					for(Int_t j = 0; j < tmp2; j++)
 					{
@@ -252,8 +252,8 @@ void TLeptonFinder::Loop(void)
 						{
 							case TYPE_MUON_CB_PLUS_ST:
 							case TYPE_MUON_STANDALONE:
-								cb_plus_st_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(xedni)));
-								cb_plus_st_phi = mu_staco_id_phi->at(xedni);
+								cb_plus_st_eta = mu_staco_eta->at(xedni);
+								cb_plus_st_phi = mu_staco_phi->at(xedni);
 								break;
 
 							case TYPE_MUON_CALO:
