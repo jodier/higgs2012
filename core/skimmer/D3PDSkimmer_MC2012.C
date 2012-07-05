@@ -250,6 +250,7 @@ void D3PDSkimmer_MC2012(void)
 	chain->SetBranchStatus("mu_calo_pt", 1);
 	chain->SetBranchStatus("mu_calo_ptcone20", 1);
 	chain->SetBranchStatus("mu_calo_ptcone30", 1);
+	chain->SetBranchStatus("mu_calo_tight", 1);
 	chain->SetBranchStatus("mu_calo_d0_exPV", 1);
 	chain->SetBranchStatus("mu_calo_z0_exPV", 1);
 	chain->SetBranchStatus("mu_calo_trackIPEstimate_d0_unbiasedpvunbiased", 1);

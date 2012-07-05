@@ -39,17 +39,17 @@ Bool_t TLeptonAnalysis::el_isEMOk_at(Int_t index)
 	);
 #endif
 #ifdef __YEAR2012
-	double Et_cl           = el_cl_E->at(index) / cosh(el_etas2->at(index));
-	double etas2           = el_etas2->at(index);
-	double rHad            = el_Ethad->at(index) / Et_cl;
-	double rHad1           = el_Ethad1->at(index) / Et_cl;
-	double Reta            = el_reta->at(index);
-	double w2              = el_weta2->at(index);
-	double f1              = el_f1->at(index);
-	double f3              = el_f3->at(index);
-	double wstot           = el_wstot->at(index);
-	double DEmaxs1         = (el_emaxs1->at(index) - el_Emax2->at(index)) / (el_emaxs1->at(index) + el_Emax2->at(index));
-	double deltaEta        = el_deltaeta1->at(index);
+	double Et_cl            = el_cl_E->at(index) / cosh(el_etas2->at(index));
+	double etas2            = el_etas2->at(index);
+	double rHad             = el_Ethad->at(index) / Et_cl;
+	double rHad1            = el_Ethad1->at(index) / Et_cl;
+	double Reta             = el_reta->at(index);
+	double w2               = el_weta2->at(index);
+	double f1               = el_f1->at(index);
+	double f3               = el_f3->at(index);
+	double wstot            = el_wstot->at(index);
+	double DEmaxs1          = (el_emaxs1->at(index) - el_Emax2->at(index)) / (el_emaxs1->at(index) + el_Emax2->at(index));
+	double deltaEta         = el_deltaeta1->at(index);
 	double deltaPhiRescaled = el_deltaphiRescaled->at(index);
 	int    nSi              = el_nSiHits->at(index);
 	int    nSiDeadSensors   = el_nSCTDeadSensors->at(index) + el_nPixelDeadSensors->at(index);
@@ -62,9 +62,10 @@ Bool_t TLeptonAnalysis::el_isEMOk_at(Int_t index)
 	bool   expectBlayer     = el_expectBLayerHit->at(index); 
 	int    nBlayerHits      = el_nBLHits->at(index);
 
-	int nTRTTotal = nTRT + nTRTOutliers;
+	int nTRTTotal     = nTRT     + nTRTOutliers    ;
+	int nTRTTotalHigh = nTRThigh + nTRThighOutliers;
 
-	double rTRT = nTRTTotal > 0 ? (double) (nTRThigh + nTRThighOutliers) / (double) nTRTTotal : 0.0;
+	double rTRT = nTRTTotal > 0 ? double(nTRTTotalHigh) / double(nTRTTotal) : 0.0;
 
 	double dpOverp = 0.0;
 

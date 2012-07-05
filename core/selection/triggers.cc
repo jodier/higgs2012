@@ -419,183 +419,6 @@ UInt_t TLeptonAnalysis::triggerMatch(
 
 		case TYPE_MUON_CB_PLUS_ST:
 		case TYPE_MUON_STANDALONE:
-#ifdef __IS_MC
-  #ifdef __YEAR2011
-			/**/ if(RunNumber == 180164 // B-D
-				||
-				RunNumber == 183003 // E-H
-			 ) {
-				chain1_A = "EF_mu18_MG";
-				chain1_B = "";
-
-				chain2_A = "EF_2mu10";
-				chain2_B = "";
-			}
-			else if(RunNumber == 186169) // I-K
-			{
-				TRandom3 random3;
-
-				random3.SetSeed(mc_channel_number * EventNumber);
-
-				const Float_t fracMu = (lumiPeriod2011I) / (lumiPeriod2011I + lumiPeriod2011J + lumiPeriod2011K);
-
-				if(random3.Uniform() < fracMu)
-				{
-					chain1_A = "EF_mu18_MG";
-					chain1_B = "";
-
-					chain2_A = "EF_2mu10";
-					chain2_B = "";
-				}
-				else
-				{
-					chain1_A = "EF_mu18_MG_medium";
-					chain1_B = "";
-
-					chain2_A = "EF_2mu10";
-					chain2_B = "";
-				}
-			}
-			else if(RunNumber == 189751) // L-M
-			{
-				chain1_A = "EF_mu18_MG_medium";
-				chain1_B = "";
-
-				chain2_A = "EF_2mu10";
-				chain2_B = "";
-			}
-  #endif
-  #ifdef __YEAR2012
-			/**/ if(RunNumber == 195847) // A-B
-			{
-				chain1_A = "EF_mu24i_tight";
-				chain1_B = "EF_mu36_tight";
-
-				chain2_A = "EF_2mu13";
-				chain2_B = "EF_mu18_tight_mu8_EFFS";
-
-				symmetric_B = false;
-			}
-  #endif
-#else
-  #ifdef __YEAR2011
-			/**/ if(lumiPeriod >= 'B' && lumiPeriod <= 'I')
-			{
-				chain1_A = "EF_mu18_MG";
-				chain1_B = "";
-
-				chain2_A = "EF_2mu10";
-				chain2_B = "";
-			}
-			else if(lumiPeriod >= 'J' && lumiPeriod <= 'M')
-			{
-				chain1_A = "EF_mu18_MG_medium";
-				chain1_B = "";
-
-				chain2_A = "EF_2mu10";
-				chain2_B = "";
-			}
-  #endif
-  #ifdef __YEAR2012
-			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'B')
-			{
-				chain1_A = "EF_mu24i_tight";
-				chain1_B = "EF_mu36_tight";
-
-				chain2_A = "EF_2mu13";
-				chain2_B = "EF_mu18_tight_mu8_EFFS";
-
-				symmetric_B = false;
-			}
-  #endif
-#endif
-			if((chain1_A.length() > 0 && m_muTriggerMatching->match(mu_staco_eta->at(index), mu_staco_phi->at(index), chain1_A) != false)
-			   ||
-			   (chain1_B.length() > 0 && m_muTriggerMatching->match(mu_staco_eta->at(index), mu_staco_phi->at(index), chain1_B) != false)
-			 ) {
-				result |= (1 << 0);
-			}
-
-			tlv1.SetPtEtaPhiE(
-				mu_staco_pt->at(index),
-				mu_staco_eta->at(index),
-				mu_staco_phi->at(index),
-				mu_staco_E->at(index)
-			);
-
-			for(Int_t xedni = 0; xedni < mu_staco_n; xedni++)
-			{
-				if(index != xedni)
-				{
-					tlv2.SetPtEtaPhiE(
-						mu_staco_pt->at(xedni),
-						mu_staco_eta->at(xedni),
-						mu_staco_phi->at(xedni),
-						mu_staco_E->at(xedni)
-					);
-
-					if(chain2_A.length() > 0)
-					{
-						m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_A, Res1, Res2);
-
-						if(symmetric_A != false)
-						{
-							if(Res1.first != false
-							   &&
-							   Res2.first != false
-							 ) {
-								result |= (1 << 1);
-
-								break;
-							}
-						}
-						else
-						{
-							if((Res1.first != false && Res2.second != false)
-							   ||
-							   (Res1.second != false && Res2.first != false)
-							 ) {
-								result |= (1 << 1);
-
-								break;
-							}
-						}
-					}
-
-					if(chain2_B.length() > 0)
-					{
-						m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_B, Res1, Res2);
-
-						if(symmetric_B != false)
-						{
-							if(Res1.first != false
-							   &&
-							   Res2.first != false
-							 ) {
-								result |= (1 << 1);
-
-								break;
-							}
-						}
-						else
-						{
-							if((Res1.first != false && Res2.second != false)
-							   ||
-							   (Res1.second != false && Res2.first != false)
-							 ) {
-								result |= (1 << 1);
-
-								break;
-							}
-						}
-					}
-				}
-			}
-
-			break;
-
-		/*---------------------------------------------------------*/
-
 		case TYPE_MUON_CALO:
 #ifdef __IS_MC
   #ifdef __YEAR2011
@@ -687,83 +510,171 @@ UInt_t TLeptonAnalysis::triggerMatch(
 			}
   #endif
 #endif
-			if((chain1_A.length() > 0 && m_muTriggerMatching->match(mu_calo_eta->at(index), mu_calo_phi->at(index), chain1_A) != false)
-			   ||
-			   (chain1_B.length() > 0 && m_muTriggerMatching->match(mu_calo_eta->at(index), mu_calo_phi->at(index), chain1_B) != false)
-			 ) {
-				result |= (1 << 0);
-			}
-
-			tlv1.SetPtEtaPhiE(
-				mu_calo_pt->at(index),
-				mu_calo_eta->at(index),
-				mu_calo_phi->at(index),
-				mu_calo_E->at(index)
-			);
-
-			for(Int_t xedni = 0; xedni < mu_calo_n; xedni++)
+			if(type != TYPE_MUON_CALO)
 			{
-				if(index != xedni)
+				if((chain1_A.length() > 0 && m_muTriggerMatching->match(mu_staco_eta->at(index), mu_staco_phi->at(index), chain1_A) != false)
+				   ||
+				   (chain1_B.length() > 0 && m_muTriggerMatching->match(mu_staco_eta->at(index), mu_staco_phi->at(index), chain1_B) != false)
+				 ) {
+					result |= (1 << 0);
+				}
+
+				tlv1.SetPtEtaPhiE(
+					mu_staco_pt->at(index),
+					mu_staco_eta->at(index),
+					mu_staco_phi->at(index),
+					mu_staco_E->at(index)
+				);
+
+				for(Int_t xedni = 0; xedni < mu_staco_n; xedni++)
 				{
-					tlv2.SetPtEtaPhiE(
-						mu_calo_pt->at(xedni),
-						mu_calo_eta->at(xedni),
-						mu_calo_phi->at(xedni),
-						mu_calo_E->at(xedni)
-					);
-
-					if(chain2_A.length() > 0)
+					if(index != xedni)
 					{
-						m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_A, Res1, Res2);
+						tlv2.SetPtEtaPhiE(
+							mu_staco_pt->at(xedni),
+							mu_staco_eta->at(xedni),
+							mu_staco_phi->at(xedni),
+							mu_staco_E->at(xedni)
+						);
 
-						if(symmetric_A != false)
+						if(chain2_A.length() > 0)
 						{
-							if(Res1.first != false
-							   &&
-							   Res2.first != false
-							 ) {
-								result |= (1 << 1);
+							m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_A, Res1, Res2);
 
-								break;
+							if(symmetric_A != false)
+							{
+								if(Res1.first != false
+								   &&
+								   Res2.first != false
+								 ) {
+									result |= (1 << 1);
+
+									break;
+								}
+							}
+							else
+							{
+								if((Res1.first != false && Res2.second != false)
+								   ||
+								   (Res1.second != false && Res2.first != false)
+								 ) {
+									result |= (1 << 1);
+
+									break;
+								}
 							}
 						}
-						else
-						{
-							if((Res1.first != false && Res2.second != false)
-							   ||
-							   (Res1.second != false && Res2.first != false)
-							 ) {
-								result |= (1 << 1);
 
-								break;
+						if(chain2_B.length() > 0)
+						{
+							m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_B, Res1, Res2);
+
+							if(symmetric_B != false)
+							{
+								if(Res1.first != false
+								   &&
+								   Res2.first != false
+								 ) {
+									result |= (1 << 1);
+
+									break;
+								}
+							}
+							else
+							{
+								if((Res1.first != false && Res2.second != false)
+								   ||
+								   (Res1.second != false && Res2.first != false)
+								 ) {
+									result |= (1 << 1);
+
+									break;
+								}
 							}
 						}
 					}
+				}
+			 }
+			else
+			{
+				if((chain1_A.length() > 0 && m_muTriggerMatching->match(mu_calo_eta->at(index), mu_calo_phi->at(index), chain1_A) != false)
+				   ||
+				   (chain1_B.length() > 0 && m_muTriggerMatching->match(mu_calo_eta->at(index), mu_calo_phi->at(index), chain1_B) != false)
+				 ) {
+					result |= (1 << 0);
+				}
 
-					if(chain2_B.length() > 0)
+				tlv1.SetPtEtaPhiE(
+					mu_calo_pt->at(index),
+					mu_calo_eta->at(index),
+					mu_calo_phi->at(index),
+					mu_calo_E->at(index)
+				);
+
+				for(Int_t xedni = 0; xedni < mu_calo_n; xedni++)
+				{
+					if(index != xedni)
 					{
-						m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_B, Res1, Res2);
+						tlv2.SetPtEtaPhiE(
+							mu_calo_pt->at(xedni),
+							mu_calo_eta->at(xedni),
+							mu_calo_phi->at(xedni),
+							mu_calo_E->at(xedni)
+						);
 
-						if(symmetric_B != false)
+						if(chain2_A.length() > 0)
 						{
-							if(Res1.first != false
-							   &&
-							   Res2.first != false
-							 ) {
-								result |= (1 << 1);
+							m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_A, Res1, Res2);
 
-								break;
+							if(symmetric_A != false)
+							{
+								if(Res1.first != false
+								   &&
+								   Res2.first != false
+								 ) {
+									result |= (1 << 1);
+
+									break;
+								}
+							}
+							else
+							{
+								if((Res1.first != false && Res2.second != false)
+								   ||
+								   (Res1.second != false && Res2.first != false)
+								 ) {
+									result |= (1 << 1);
+
+									break;
+								}
 							}
 						}
-						else
-						{
-							if((Res1.first != false && Res2.second != false)
-							   ||
-							   (Res1.second != false && Res2.first != false)
-							 ) {
-								result |= (1 << 1);
 
-								break;
+						if(chain2_B.length() > 0)
+						{
+							m_muTriggerMatching->matchDimuon(tlv1, tlv2, chain2_B, Res1, Res2);
+
+							if(symmetric_B != false)
+							{
+								if(Res1.first != false
+								   &&
+								   Res2.first != false
+								 ) {
+									result |= (1 << 1);
+
+									break;
+								}
+							}
+							else
+							{
+								if((Res1.first != false && Res2.second != false)
+								   ||
+								   (Res1.second != false && Res2.first != false)
+								 ) {
+									result |= (1 << 1);
+
+									break;
+								}
 							}
 						}
 					}

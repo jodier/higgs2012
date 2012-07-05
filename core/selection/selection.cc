@@ -236,7 +236,7 @@ Float_t TLeptonAnalysis::eventGetWeight3(Int_t index, TLeptonType type)
 		case TYPE_MUON_CALO:
 			tlv.SetPtEtaPhiE(mu_calo_pt->at(index), mu_calo_eta->at(index), mu_calo_phi->at(index), mu_calo_E->at(index));
 
-			weight = m_caloMuSCF->scaleFactor(mu_staco_charge->at(index), tlv);
+			weight = m_caloMuSCF->scaleFactor(tlv);
 
 			break;
 

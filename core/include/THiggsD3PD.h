@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Wed Jul  4 13:45:35 2012 by ROOT version 5.32/01
+// Thu Jul  5 15:02:02 2012 by ROOT version 5.32/01
 // from TTree physics/physics
 // found on file: result.root
 //////////////////////////////////////////////////////////
@@ -221,6 +221,7 @@ public :
    std::vector<int>     *mu_calo_isStandAloneMuon;
    std::vector<int>     *mu_calo_isCombinedMuon;
    std::vector<int>     *mu_calo_isSegmentTaggedMuon;
+   std::vector<int>     *mu_calo_tight;
    std::vector<float>   *mu_calo_d0_exPV;
    std::vector<float>   *mu_calo_z0_exPV;
    std::vector<float>   *mu_calo_id_theta_exPV;
@@ -481,6 +482,7 @@ public :
    TBranch        *b_mu_calo_isStandAloneMuon;   //!
    TBranch        *b_mu_calo_isCombinedMuon;   //!
    TBranch        *b_mu_calo_isSegmentTaggedMuon;   //!
+   TBranch        *b_mu_calo_tight;   //!
    TBranch        *b_mu_calo_d0_exPV;   //!
    TBranch        *b_mu_calo_z0_exPV;   //!
    TBranch        *b_mu_calo_id_theta_exPV;   //!
@@ -784,6 +786,7 @@ void THiggsD3PD::Init(TTree *tree)
    mu_calo_isStandAloneMuon = 0;
    mu_calo_isCombinedMuon = 0;
    mu_calo_isSegmentTaggedMuon = 0;
+   mu_calo_tight = 0;
    mu_calo_d0_exPV = 0;
    mu_calo_z0_exPV = 0;
    mu_calo_id_theta_exPV = 0;
@@ -1043,6 +1046,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_calo_isStandAloneMuon", &mu_calo_isStandAloneMuon, &b_mu_calo_isStandAloneMuon);
    fChain->SetBranchAddress("mu_calo_isCombinedMuon", &mu_calo_isCombinedMuon, &b_mu_calo_isCombinedMuon);
    fChain->SetBranchAddress("mu_calo_isSegmentTaggedMuon", &mu_calo_isSegmentTaggedMuon, &b_mu_calo_isSegmentTaggedMuon);
+   fChain->SetBranchAddress("mu_calo_tight", &mu_calo_tight, &b_mu_calo_tight);
    fChain->SetBranchAddress("mu_calo_d0_exPV", &mu_calo_d0_exPV, &b_mu_calo_d0_exPV);
    fChain->SetBranchAddress("mu_calo_z0_exPV", &mu_calo_z0_exPV, &b_mu_calo_z0_exPV);
    fChain->SetBranchAddress("mu_calo_id_theta_exPV", &mu_calo_id_theta_exPV, &b_mu_calo_id_theta_exPV);
