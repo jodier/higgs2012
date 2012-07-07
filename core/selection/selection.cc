@@ -198,8 +198,6 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 		return;
 	}
 
-	float pT_ME;
-	float pT_ID;
 	float pT_old;
 	float pT_new;
 
@@ -226,14 +224,10 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 			break;
 
 		/*---------------------------------------------------------*/
-		/* TYPE_MUON_STACO					   */
+		/* TYPE_MUON_CB_PLUS_ST					   */
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_CB_PLUS_ST:
-		case TYPE_MUON_STANDALONE:
-			pT_ME = (mu_staco_me_qoverp_exPV->at(index) != 0.0f) ? sin(mu_staco_me_theta_exPV->at(index)) / fabs(mu_staco_me_qoverp_exPV->at(index)) : 0.0f;
-			pT_ID = (mu_staco_id_qoverp_exPV->at(index) != 0.0f) ? sin(mu_staco_id_theta_exPV->at(index)) / fabs(mu_staco_id_qoverp_exPV->at(index)) : 0.0f;
-
 			pT_old = pT_new = mu_staco_pt->at(index);
 
 			m_stacoSM->SetSeed(EventNumber, index);
@@ -241,8 +235,8 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 			/**/ if(mu_staco_isCombinedMuon->at(index) != false)
 			{
 				m_stacoSM->Event(
-					pT_ME,
-					pT_ID,
+					(mu_staco_me_qoverp_exPV->at(index) != 0.0f) ? sin(mu_staco_me_theta_exPV->at(index)) / fabs(mu_staco_me_qoverp_exPV->at(index)) : 0.0f,
+					(mu_staco_id_qoverp_exPV->at(index) != 0.0f) ? sin(mu_staco_id_theta_exPV->at(index)) / fabs(mu_staco_id_qoverp_exPV->at(index)) : 0.0f,
 					pT_old,
 					mu_staco_eta->at(index)
 				);
@@ -259,7 +253,22 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 
 				pT_new = m_stacoSM->pTID();
 			}
-			else if(mu_staco_isStandAloneMuon->at(index) != false)
+
+			mu_staco_E->at(index) = (pT_new / pT_old) * mu_staco_E->at(index);
+			mu_staco_pt->at(index) = pT_new;
+
+			break;
+
+		/*---------------------------------------------------------*/
+		/* TYPE_MUON_STANDALONE					   */
+		/*---------------------------------------------------------*/
+
+		case TYPE_MUON_STANDALONE:
+			pT_old = pT_new = mu_staco_pt->at(index);
+
+			m_stacoSM->SetSeed(EventNumber, index);
+
+			/**/ if(true)
 			{
 				m_stacoSM->Event(
 					pT_old,
@@ -280,9 +289,6 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_CALO:
-			pT_ME = (mu_calo_me_qoverp_exPV->at(index) != 0.0f) ? sin(mu_calo_me_theta_exPV->at(index)) / fabs(mu_calo_me_qoverp_exPV->at(index)) : 0.0f;
-			pT_ID = (mu_calo_id_qoverp_exPV->at(index) != 0.0f) ? sin(mu_calo_id_theta_exPV->at(index)) / fabs(mu_calo_id_qoverp_exPV->at(index)) : 0.0f;
-
 			pT_old = pT_new = mu_calo_pt->at(index);
 
 			m_stacoSM->SetSeed(EventNumber, index);
@@ -307,6 +313,36 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 	}
 #endif
 }
+
+/*-------------------------------------------------------------------------*/
+
+#define __ELECTRON_CHECK(index) \
+		if(el_author->at(index) != 1				\
+		   &&							\
+		   el_author->at(index) != 3				\
+		 ) {							\
+			continue;					\
+		}							\
+									\
+		if(el_isEMOk_at(index) == false) {			\
+			continue;					\
+		}							\
+									\
+		if(fabs(el_cl_eta->at(index)) > 2.47f) {		\
+			continue;					\
+		}							\
+									\
+		if(electronGetEt(index) < __el_et) {			\
+			continue;					\
+		}							\
+									\
+		if((el_OQ->at(index) & 1446) != 0) {			\
+			continue;					\
+		}							\
+									\
+		if(fabs(el_trackz0pvunbiased->at(index)) > 10.0f) {	\
+			continue;					\
+		}
 
 /*-------------------------------------------------------------------------*/
 
@@ -603,36 +639,6 @@ Bool_t TLeptonAnalysis::checkObject(
 
 	return true;
 }
-
-/*-------------------------------------------------------------------------*/
-
-#define __ELECTRON_CHECK(index) \
-		if(el_author->at(index) != 1				\
-		   &&							\
-		   el_author->at(index) != 3				\
-		 ) {							\
-			continue;					\
-		}							\
-									\
-		if(el_isEMOk_at(index) == false) {			\
-			continue;					\
-		}							\
-									\
-		if(fabs(el_cl_eta->at(index)) > 2.47f) {		\
-			continue;					\
-		}							\
-									\
-		if(electronGetEt(index) < __el_et) {			\
-			continue;					\
-		}							\
-									\
-		if((el_OQ->at(index) & 1446) != 0) {			\
-			continue;					\
-		}							\
-									\
-		if(fabs(el_trackz0pvunbiased->at(index)) > 10.0f) {	\
-			continue;					\
-		}
 
 /*-------------------------------------------------------------------------*/
 
