@@ -501,6 +501,11 @@ class TLeptonAnalysis: public TNTuple
 	/* SELECTION							   */
 	/*-----------------------------------------------------------------*/
 
+	void smearObject(
+		Int_t index,
+		TLeptonType type
+	);
+
 	Bool_t checkObject(
 		Int_t index,
 		TLeptonType type,

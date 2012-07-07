@@ -128,9 +128,9 @@ void TLeptonFinder::Loop(void)
 				elNr2 += el_n;
 				muNr2 += mu_staco_n + mu_calo_n;
 
-				/*--------------------------------------*/
-				/* STACO MUONS				*/
-				/*--------------------------------------*/
+				/*-----------------------------------------*/
+				/* STACO MUONS				   */
+				/*-----------------------------------------*/
 
 				for(Int_t i = 0; i < mu_staco_n; i++)
 				{
@@ -151,9 +151,9 @@ void TLeptonFinder::Loop(void)
 					}
 				}
 
-				/*--------------------------------------*/
-				/* CALO MUONS				*/
-				/*--------------------------------------*/
+				/*-----------------------------------------*/
+				/* CALO MUONS				   */
+				/*-----------------------------------------*/
 
 				for(Int_t i = 0; i < mu_calo_n; i++)
 				{
@@ -166,9 +166,9 @@ void TLeptonFinder::Loop(void)
 					}
 				}
 
-				/*--------------------------------------*/
-				/* CALO - CB_PLUS_ST OVERLAP		*/
-				/*--------------------------------------*/
+				/*-----------------------------------------*/
+				/* CALO - CB_PLUS_ST OVERLAP		   */
+				/*-----------------------------------------*/
 
 				Int_t tmp1 = muCB_PLUS_STIndexNr;
 
@@ -226,9 +226,9 @@ void TLeptonFinder::Loop(void)
 					}
 				}
 
-				/*--------------------------------------*/
-				/* STANDALONE - CB_PLUS_ST OVERLAP	*/
-				/*--------------------------------------*/
+				/*-----------------------------------------*/
+				/* STANDALONE - CB_PLUS_ST OVERLAP	   */
+				/*-----------------------------------------*/
 
 				Int_t tmp2 = muCB_PLUS_STIndexNr;
 
@@ -286,15 +286,16 @@ void TLeptonFinder::Loop(void)
 					}
 				}
 
-				/*--------------------------------------*/
-				/* ELECTRONS				*/
-				/*--------------------------------------*/
+				/*-----------------------------------------*/
+				/* ELECTRONS				   */
+				/*-----------------------------------------*/
 
 				for(Int_t i = 0; i < el_n; i++)
 				{
 					if(checkObject(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
 					{
-						if(checkOverlapping(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt, muCB_PLUS_STIndexNr, muCB_PLUS_STIndexArray, muCB_PLUS_STTypeArray) != false)
+						if(checkOverlapping(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt,
+									muCB_PLUS_STIndexNr, muCB_PLUS_STIndexArray, muCB_PLUS_STTypeArray) != false)
 						{
 							elIndexArray[elIndexNr] = i;
 							elTypeArray[elIndexNr] = TYPE_ELECTRON;
@@ -304,7 +305,7 @@ void TLeptonFinder::Loop(void)
 					}
 				}
 
-				/*--------------------------------------*/
+				/*-----------------------------------------*/
 			}
 		}
 
@@ -605,7 +606,7 @@ void TLeptonFinder::Loop(void)
 	std::cout << "after author     : " << elNr3 << std::endl;
 	std::cout << "after isEM       : " << elNr4 << std::endl;
 	std::cout << "after |η|        : " << elNr5 << std::endl;
-	std::cout << "after pt         : " << elNr6 << std::endl;
+	std::cout << "after Et         : " << elNr6 << std::endl;
 	std::cout << "after OQ         : " << elNr7 << std::endl;
 	std::cout << "after z0         : " << elNr8 << std::endl;
 	std::cout << "after e-e overlap: " << elNr9 << std::endl;
