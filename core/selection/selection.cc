@@ -234,9 +234,12 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 
 			/**/ if(mu_staco_isCombinedMuon->at(index) != false)
 			{
+				Float_t pt_ME = (mu_staco_me_qoverp_exPV->at(index) != 0.0f) ? sin(mu_staco_me_theta_exPV->at(index)) / fabs(mu_staco_me_qoverp_exPV->at(index)) : 0.0f;
+				Float_t pt_ID = (mu_staco_id_qoverp_exPV->at(index) != 0.0f) ? sin(mu_staco_id_theta_exPV->at(index)) / fabs(mu_staco_id_qoverp_exPV->at(index)) : 0.0f;
+
 				m_stacoSM->Event(
-					(mu_staco_me_qoverp_exPV->at(index) != 0.0f) ? sin(mu_staco_me_theta_exPV->at(index)) / fabs(mu_staco_me_qoverp_exPV->at(index)) : 0.0f,
-					(mu_staco_id_qoverp_exPV->at(index) != 0.0f) ? sin(mu_staco_id_theta_exPV->at(index)) / fabs(mu_staco_id_qoverp_exPV->at(index)) : 0.0f,
+					pt_ME,
+					pt_ID,
 					pT_old,
 					mu_staco_eta->at(index)
 				);
