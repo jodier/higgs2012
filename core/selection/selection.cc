@@ -685,6 +685,7 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 		{
 			if(index != xedni
 			   &&
+#ifdef __YEAR2011
 			   el_trackd0->at(index) == el_trackd0->at(xedni)
 			   &&
 			   el_trackz0->at(index) == el_trackz0->at(xedni)
@@ -694,6 +695,18 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 			   el_trackphi->at(index) == el_trackphi->at(xedni)
 			   &&
 			   el_trackqoverp->at(index) == el_trackqoverp->at(xedni)
+#endif
+#ifdef __YEAR2012
+			   el_Unrefittedtrack_d0->at(index) == el_Unrefittedtrack_d0->at(xedni)
+			   &&
+			   el_Unrefittedtrack_z0->at(index) == el_Unrefittedtrack_z0->at(xedni)
+			   &&
+			   el_Unrefittedtrack_theta->at(index) == el_Unrefittedtrack_theta->at(xedni)
+			   &&
+			   el_Unrefittedtrack_phi->at(index) == el_Unrefittedtrack_phi->at(xedni)
+			   &&
+			   el_Unrefittedtrack_qoverp->at(index) == el_Unrefittedtrack_qoverp->at(xedni)
+#endif
 			 ) {
 				__ELECTRON_CHECK(xedni);
 
@@ -761,7 +774,12 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 					return false;
 			}
 
+#ifdef __YEAR2011
 			if(sqrtf(__dR2(el_tracketa->at(index), mu_id_eta, el_trackphi->at(index), mu_id_phi)) < 0.02f * 0.02f)
+#endif
+#ifdef __YEAR2012
+			if(sqrtf(__dR2(el_Unrefittedtrack_eta->at(index), mu_id_eta, el_Unrefittedtrack_phi->at(index), mu_id_phi)) < 0.02f * 0.02f)
+#endif
 			{
 				return false;
 			}

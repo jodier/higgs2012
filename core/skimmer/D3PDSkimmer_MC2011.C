@@ -78,6 +78,12 @@ void D3PDSkimmer_MC2011(void)
 	chain->SetBranchStatus("el_GSF_tracktheta", 1);
 	chain->SetBranchStatus("el_GSF_trackz0", 1);
 	chain->SetBranchStatus("el_GSF_trackz0pvunbiased", 1);
+	chain->SetBranchStatus("el_GSF_Unrefittedtrack_eta", 1);
+	chain->SetBranchStatus("el_GSF_Unrefittedtrack_phi", 1);
+	chain->SetBranchStatus("el_GSF_Unrefittedtrack_theta", 1);
+	chain->SetBranchStatus("el_GSF_Unrefittedtrack_qoverp", 1);
+	chain->SetBranchStatus("el_GSF_Unrefittedtrack_d0", 1);
+	chain->SetBranchStatus("el_GSF_Unrefittedtrack_z0", 1);
 	chain->SetBranchStatus("el_GSF_refittedTrack_LMqoverp", 1);
 	chain->SetBranchStatus("el_GSF_refittedTrack_author", 1);
 	chain->SetBranchStatus("el_GSF_Ethad", 1);

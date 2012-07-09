@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Mon Jul  9 23:29:57 2012 by ROOT version 5.34/00
+// Tue Jul 10 00:29:50 2012 by ROOT version 5.34/00
 // from TTree physics/physics
 // found on file: result.root
 //////////////////////////////////////////////////////////
@@ -113,6 +113,12 @@ public :
    std::vector<float>   *el_trackd0pvunbiased;
    std::vector<float>   *el_trackz0pvunbiased;
    std::vector<float>   *el_tracksigd0pvunbiased;
+   std::vector<float>   *el_Unrefittedtrack_d0;
+   std::vector<float>   *el_Unrefittedtrack_z0;
+   std::vector<float>   *el_Unrefittedtrack_phi;
+   std::vector<float>   *el_Unrefittedtrack_theta;
+   std::vector<float>   *el_Unrefittedtrack_qoverp;
+   std::vector<float>   *el_Unrefittedtrack_eta;
    std::vector<float>   *el_ED_median;
    std::vector<int>     *el_EF_index;
    Int_t           mu_staco_n;
@@ -330,6 +336,12 @@ public :
    TBranch        *b_el_trackd0pvunbiased;   //!
    TBranch        *b_el_trackz0pvunbiased;   //!
    TBranch        *b_el_tracksigd0pvunbiased;   //!
+   TBranch        *b_el_Unrefittedtrack_d0;   //!
+   TBranch        *b_el_Unrefittedtrack_z0;   //!
+   TBranch        *b_el_Unrefittedtrack_phi;   //!
+   TBranch        *b_el_Unrefittedtrack_theta;   //!
+   TBranch        *b_el_Unrefittedtrack_qoverp;   //!
+   TBranch        *b_el_Unrefittedtrack_eta;   //!
    TBranch        *b_el_ED_median;   //!
    TBranch        *b_el_EF_index;   //!
    TBranch        *b_mu_staco_n;   //!
@@ -593,6 +605,12 @@ void THiggsD3PD::Init(TTree *tree)
    el_trackd0pvunbiased = 0;
    el_trackz0pvunbiased = 0;
    el_tracksigd0pvunbiased = 0;
+   el_Unrefittedtrack_d0 = 0;
+   el_Unrefittedtrack_z0 = 0;
+   el_Unrefittedtrack_phi = 0;
+   el_Unrefittedtrack_theta = 0;
+   el_Unrefittedtrack_qoverp = 0;
+   el_Unrefittedtrack_eta = 0;
    el_ED_median = 0;
    el_EF_index = 0;
    mu_staco_E = 0;
@@ -807,6 +825,12 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("el_trackd0pvunbiased", &el_trackd0pvunbiased, &b_el_trackd0pvunbiased);
    fChain->SetBranchAddress("el_trackz0pvunbiased", &el_trackz0pvunbiased, &b_el_trackz0pvunbiased);
    fChain->SetBranchAddress("el_tracksigd0pvunbiased", &el_tracksigd0pvunbiased, &b_el_tracksigd0pvunbiased);
+   fChain->SetBranchAddress("el_Unrefittedtrack_d0", &el_Unrefittedtrack_d0, &b_el_Unrefittedtrack_d0);
+   fChain->SetBranchAddress("el_Unrefittedtrack_z0", &el_Unrefittedtrack_z0, &b_el_Unrefittedtrack_z0);
+   fChain->SetBranchAddress("el_Unrefittedtrack_phi", &el_Unrefittedtrack_phi, &b_el_Unrefittedtrack_phi);
+   fChain->SetBranchAddress("el_Unrefittedtrack_theta", &el_Unrefittedtrack_theta, &b_el_Unrefittedtrack_theta);
+   fChain->SetBranchAddress("el_Unrefittedtrack_qoverp", &el_Unrefittedtrack_qoverp, &b_el_Unrefittedtrack_qoverp);
+   fChain->SetBranchAddress("el_Unrefittedtrack_eta", &el_Unrefittedtrack_eta, &b_el_Unrefittedtrack_eta);
    fChain->SetBranchAddress("el_ED_median", &el_ED_median, &b_el_ED_median);
    fChain->SetBranchAddress("el_EF_index", &el_EF_index, &b_el_EF_index);
    fChain->SetBranchAddress("mu_staco_n", &mu_staco_n, &b_mu_staco_n);
