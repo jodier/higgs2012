@@ -484,9 +484,15 @@ Bool_t TLeptonAnalysis::checkObject(
 			muNr9++;
 
 			n = mu_staco_nTRTHits->at(index) + mu_staco_nTRTOutliers->at(index);
-
-			if(fabs(mu_staco_eta->at(index)) < 1.9f)
-			{
+#ifdef __YEAR2011
+			if(fabs(mu_staco_eta->at(index)) > 0.0f
+#endif
+#ifdef __YEAR2012
+			if(fabs(mu_staco_eta->at(index)) > 0.1f
+#endif
+			   &&
+			   fabs(mu_staco_eta->at(index)) < 1.9f
+			 ) {
 				if(n < 6 || mu_staco_nTRTOutliers->at(index) > 0.9f * n) {
 					goto __error;
 				}

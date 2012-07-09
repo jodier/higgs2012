@@ -2,7 +2,7 @@ void D3PDSkimmer_MC2012(void)
 {
 	TChain *chain = new TChain("physics");
 
-	chain->Add("/afs/cern.ch/atlas/groups/HSG2/NTUP_HSG2.00814271._000001.root");
+	chain->Add("/home/jodier/Bureau/H130_2012/NTUP_HSG2.00814271._000001.root");
 
 	/*-----------------------------------------------------------------*/
 

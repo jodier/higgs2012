@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Mon Jul  9 10:24:54 2012 by ROOT version 5.32/01
+// Mon Jul  9 23:29:57 2012 by ROOT version 5.34/00
 // from TTree physics/physics
 // found on file: result.root
 //////////////////////////////////////////////////////////
@@ -14,7 +14,7 @@
 
 #define __IS_MC
 
-#define __YEAR2011
+#define __YEAR2012
 
 // Header file for the classes stored in the TTree if any.
 #include <vector>
@@ -34,27 +34,16 @@ public :
    Int_t           fCurrent; //!current Tree number in a TChain
 
    // Declaration of leaf types
-   Bool_t          EF_2e12T_medium;
-   Bool_t          EF_2e12_medium;
-   Bool_t          EF_2e15_medium;
-   Bool_t          EF_2mu10_loose;
-   Bool_t          EF_e10_medium_mu10;
-   Bool_t          EF_e10_medium_mu6;
-   Bool_t          EF_e20_medium;
-   Bool_t          EF_e22_medium;
-   Bool_t          EF_e22_medium1;
+   Bool_t          EF_2e12Tvh_loose1;
+   Bool_t          EF_2mu13;
+   Bool_t          EF_e22vh_medium1;
+   Bool_t          EF_e24vhi_medium1;
+   Bool_t          EF_e60_medium1;
    Bool_t          EF_mu10;
-   Bool_t          EF_mu15_mu10_EFFS;
-   Bool_t          EF_mu15_mu10_EFFS_medium;
    Bool_t          EF_mu18;
-   Bool_t          EF_mu18_MG;
-   Bool_t          EF_mu18_MG_medium;
-   Bool_t          EF_mu20;
-   Bool_t          EF_mu20_MG;
-   Bool_t          EF_mu20_MG_medium;
-   Bool_t          EF_mu22;
-   Bool_t          EF_mu22_MG;
-   Bool_t          EF_mu22_MG_medium;
+   Bool_t          EF_mu18_tight_mu8_EFFS;
+   Bool_t          EF_mu24i_tight;
+   Bool_t          EF_mu36_tight;
    UInt_t          RunNumber;
    UInt_t          EventNumber;
    UInt_t          lbn;
@@ -66,6 +55,12 @@ public :
    std::vector<float>   *el_charge;
    std::vector<int>     *el_author;
    std::vector<unsigned int> *el_OQ;
+   std::vector<int>     *el_type;
+   std::vector<int>     *el_origin;
+   std::vector<int>     *el_typebkg;
+   std::vector<int>     *el_originbkg;
+   std::vector<int>     *el_truth_type;
+   std::vector<int>     *el_truth_mothertype;
    std::vector<int>     *el_medium;
    std::vector<int>     *el_tight;
    std::vector<int>     *el_loosePP;
@@ -106,6 +101,8 @@ public :
    std::vector<int>     *el_nSCTHits;
    std::vector<int>     *el_nTRTHits;
    std::vector<int>     *el_nTRTHighTHits;
+   std::vector<int>     *el_nPixelDeadSensors;
+   std::vector<int>     *el_nSCTDeadSensors;
    std::vector<int>     *el_nBLayerOutliers;
    std::vector<int>     *el_nPixelOutliers;
    std::vector<int>     *el_nSCTOutliers;
@@ -116,13 +113,8 @@ public :
    std::vector<float>   *el_trackd0pvunbiased;
    std::vector<float>   *el_trackz0pvunbiased;
    std::vector<float>   *el_tracksigd0pvunbiased;
+   std::vector<float>   *el_ED_median;
    std::vector<int>     *el_EF_index;
-   std::vector<int>     *el_type;
-   std::vector<int>     *el_origin;
-   std::vector<int>     *el_typebkg;
-   std::vector<int>     *el_originbkg;
-   std::vector<int>     *el_truth_type;
-   std::vector<int>     *el_truth_mothertype;
    Int_t           mu_staco_n;
    std::vector<float>   *mu_staco_E;
    std::vector<float>   *mu_staco_pt;
@@ -218,8 +210,8 @@ public :
    std::vector<int>     *vxp_nTracks;
    std::vector<std::vector<double> > *mcevt_weight;
    Int_t           mc_n;
-   std::vector<std::vector<int> > *mc_children;
    std::vector<int>     *mc_pdgId;
+   std::vector<std::vector<int> > *mc_children;
    std::vector<float>   *mc_vx_z;
    std::vector<std::vector<int> > *mc_child_index;
    UInt_t          trig_DB_SMK;
@@ -250,36 +242,25 @@ public :
    std::vector<int>     *trig_RoI_EF_mu_Muon_ROI;
    std::vector<std::vector<int> > *trig_RoI_EF_mu_TrigMuonEFInfoContainer;
    std::vector<std::vector<int> > *trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus;
+   std::vector<std::vector<int> > *trig_RoI_EF_mu_TrigMuonEFIsolationContainer;
+   std::vector<std::vector<int> > *trig_RoI_EF_mu_TrigMuonEFIsolationContainerStatus;
    Int_t           trig_EF_el_n;
    std::vector<float>   *trig_EF_el_eta;
    std::vector<float>   *trig_EF_el_phi;
    std::vector<std::vector<int> > *trig_RoI_EF_e_egammaContainer_egamma_Electrons;
    std::vector<std::vector<int> > *trig_RoI_EF_e_egammaContainer_egamma_ElectronsStatus;
-   Bool_t          EF_2e12Tvh_medium;
-   Bool_t          EF_e22vh_medium1;
 
    // List of branches
-   TBranch        *b_EF_2e12T_medium;   //!
-   TBranch        *b_EF_2e12_medium;   //!
-   TBranch        *b_EF_2e15_medium;   //!
-   TBranch        *b_EF_2mu10_loose;   //!
-   TBranch        *b_EF_e10_medium_mu10;   //!
-   TBranch        *b_EF_e10_medium_mu6;   //!
-   TBranch        *b_EF_e20_medium;   //!
-   TBranch        *b_EF_e22_medium;   //!
-   TBranch        *b_EF_e22_medium1;   //!
+   TBranch        *b_EF_2e12Tvh_loose1;   //!
+   TBranch        *b_EF_2mu13;   //!
+   TBranch        *b_EF_e22vh_medium1;   //!
+   TBranch        *b_EF_e24vhi_medium1;   //!
+   TBranch        *b_EF_e60_medium1;   //!
    TBranch        *b_EF_mu10;   //!
-   TBranch        *b_EF_mu15_mu10_EFFS;   //!
-   TBranch        *b_EF_mu15_mu10_EFFS_medium;   //!
    TBranch        *b_EF_mu18;   //!
-   TBranch        *b_EF_mu18_MG;   //!
-   TBranch        *b_EF_mu18_MG_medium;   //!
-   TBranch        *b_EF_mu20;   //!
-   TBranch        *b_EF_mu20_MG;   //!
-   TBranch        *b_EF_mu20_MG_medium;   //!
-   TBranch        *b_EF_mu22;   //!
-   TBranch        *b_EF_mu22_MG;   //!
-   TBranch        *b_EF_mu22_MG_medium;   //!
+   TBranch        *b_EF_mu18_tight_mu8_EFFS;   //!
+   TBranch        *b_EF_mu24i_tight;   //!
+   TBranch        *b_EF_mu36_tight;   //!
    TBranch        *b_RunNumber;   //!
    TBranch        *b_EventNumber;   //!
    TBranch        *b_lbn;   //!
@@ -291,6 +272,12 @@ public :
    TBranch        *b_el_charge;   //!
    TBranch        *b_el_author;   //!
    TBranch        *b_el_OQ;   //!
+   TBranch        *b_el_type;   //!
+   TBranch        *b_el_origin;   //!
+   TBranch        *b_el_typebkg;   //!
+   TBranch        *b_el_originbkg;   //!
+   TBranch        *b_el_truth_type;   //!
+   TBranch        *b_el_truth_mothertype;   //!
    TBranch        *b_el_medium;   //!
    TBranch        *b_el_tight;   //!
    TBranch        *b_el_loosePP;   //!
@@ -331,6 +318,8 @@ public :
    TBranch        *b_el_nSCTHits;   //!
    TBranch        *b_el_nTRTHits;   //!
    TBranch        *b_el_nTRTHighTHits;   //!
+   TBranch        *b_el_nPixelDeadSensors;   //!
+   TBranch        *b_el_nSCTDeadSensors;   //!
    TBranch        *b_el_nBLayerOutliers;   //!
    TBranch        *b_el_nPixelOutliers;   //!
    TBranch        *b_el_nSCTOutliers;   //!
@@ -341,13 +330,8 @@ public :
    TBranch        *b_el_trackd0pvunbiased;   //!
    TBranch        *b_el_trackz0pvunbiased;   //!
    TBranch        *b_el_tracksigd0pvunbiased;   //!
+   TBranch        *b_el_ED_median;   //!
    TBranch        *b_el_EF_index;   //!
-   TBranch        *b_el_type;   //!
-   TBranch        *b_el_origin;   //!
-   TBranch        *b_el_typebkg;   //!
-   TBranch        *b_el_originbkg;   //!
-   TBranch        *b_el_truth_type;   //!
-   TBranch        *b_el_truth_mothertype;   //!
    TBranch        *b_mu_staco_n;   //!
    TBranch        *b_mu_staco_E;   //!
    TBranch        *b_mu_staco_pt;   //!
@@ -443,8 +427,8 @@ public :
    TBranch        *b_vxp_nTracks;   //!
    TBranch        *b_mcevt_weight;   //!
    TBranch        *b_mc_n;   //!
-   TBranch        *b_mc_children;   //!
    TBranch        *b_mc_pdgId;   //!
+   TBranch        *b_mc_children;   //!
    TBranch        *b_mc_vx_z;   //!
    TBranch        *b_mc_child_index;   //!
    TBranch        *b_trig_DB_SMK;   //!
@@ -475,13 +459,13 @@ public :
    TBranch        *b_trig_RoI_EF_mu_Muon_ROI;   //!
    TBranch        *b_trig_RoI_EF_mu_TrigMuonEFInfoContainer;   //!
    TBranch        *b_trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus;   //!
+   TBranch        *b_trig_RoI_EF_mu_TrigMuonEFIsolationContainer;   //!
+   TBranch        *b_trig_RoI_EF_mu_TrigMuonEFIsolationContainerStatus;   //!
    TBranch        *b_trig_EF_el_n;   //!
    TBranch        *b_trig_EF_el_eta;   //!
    TBranch        *b_trig_EF_el_phi;   //!
    TBranch        *b_trig_RoI_EF_e_egammaContainer_egamma_Electrons;   //!
    TBranch        *b_trig_RoI_EF_e_egammaContainer_egamma_ElectronsStatus;   //!
-   TBranch        *b_EF_2e12Tvh_medium;   //!
-   TBranch        *b_EF_e22vh_medium1;   //!
 
    THiggsD3PD(TTree *tree=0);
    virtual ~THiggsD3PD();
@@ -551,6 +535,12 @@ void THiggsD3PD::Init(TTree *tree)
    el_charge = 0;
    el_author = 0;
    el_OQ = 0;
+   el_type = 0;
+   el_origin = 0;
+   el_typebkg = 0;
+   el_originbkg = 0;
+   el_truth_type = 0;
+   el_truth_mothertype = 0;
    el_medium = 0;
    el_tight = 0;
    el_loosePP = 0;
@@ -591,6 +581,8 @@ void THiggsD3PD::Init(TTree *tree)
    el_nSCTHits = 0;
    el_nTRTHits = 0;
    el_nTRTHighTHits = 0;
+   el_nPixelDeadSensors = 0;
+   el_nSCTDeadSensors = 0;
    el_nBLayerOutliers = 0;
    el_nPixelOutliers = 0;
    el_nSCTOutliers = 0;
@@ -601,13 +593,8 @@ void THiggsD3PD::Init(TTree *tree)
    el_trackd0pvunbiased = 0;
    el_trackz0pvunbiased = 0;
    el_tracksigd0pvunbiased = 0;
+   el_ED_median = 0;
    el_EF_index = 0;
-   el_type = 0;
-   el_origin = 0;
-   el_typebkg = 0;
-   el_originbkg = 0;
-   el_truth_type = 0;
-   el_truth_mothertype = 0;
    mu_staco_E = 0;
    mu_staco_pt = 0;
    mu_staco_eta = 0;
@@ -699,8 +686,8 @@ void THiggsD3PD::Init(TTree *tree)
    mu_calo_truth_mothertype = 0;
    vxp_nTracks = 0;
    mcevt_weight = 0;
-   mc_children = 0;
    mc_pdgId = 0;
+   mc_children = 0;
    mc_vx_z = 0;
    mc_child_index = 0;
    trig_L1_mu_eta = 0;
@@ -729,6 +716,8 @@ void THiggsD3PD::Init(TTree *tree)
    trig_RoI_EF_mu_Muon_ROI = 0;
    trig_RoI_EF_mu_TrigMuonEFInfoContainer = 0;
    trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus = 0;
+   trig_RoI_EF_mu_TrigMuonEFIsolationContainer = 0;
+   trig_RoI_EF_mu_TrigMuonEFIsolationContainerStatus = 0;
    trig_EF_el_eta = 0;
    trig_EF_el_phi = 0;
    trig_RoI_EF_e_egammaContainer_egamma_Electrons = 0;
@@ -739,27 +728,16 @@ void THiggsD3PD::Init(TTree *tree)
    fCurrent = -1;
    fChain->SetMakeClass(1);
 
-   fChain->SetBranchAddress("EF_2e12T_medium", &EF_2e12T_medium, &b_EF_2e12T_medium);
-   fChain->SetBranchAddress("EF_2e12_medium", &EF_2e12_medium, &b_EF_2e12_medium);
-   fChain->SetBranchAddress("EF_2e15_medium", &EF_2e15_medium, &b_EF_2e15_medium);
-   fChain->SetBranchAddress("EF_2mu10_loose", &EF_2mu10_loose, &b_EF_2mu10_loose);
-   fChain->SetBranchAddress("EF_e10_medium_mu10", &EF_e10_medium_mu10, &b_EF_e10_medium_mu10);
-   fChain->SetBranchAddress("EF_e10_medium_mu6", &EF_e10_medium_mu6, &b_EF_e10_medium_mu6);
-   fChain->SetBranchAddress("EF_e20_medium", &EF_e20_medium, &b_EF_e20_medium);
-   fChain->SetBranchAddress("EF_e22_medium", &EF_e22_medium, &b_EF_e22_medium);
-   fChain->SetBranchAddress("EF_e22_medium1", &EF_e22_medium1, &b_EF_e22_medium1);
+   fChain->SetBranchAddress("EF_2e12Tvh_loose1", &EF_2e12Tvh_loose1, &b_EF_2e12Tvh_loose1);
+   fChain->SetBranchAddress("EF_2mu13", &EF_2mu13, &b_EF_2mu13);
+   fChain->SetBranchAddress("EF_e22vh_medium1", &EF_e22vh_medium1, &b_EF_e22vh_medium1);
+   fChain->SetBranchAddress("EF_e24vhi_medium1", &EF_e24vhi_medium1, &b_EF_e24vhi_medium1);
+   fChain->SetBranchAddress("EF_e60_medium1", &EF_e60_medium1, &b_EF_e60_medium1);
    fChain->SetBranchAddress("EF_mu10", &EF_mu10, &b_EF_mu10);
-   fChain->SetBranchAddress("EF_mu15_mu10_EFFS", &EF_mu15_mu10_EFFS, &b_EF_mu15_mu10_EFFS);
-   fChain->SetBranchAddress("EF_mu15_mu10_EFFS_medium", &EF_mu15_mu10_EFFS_medium, &b_EF_mu15_mu10_EFFS_medium);
    fChain->SetBranchAddress("EF_mu18", &EF_mu18, &b_EF_mu18);
-   fChain->SetBranchAddress("EF_mu18_MG", &EF_mu18_MG, &b_EF_mu18_MG);
-   fChain->SetBranchAddress("EF_mu18_MG_medium", &EF_mu18_MG_medium, &b_EF_mu18_MG_medium);
-   fChain->SetBranchAddress("EF_mu20", &EF_mu20, &b_EF_mu20);
-   fChain->SetBranchAddress("EF_mu20_MG", &EF_mu20_MG, &b_EF_mu20_MG);
-   fChain->SetBranchAddress("EF_mu20_MG_medium", &EF_mu20_MG_medium, &b_EF_mu20_MG_medium);
-   fChain->SetBranchAddress("EF_mu22", &EF_mu22, &b_EF_mu22);
-   fChain->SetBranchAddress("EF_mu22_MG", &EF_mu22_MG, &b_EF_mu22_MG);
-   fChain->SetBranchAddress("EF_mu22_MG_medium", &EF_mu22_MG_medium, &b_EF_mu22_MG_medium);
+   fChain->SetBranchAddress("EF_mu18_tight_mu8_EFFS", &EF_mu18_tight_mu8_EFFS, &b_EF_mu18_tight_mu8_EFFS);
+   fChain->SetBranchAddress("EF_mu24i_tight", &EF_mu24i_tight, &b_EF_mu24i_tight);
+   fChain->SetBranchAddress("EF_mu36_tight", &EF_mu36_tight, &b_EF_mu36_tight);
    fChain->SetBranchAddress("RunNumber", &RunNumber, &b_RunNumber);
    fChain->SetBranchAddress("EventNumber", &EventNumber, &b_EventNumber);
    fChain->SetBranchAddress("lbn", &lbn, &b_lbn);
@@ -767,67 +745,70 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("averageIntPerXing", &averageIntPerXing, &b_averageIntPerXing);
    fChain->SetBranchAddress("mc_channel_number", &mc_channel_number, &b_mc_channel_number);
    fChain->SetBranchAddress("larError", &larError, &b_larError);
-   fChain->SetBranchAddress("el_GSF_n", &el_n, &b_el_n);
-   fChain->SetBranchAddress("el_GSF_charge", &el_charge, &b_el_charge);
-   fChain->SetBranchAddress("el_GSF_author", &el_author, &b_el_author);
-   fChain->SetBranchAddress("el_GSF_OQ", &el_OQ, &b_el_OQ);
-   fChain->SetBranchAddress("el_GSF_medium", &el_medium, &b_el_medium);
-   fChain->SetBranchAddress("el_GSF_tight", &el_tight, &b_el_tight);
-   fChain->SetBranchAddress("el_GSF_loosePP", &el_loosePP, &b_el_loosePP);
-   fChain->SetBranchAddress("el_GSF_Ethad", &el_Ethad, &b_el_Ethad);
-   fChain->SetBranchAddress("el_GSF_Ethad1", &el_Ethad1, &b_el_Ethad1);
-   fChain->SetBranchAddress("el_GSF_f1", &el_f1, &b_el_f1);
-   fChain->SetBranchAddress("el_GSF_Emax2", &el_Emax2, &b_el_Emax2);
-   fChain->SetBranchAddress("el_GSF_wstot", &el_wstot, &b_el_wstot);
-   fChain->SetBranchAddress("el_GSF_emaxs1", &el_emaxs1, &b_el_emaxs1);
-   fChain->SetBranchAddress("el_GSF_weta2", &el_weta2, &b_el_weta2);
-   fChain->SetBranchAddress("el_GSF_f3", &el_f3, &b_el_f3);
-   fChain->SetBranchAddress("el_GSF_Etcone20", &el_Etcone20, &b_el_Etcone20);
-   fChain->SetBranchAddress("el_GSF_Etcone30", &el_Etcone30, &b_el_Etcone30);
-   fChain->SetBranchAddress("el_GSF_ptcone20", &el_ptcone20, &b_el_ptcone20);
-   fChain->SetBranchAddress("el_GSF_ptcone30", &el_ptcone30, &b_el_ptcone30);
-   fChain->SetBranchAddress("el_GSF_deltaeta1", &el_deltaeta1, &b_el_deltaeta1);
-   fChain->SetBranchAddress("el_GSF_deltaphiRescaled", &el_deltaphiRescaled, &b_el_deltaphiRescaled);
-   fChain->SetBranchAddress("el_GSF_reta", &el_reta, &b_el_reta);
-   fChain->SetBranchAddress("el_GSF_rphi", &el_rphi, &b_el_rphi);
-   fChain->SetBranchAddress("el_GSF_etap", &el_etap, &b_el_etap);
-   fChain->SetBranchAddress("el_GSF_refittedTrack_author", &el_refittedTrack_author, &b_el_refittedTrack_author);
-   fChain->SetBranchAddress("el_GSF_refittedTrack_LMqoverp", &el_refittedTrack_LMqoverp, &b_el_refittedTrack_LMqoverp);
-   fChain->SetBranchAddress("el_GSF_etas2", &el_etas2, &b_el_etas2);
-   fChain->SetBranchAddress("el_GSF_phis2", &el_phis2, &b_el_phis2);
-   fChain->SetBranchAddress("el_GSF_cl_E", &el_cl_E, &b_el_cl_E);
-   fChain->SetBranchAddress("el_GSF_cl_pt", &el_cl_pt, &b_el_cl_pt);
-   fChain->SetBranchAddress("el_GSF_cl_eta", &el_cl_eta, &b_el_cl_eta);
-   fChain->SetBranchAddress("el_GSF_cl_phi", &el_cl_phi, &b_el_cl_phi);
-   fChain->SetBranchAddress("el_GSF_trackd0", &el_trackd0, &b_el_trackd0);
-   fChain->SetBranchAddress("el_GSF_trackz0", &el_trackz0, &b_el_trackz0);
-   fChain->SetBranchAddress("el_GSF_trackphi", &el_trackphi, &b_el_trackphi);
-   fChain->SetBranchAddress("el_GSF_tracktheta", &el_tracktheta, &b_el_tracktheta);
-   fChain->SetBranchAddress("el_GSF_trackqoverp", &el_trackqoverp, &b_el_trackqoverp);
-   fChain->SetBranchAddress("el_GSF_trackpt", &el_trackpt, &b_el_trackpt);
-   fChain->SetBranchAddress("el_GSF_tracketa", &el_tracketa, &b_el_tracketa);
-   fChain->SetBranchAddress("el_GSF_nBLHits", &el_nBLHits, &b_el_nBLHits);
-   fChain->SetBranchAddress("el_GSF_nPixHits", &el_nPixHits, &b_el_nPixHits);
-   fChain->SetBranchAddress("el_GSF_nSCTHits", &el_nSCTHits, &b_el_nSCTHits);
-   fChain->SetBranchAddress("el_GSF_nTRTHits", &el_nTRTHits, &b_el_nTRTHits);
-   fChain->SetBranchAddress("el_GSF_nTRTHighTHits", &el_nTRTHighTHits, &b_el_nTRTHighTHits);
-   fChain->SetBranchAddress("el_GSF_nBLayerOutliers", &el_nBLayerOutliers, &b_el_nBLayerOutliers);
-   fChain->SetBranchAddress("el_GSF_nPixelOutliers", &el_nPixelOutliers, &b_el_nPixelOutliers);
-   fChain->SetBranchAddress("el_GSF_nSCTOutliers", &el_nSCTOutliers, &b_el_nSCTOutliers);
-   fChain->SetBranchAddress("el_GSF_nTRTOutliers", &el_nTRTOutliers, &b_el_nTRTOutliers);
-   fChain->SetBranchAddress("el_GSF_nTRTHighTOutliers", &el_nTRTHighTOutliers, &b_el_nTRTHighTOutliers);
-   fChain->SetBranchAddress("el_GSF_expectBLayerHit", &el_expectBLayerHit, &b_el_expectBLayerHit);
-   fChain->SetBranchAddress("el_GSF_nSiHits", &el_nSiHits, &b_el_nSiHits);
-   fChain->SetBranchAddress("el_GSF_trackd0pvunbiased", &el_trackd0pvunbiased, &b_el_trackd0pvunbiased);
-   fChain->SetBranchAddress("el_GSF_trackz0pvunbiased", &el_trackz0pvunbiased, &b_el_trackz0pvunbiased);
-   fChain->SetBranchAddress("el_GSF_tracksigd0pvunbiased", &el_tracksigd0pvunbiased, &b_el_tracksigd0pvunbiased);
-   fChain->SetBranchAddress("el_GSF_EF_index", &el_EF_index, &b_el_EF_index);
-   fChain->SetBranchAddress("el_GSF_type", &el_type, &b_el_type);
-   fChain->SetBranchAddress("el_GSF_origin", &el_origin, &b_el_origin);
-   fChain->SetBranchAddress("el_GSF_typebkg", &el_typebkg, &b_el_typebkg);
-   fChain->SetBranchAddress("el_GSF_originbkg", &el_originbkg, &b_el_originbkg);
-   fChain->SetBranchAddress("el_GSF_truth_type", &el_truth_type, &b_el_truth_type);
-   fChain->SetBranchAddress("el_GSF_truth_mothertype", &el_truth_mothertype, &b_el_truth_mothertype);
+   fChain->SetBranchAddress("el_n", &el_n, &b_el_n);
+   fChain->SetBranchAddress("el_charge", &el_charge, &b_el_charge);
+   fChain->SetBranchAddress("el_author", &el_author, &b_el_author);
+   fChain->SetBranchAddress("el_OQ", &el_OQ, &b_el_OQ);
+   fChain->SetBranchAddress("el_type", &el_type, &b_el_type);
+   fChain->SetBranchAddress("el_origin", &el_origin, &b_el_origin);
+   fChain->SetBranchAddress("el_typebkg", &el_typebkg, &b_el_typebkg);
+   fChain->SetBranchAddress("el_originbkg", &el_originbkg, &b_el_originbkg);
+   fChain->SetBranchAddress("el_truth_type", &el_truth_type, &b_el_truth_type);
+   fChain->SetBranchAddress("el_truth_mothertype", &el_truth_mothertype, &b_el_truth_mothertype);
+   fChain->SetBranchAddress("el_medium", &el_medium, &b_el_medium);
+   fChain->SetBranchAddress("el_tight", &el_tight, &b_el_tight);
+   fChain->SetBranchAddress("el_loosePP", &el_loosePP, &b_el_loosePP);
+   fChain->SetBranchAddress("el_Ethad", &el_Ethad, &b_el_Ethad);
+   fChain->SetBranchAddress("el_Ethad1", &el_Ethad1, &b_el_Ethad1);
+   fChain->SetBranchAddress("el_f1", &el_f1, &b_el_f1);
+   fChain->SetBranchAddress("el_Emax2", &el_Emax2, &b_el_Emax2);
+   fChain->SetBranchAddress("el_wstot", &el_wstot, &b_el_wstot);
+   fChain->SetBranchAddress("el_emaxs1", &el_emaxs1, &b_el_emaxs1);
+   fChain->SetBranchAddress("el_weta2", &el_weta2, &b_el_weta2);
+   fChain->SetBranchAddress("el_f3", &el_f3, &b_el_f3);
+   fChain->SetBranchAddress("el_Etcone20", &el_Etcone20, &b_el_Etcone20);
+   fChain->SetBranchAddress("el_Etcone30", &el_Etcone30, &b_el_Etcone30);
+   fChain->SetBranchAddress("el_ptcone20", &el_ptcone20, &b_el_ptcone20);
+   fChain->SetBranchAddress("el_ptcone30", &el_ptcone30, &b_el_ptcone30);
+   fChain->SetBranchAddress("el_deltaeta1", &el_deltaeta1, &b_el_deltaeta1);
+   fChain->SetBranchAddress("el_deltaphiRescaled", &el_deltaphiRescaled, &b_el_deltaphiRescaled);
+   fChain->SetBranchAddress("el_reta", &el_reta, &b_el_reta);
+   fChain->SetBranchAddress("el_rphi", &el_rphi, &b_el_rphi);
+   fChain->SetBranchAddress("el_etap", &el_etap, &b_el_etap);
+   fChain->SetBranchAddress("el_refittedTrack_author", &el_refittedTrack_author, &b_el_refittedTrack_author);
+   fChain->SetBranchAddress("el_refittedTrack_LMqoverp", &el_refittedTrack_LMqoverp, &b_el_refittedTrack_LMqoverp);
+   fChain->SetBranchAddress("el_etas2", &el_etas2, &b_el_etas2);
+   fChain->SetBranchAddress("el_phis2", &el_phis2, &b_el_phis2);
+   fChain->SetBranchAddress("el_cl_E", &el_cl_E, &b_el_cl_E);
+   fChain->SetBranchAddress("el_cl_pt", &el_cl_pt, &b_el_cl_pt);
+   fChain->SetBranchAddress("el_cl_eta", &el_cl_eta, &b_el_cl_eta);
+   fChain->SetBranchAddress("el_cl_phi", &el_cl_phi, &b_el_cl_phi);
+   fChain->SetBranchAddress("el_trackd0", &el_trackd0, &b_el_trackd0);
+   fChain->SetBranchAddress("el_trackz0", &el_trackz0, &b_el_trackz0);
+   fChain->SetBranchAddress("el_trackphi", &el_trackphi, &b_el_trackphi);
+   fChain->SetBranchAddress("el_tracktheta", &el_tracktheta, &b_el_tracktheta);
+   fChain->SetBranchAddress("el_trackqoverp", &el_trackqoverp, &b_el_trackqoverp);
+   fChain->SetBranchAddress("el_trackpt", &el_trackpt, &b_el_trackpt);
+   fChain->SetBranchAddress("el_tracketa", &el_tracketa, &b_el_tracketa);
+   fChain->SetBranchAddress("el_nBLHits", &el_nBLHits, &b_el_nBLHits);
+   fChain->SetBranchAddress("el_nPixHits", &el_nPixHits, &b_el_nPixHits);
+   fChain->SetBranchAddress("el_nSCTHits", &el_nSCTHits, &b_el_nSCTHits);
+   fChain->SetBranchAddress("el_nTRTHits", &el_nTRTHits, &b_el_nTRTHits);
+   fChain->SetBranchAddress("el_nTRTHighTHits", &el_nTRTHighTHits, &b_el_nTRTHighTHits);
+   fChain->SetBranchAddress("el_nPixelDeadSensors", &el_nPixelDeadSensors, &b_el_nPixelDeadSensors);
+   fChain->SetBranchAddress("el_nSCTDeadSensors", &el_nSCTDeadSensors, &b_el_nSCTDeadSensors);
+   fChain->SetBranchAddress("el_nBLayerOutliers", &el_nBLayerOutliers, &b_el_nBLayerOutliers);
+   fChain->SetBranchAddress("el_nPixelOutliers", &el_nPixelOutliers, &b_el_nPixelOutliers);
+   fChain->SetBranchAddress("el_nSCTOutliers", &el_nSCTOutliers, &b_el_nSCTOutliers);
+   fChain->SetBranchAddress("el_nTRTOutliers", &el_nTRTOutliers, &b_el_nTRTOutliers);
+   fChain->SetBranchAddress("el_nTRTHighTOutliers", &el_nTRTHighTOutliers, &b_el_nTRTHighTOutliers);
+   fChain->SetBranchAddress("el_expectBLayerHit", &el_expectBLayerHit, &b_el_expectBLayerHit);
+   fChain->SetBranchAddress("el_nSiHits", &el_nSiHits, &b_el_nSiHits);
+   fChain->SetBranchAddress("el_trackd0pvunbiased", &el_trackd0pvunbiased, &b_el_trackd0pvunbiased);
+   fChain->SetBranchAddress("el_trackz0pvunbiased", &el_trackz0pvunbiased, &b_el_trackz0pvunbiased);
+   fChain->SetBranchAddress("el_tracksigd0pvunbiased", &el_tracksigd0pvunbiased, &b_el_tracksigd0pvunbiased);
+   fChain->SetBranchAddress("el_ED_median", &el_ED_median, &b_el_ED_median);
+   fChain->SetBranchAddress("el_EF_index", &el_EF_index, &b_el_EF_index);
    fChain->SetBranchAddress("mu_staco_n", &mu_staco_n, &b_mu_staco_n);
    fChain->SetBranchAddress("mu_staco_E", &mu_staco_E, &b_mu_staco_E);
    fChain->SetBranchAddress("mu_staco_pt", &mu_staco_pt, &b_mu_staco_pt);
@@ -923,8 +904,8 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("vxp_nTracks", &vxp_nTracks, &b_vxp_nTracks);
    fChain->SetBranchAddress("mcevt_weight", &mcevt_weight, &b_mcevt_weight);
    fChain->SetBranchAddress("mc_n", &mc_n, &b_mc_n);
-   fChain->SetBranchAddress("mc_children", &mc_children, &b_mc_children);
    fChain->SetBranchAddress("mc_pdgId", &mc_pdgId, &b_mc_pdgId);
+   fChain->SetBranchAddress("mc_children", &mc_children, &b_mc_children);
    fChain->SetBranchAddress("mc_vx_z", &mc_vx_z, &b_mc_vx_z);
    fChain->SetBranchAddress("mc_child_index", &mc_child_index, &b_mc_child_index);
    fChain->SetBranchAddress("trig_DB_SMK", &trig_DB_SMK, &b_trig_DB_SMK);
@@ -955,13 +936,13 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("trig_RoI_EF_mu_Muon_ROI", &trig_RoI_EF_mu_Muon_ROI, &b_trig_RoI_EF_mu_Muon_ROI);
    fChain->SetBranchAddress("trig_RoI_EF_mu_TrigMuonEFInfoContainer", &trig_RoI_EF_mu_TrigMuonEFInfoContainer, &b_trig_RoI_EF_mu_TrigMuonEFInfoContainer);
    fChain->SetBranchAddress("trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus", &trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus, &b_trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus);
+   fChain->SetBranchAddress("trig_RoI_EF_mu_TrigMuonEFIsolationContainer", &trig_RoI_EF_mu_TrigMuonEFIsolationContainer, &b_trig_RoI_EF_mu_TrigMuonEFIsolationContainer);
+   fChain->SetBranchAddress("trig_RoI_EF_mu_TrigMuonEFIsolationContainerStatus", &trig_RoI_EF_mu_TrigMuonEFIsolationContainerStatus, &b_trig_RoI_EF_mu_TrigMuonEFIsolationContainerStatus);
    fChain->SetBranchAddress("trig_EF_el_n", &trig_EF_el_n, &b_trig_EF_el_n);
    fChain->SetBranchAddress("trig_EF_el_eta", &trig_EF_el_eta, &b_trig_EF_el_eta);
    fChain->SetBranchAddress("trig_EF_el_phi", &trig_EF_el_phi, &b_trig_EF_el_phi);
    fChain->SetBranchAddress("trig_RoI_EF_e_egammaContainer_egamma_Electrons", &trig_RoI_EF_e_egammaContainer_egamma_Electrons, &b_trig_RoI_EF_e_egammaContainer_egamma_Electrons);
    fChain->SetBranchAddress("trig_RoI_EF_e_egammaContainer_egamma_ElectronsStatus", &trig_RoI_EF_e_egammaContainer_egamma_ElectronsStatus, &b_trig_RoI_EF_e_egammaContainer_egamma_ElectronsStatus);
-   fChain->SetBranchAddress("EF_2e12Tvh_medium", &EF_2e12Tvh_medium, &b_EF_2e12Tvh_medium);
-   fChain->SetBranchAddress("EF_e22vh_medium1", &EF_e22vh_medium1, &b_EF_e22vh_medium1);
    Notify();
 }
 
