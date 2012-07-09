@@ -468,10 +468,10 @@ class TLeptonAnalysis: public TNTuple
 		m_triggerNavigationVariables->set_trig_L1_mu_eta(trig_L1_mu_eta);
 		m_triggerNavigationVariables->set_trig_L1_mu_phi(trig_L1_mu_phi);
 		m_triggerNavigationVariables->set_trig_L1_mu_thrName(trig_L1_mu_thrName);
-
+#ifdef __YEAR2012
 		m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFIsolationContainer(trig_RoI_EF_mu_TrigMuonEFIsolationContainer); // for 2012 isolated trigger
 		m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFIsolationContainerStatus(trig_RoI_EF_mu_TrigMuonEFIsolationContainerStatus); // for 2012 isolated trigger
-
+#endif
 		if(m_triggerNavigationVariables->isValid() == false)
 		{
 			std::cerr << "VARIABLES NOT CORRECTLY SET\n";

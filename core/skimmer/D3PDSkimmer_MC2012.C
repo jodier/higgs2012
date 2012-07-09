@@ -2,7 +2,7 @@ void D3PDSkimmer_MC2012(void)
 {
 	TChain *chain = new TChain("physics");
 
-	chain->Add("/home/jodier/Bureau/H130_2012/NTUP_HSG2.00814271._000001.root");
+	chain->Add("/afs/cern.ch/atlas/groups/HSG2/NTUP_HSG2.00814271._000001.root");
 
 	/*-----------------------------------------------------------------*/
 
@@ -157,56 +157,6 @@ void D3PDSkimmer_MC2012(void)
 	chain->SetBranchStatus("mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased", 1);
 	chain->SetBranchStatus("mu_staco_truth_mothertype", 1);
 	chain->SetBranchStatus("mu_staco_truth_type", 1);
-
-	/*-----------------------------------------------------------------*/
-	/* MUONS muid							   */
-	/*-----------------------------------------------------------------*/
-
-	chain->SetBranchStatus("mu_muid_author", 1);
-	chain->SetBranchStatus("mu_muid_charge", 1);
-	chain->SetBranchStatus("mu_muid_E", 1);
-	chain->SetBranchStatus("mu_muid_EFCB_index", 1);
-	chain->SetBranchStatus("mu_muid_eta", 1);
-	chain->SetBranchStatus("mu_muid_etcone20", 1);
-	chain->SetBranchStatus("mu_muid_etcone30", 1);
-	chain->SetBranchStatus("mu_muid_expectBLayerHit", 1);
-	chain->SetBranchStatus("mu_muid_id_d0", 1);
-	chain->SetBranchStatus("mu_muid_id_phi", 1);
-	chain->SetBranchStatus("mu_muid_id_qoverp", 1);
-	chain->SetBranchStatus("mu_muid_id_qoverp_exPV", 1);
-	chain->SetBranchStatus("mu_muid_id_theta", 1);
-	chain->SetBranchStatus("mu_muid_id_theta_exPV", 1);
-	chain->SetBranchStatus("mu_muid_id_z0", 1);
-	chain->SetBranchStatus("mu_muid_isStandAloneMuon", 1);
-	chain->SetBranchStatus("mu_muid_isCombinedMuon", 1);
-	chain->SetBranchStatus("mu_muid_isSegmentTaggedMuon", 1);
-	chain->SetBranchStatus("mu_muid_me_qoverp_exPV", 1);
-	chain->SetBranchStatus("mu_muid_me_theta_exPV", 1);
-	chain->SetBranchStatus("mu_muid_n", 1);
-	chain->SetBranchStatus("mu_muid_nBLHits", 1);
-	chain->SetBranchStatus("mu_muid_nPixelDeadSensors", 1);
-	chain->SetBranchStatus("mu_muid_nPixHits", 1);
-	chain->SetBranchStatus("mu_muid_nPixHoles", 1);
-	chain->SetBranchStatus("mu_muid_nSCTDeadSensors", 1);
-	chain->SetBranchStatus("mu_muid_nSCTHits", 1);
-	chain->SetBranchStatus("mu_muid_nSCTHoles", 1);
-	chain->SetBranchStatus("mu_muid_nTRTHits", 1);
-	chain->SetBranchStatus("mu_muid_nTRTOutliers", 1);
-	chain->SetBranchStatus("mu_muid_nCSCEtaHits", 1);
-	chain->SetBranchStatus("mu_muid_nCSCPhiHits", 1);
-	chain->SetBranchStatus("mu_muid_nMDTEMHits", 1);
-	chain->SetBranchStatus("mu_muid_nMDTEOHits", 1);
-	chain->SetBranchStatus("mu_muid_phi", 1);
-	chain->SetBranchStatus("mu_muid_pt", 1);
-	chain->SetBranchStatus("mu_muid_ptcone20", 1);
-	chain->SetBranchStatus("mu_muid_ptcone30", 1);
-	chain->SetBranchStatus("mu_muid_tight", 1);
-	chain->SetBranchStatus("mu_muid_d0_exPV", 1);
-	chain->SetBranchStatus("mu_muid_z0_exPV", 1);
-	chain->SetBranchStatus("mu_muid_trackIPEstimate_d0_unbiasedpvunbiased", 1);
-	chain->SetBranchStatus("mu_muid_trackIPEstimate_sigd0_unbiasedpvunbiased", 1);
-	chain->SetBranchStatus("mu_muid_truth_mothertype", 1);
-	chain->SetBranchStatus("mu_muid_truth_type", 1);
 
 	/*-----------------------------------------------------------------*/
 	/* MUONS calo							   */
