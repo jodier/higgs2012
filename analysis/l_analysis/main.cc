@@ -4,8 +4,6 @@
 #include <cstring>
 #include <iostream>
 
-#include <egammaAnalysisUtils/CaloIsoCorrection.h>
-
 #include "main.h"
 
 /*-------------------------------------------------------------------------*/
@@ -310,6 +308,14 @@ void TLeptonFinder::Loop(void)
 		}
 
 		/*---------------------------------------------------------*/
+		/* D0 BIAS						   */
+		/*---------------------------------------------------------*/
+#if defined( __YEAR2012) && defined(__IS_MC)
+		Float_t d0Bias = 2.0e-3f;
+#else
+		Float_t d0Bias = 0.0000f;
+#endif
+		/*---------------------------------------------------------*/
 		/*---------------------------------------------------------*/
 		/*- ELECTRONS						  -*/
 		/*---------------------------------------------------------*/
@@ -345,9 +351,10 @@ void TLeptonFinder::Loop(void)
 					m_l[0].weight2[i] = eventGetWeight2();
 					m_l[0].weight3[i] = eventGetWeight3(index, TYPE_ELECTRON);
 
+					m_l[0].l_lepton[i] = TYPE_ELECTRON;
 					m_l[0].l_tight[i] = el_tight->at(index) != 0;
-
 					m_l[0].l_triggerMatch[i] = triggerMatch(index, TYPE_ELECTRON);
+					m_l[0].l_truthMatch[i] = truthMatch(index, TYPE_ELECTRON);
 
 					m_l[0].l_charge[i] = el_charge->at(index);
 					m_l[0].l_e[i] = el_cl_E->at(index);
@@ -358,31 +365,43 @@ void TLeptonFinder::Loop(void)
 					m_l[0].l_z0[i] = el_trackz0pvunbiased->at(index);
 					m_l[0].l_d0[i] = el_trackd0pvunbiased->at(index);
 #ifdef __YEAR2011
-					m_l[0].l_clIso20[i] = CaloIsoCorrection::GetNPVCorrectedIsolation(nPV2, el_etas2->at(index), 20, __isMC, el_Etcone20->at(index), CaloIsoCorrection::ELECTRON) / electronGetEt(index);
-					m_l[0].l_tkIso20[i] = el_ptcone20->at(index) / electronGetEt(index);
-					m_l[0].l_d0sigma[i] = fabs((el_trackd0pvunbiased->at(index) - 2.0e-3f) / el_tracksigd0pvunbiased->at(index));
+					m_l[0].l_clIso20[i] = el_Etcone20_at(index) / electronGetEt(index);
 #endif
 #ifdef __YEAR2012
-					m_l[0].l_clIso20[i] = CaloIsoCorrection::GetPtEDCorrectedTopoIsolation(el_ED_median->at(i), el_cl_E->at(i), el_etas2->at(i), el_etap->at(i), el_cl_eta->at(i), 20, __isMC, el_Etcone20->at(i), false, CaloIsoCorrection::ELECTRON) / electronGetEt(index);
-					m_l[0].l_tkIso20[i] = el_ptcone20->at(index) / electronGetEt(index);
-					m_l[0].l_d0sigma[i] = fabs((el_trackd0pvunbiased->at(index) - 0.0000f) / el_tracksigd0pvunbiased->at(index));
+					m_l[0].l_clIso20[i] = el_Etcone20_at(index) / electronGetRawEt(index);
 #endif
+					m_l[0].l_tkIso20[i] = el_ptcone20->at(index) / electronGetEt(index);
+					m_l[0].l_d0sigma[i] = fabs((el_trackd0pvunbiased->at(index) - d0Bias) / el_tracksigd0pvunbiased->at(index));
+
 					for(Int_t j = i + 1; j < elIndexNr; j++)
 					{
-						Int_t index2 = elIndexArray[j];
+						Int_t xedni = elIndexArray[j];
+
+						Float_t deltaR_track = sqrtf(__dR2(
+							el_tracketa->at(index), el_tracketa->at(xedni)
+							,
+							el_trackphi->at(index), el_trackphi->at(xedni)
+						));
+#ifdef __YEAR2012
+						Float_t deltaR_clust = sqrtf(__dR2(
+							el_etas2->at(index), el_etas2->at(xedni)
+							,
+							el_phis2->at(index), el_phis2->at(xedni)
+						));
+#endif
+						if(deltaR_track < 0.20f) {
+							m_l[0].l_tkIso20[i] -= el_trackpt->at(xedni) / electronGetEt(index);
+						}
 #ifdef __YEAR2011
-						Float_t deltaR = sqrtf(__dR2(el_tracketa->at(index), el_tracketa->at(index2), el_trackphi->at(index), el_trackphi->at(index2)));
+						if(deltaR_track < 0.18f) {
+							m_l[0].l_clIso20[i] -= electronGetEt(xedni) / electronGetEt(index);
+						}
 #endif
 #ifdef __YEAR2012
-						Float_t deltaR = sqrtf(__dR2(el_etas2->at(index), el_etas2->at(index2), el_phis2->at(index), el_phis2->at(index2)));
+						if(deltaR_clust < 0.18f) {
+							m_l[0].l_clIso20[i] -= electronGetRawEt(xedni) / electronGetRawEt(index);
+						}
 #endif
-						if(deltaR < 0.20f) {
-							m_l[0].l_tkIso20[i] -= el_trackpt->at(index2) / m_l[0].l_pt[i];
-						}
-
-						if(deltaR < 0.18f) {
-							m_l[0].l_clIso20[i] -= electronGetEt(index2) / m_l[0].l_pt[i];
-						}
 					}
 
 					/**/
@@ -453,11 +472,12 @@ void TLeptonFinder::Loop(void)
 				case TYPE_MUON_STANDALONE:
 					m_l[1].weight1[i] = eventGetWeight1();
 					m_l[1].weight2[i] = eventGetWeight2();
-					m_l[1].weight3[i] = eventGetWeight3(index, TYPE_MUON_CB_PLUS_ST);
+					m_l[1].weight3[i] = eventGetWeight3(index, muCB_PLUS_STTypeArray[i]);
 
+					m_l[1].l_lepton[i] = muCB_PLUS_STTypeArray[i];
 					m_l[1].l_tight[i] = mu_staco_tight->at(index) != 0;
-
-					m_l[1].l_triggerMatch[i] = triggerMatch(index, TYPE_MUON_CB_PLUS_ST);
+					m_l[1].l_triggerMatch[i] = triggerMatch(index, muCB_PLUS_STTypeArray[i]);
+					m_l[1].l_truthMatch[i] = truthMatch(index, muCB_PLUS_STTypeArray[i]);
 
 					m_l[1].l_charge[i] = mu_staco_charge->at(index);
 					m_l[1].l_e[i] = mu_staco_E->at(index);
@@ -468,28 +488,27 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_z0[i] = mu_staco_z0_exPV->at(index);
 					m_l[1].l_d0[i] = mu_staco_d0_exPV->at(index);
 
-#if defined( __YEAR2012) && defined(__IS_MC)
 					m_l[1].l_clIso20[i] = mu_staco_etcone20->at(index) / mu_staco_pt->at(index);
 					m_l[1].l_tkIso20[i] = mu_staco_ptcone20->at(index) / mu_staco_pt->at(index);
-					m_l[1].l_d0sigma[i] = fabs((mu_staco_trackIPEstimate_d0_unbiasedpvunbiased->at(index) - 2.0e-3f) / mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased->at(index));
-#else
-					m_l[1].l_clIso20[i] = mu_staco_etcone20->at(index) / mu_staco_pt->at(index);
-					m_l[1].l_tkIso20[i] = mu_staco_ptcone20->at(index) / mu_staco_pt->at(index);
-					m_l[1].l_d0sigma[i] = fabs((mu_staco_trackIPEstimate_d0_unbiasedpvunbiased->at(index) - 0.0000f) / mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased->at(index));
-#endif
+					m_l[1].l_d0sigma[i] = fabs((mu_staco_trackIPEstimate_d0_unbiasedpvunbiased->at(index) - d0Bias) / mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased->at(index));
+
 					if(mu_staco_isStandAloneMuon->at(index) != false)
 					{
 						for(Int_t j = i + 1; j < muCB_PLUS_STIndexNr; j++)
 						{
-							Int_t index2 = muCB_PLUS_STIndexArray[j];
+							Int_t xedni = muCB_PLUS_STIndexArray[j];
 
-							if(mu_staco_isStandAloneMuon->at(index2) != false)
+							if(mu_staco_isStandAloneMuon->at(xedni) != false)
 							{
-								Float_t deltaR = sqrtf(__dR2(mu_staco_eta->at(index), mu_staco_eta->at(index2), mu_staco_phi->at(index), mu_staco_phi->at(index2)));
+								Float_t deltaR = sqrtf(__dR2(
+									mu_staco_eta->at(index), mu_staco_eta->at(xedni)
+									,
+									mu_staco_phi->at(index), mu_staco_phi->at(xedni)
+								));
 
 								if(deltaR < 0.20f)
 								{
-									m_l[1].l_tkIso20[i] -= ((mu_staco_id_qoverp_exPV->at(index2) != 0.0f) ? sinf(mu_staco_id_theta_exPV->at(index2)) / fabs(mu_staco_id_qoverp_exPV->at(index2)) : 0.0f) / m_l[1].l_pt[i];
+									m_l[1].l_tkIso20[i] -= ((mu_staco_id_qoverp_exPV->at(xedni) != 0.0f) ? sinf(mu_staco_id_theta_exPV->at(xedni)) / fabs(mu_staco_id_qoverp_exPV->at(xedni)) : 0.0f) / mu_staco_pt->at(index);
 								}
 							}
 						}
@@ -521,9 +540,10 @@ void TLeptonFinder::Loop(void)
 					m_l[1].weight2[i] = eventGetWeight2();
 					m_l[1].weight3[i] = eventGetWeight3(index, TYPE_MUON_CALO);
 
+					m_l[1].l_lepton[i] = TYPE_MUON_CALO;
 					m_l[1].l_tight[i] = mu_calo_tight->at(index) != 0;
-
 					m_l[1].l_triggerMatch[i] = triggerMatch(index, TYPE_MUON_CALO);
+					m_l[1].l_truthMatch[i] = truthMatch(index, TYPE_MUON_CALO);
 
 					m_l[1].l_charge[i] = mu_calo_charge->at(index);
 					m_l[1].l_e[i] = mu_calo_E->at(index);
@@ -534,24 +554,23 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_z0[i] = mu_calo_z0_exPV->at(index);
 					m_l[1].l_d0[i] = mu_calo_d0_exPV->at(index);
 
-#if defined( __YEAR2012) && defined(__IS_MC)
 					m_l[1].l_clIso20[i] = mu_calo_etcone20->at(index) / mu_calo_pt->at(index);
 					m_l[1].l_tkIso20[i] = mu_calo_ptcone20->at(index) / mu_calo_pt->at(index);
-					m_l[1].l_d0sigma[i] = fabs((mu_calo_trackIPEstimate_d0_unbiasedpvunbiased->at(index) - 2.0e-3f) / mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased->at(index));
-#else
-					m_l[1].l_clIso20[i] = mu_calo_etcone20->at(index) / mu_calo_pt->at(index);
-					m_l[1].l_tkIso20[i] = mu_calo_ptcone20->at(index) / mu_calo_pt->at(index);
-					m_l[1].l_d0sigma[i] = fabs((mu_calo_trackIPEstimate_d0_unbiasedpvunbiased->at(index) - 0.0000f) / mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased->at(index));
-#endif
+					m_l[1].l_d0sigma[i] = fabs((mu_calo_trackIPEstimate_d0_unbiasedpvunbiased->at(index) - d0Bias) / mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased->at(index));
+
 					for(Int_t j = i + 1; j < muCaloIndexNr; j++)
 					{
-						Int_t index2 = muCaloIndexArray[j];
+						Int_t xedni = muCaloIndexArray[j];
 
-						Float_t deltaR = sqrtf(__dR2(mu_calo_eta->at(index), mu_calo_eta->at(index2), mu_calo_phi->at(index), mu_calo_phi->at(index2)));
+						Float_t deltaR = sqrtf(__dR2(
+							mu_calo_eta->at(index), mu_calo_eta->at(xedni)
+							,
+							mu_calo_phi->at(index), mu_calo_phi->at(xedni)
+						));
 
 						if(deltaR < 0.20f)
 						{
-							m_l[1].l_tkIso20[i] -= ((mu_calo_id_qoverp_exPV->at(index2) != 0.0f) ? sinf(mu_calo_id_theta_exPV->at(index2)) / fabs(mu_calo_id_qoverp_exPV->at(index2)) : 0.0f) / m_l[1].l_pt[i];
+							m_l[1].l_tkIso20[i] -= ((mu_calo_id_qoverp_exPV->at(xedni) != 0.0f) ? sinf(mu_calo_id_theta_exPV->at(xedni)) / fabs(mu_calo_id_qoverp_exPV->at(xedni)) : 0.0f) / mu_calo_pt->at(index);
 						}
 					}
 

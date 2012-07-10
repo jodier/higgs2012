@@ -49,7 +49,7 @@ GLIBS         = $(ROOTGLIBS) -lTreePlayer
 
 #############################################################################
 
-OBJS1         = core/main.o core/core.o core/config.o core/loader.o core/utils.o core/selection/isEMOk.o core/selection/selection.o core/selection/triggers.o
+OBJS1         = core/main.o core/core.o core/config.o core/loader.o core/utils.o core/selection/isEMOk.o core/selection/etcone.o core/selection/selection.o core/selection/triggers.o
 
 OBJS2         = analysis/l_analysis/main.o
 

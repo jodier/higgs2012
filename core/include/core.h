@@ -494,8 +494,10 @@ class TLeptonAnalysis: public TNTuple
 	Float_t electronGetEtaDirection(Int_t index);
 	Float_t electronGetPhiDirection(Int_t index);
 	Float_t electronGetEt(Int_t index);
+	Float_t electronGetRawEt(Int_t index);
 
 	Bool_t el_isEMOk_at(Int_t index);
+	Float_t el_Etcone20_at(Int_t index);
 
 	/*-----------------------------------------------------------------*/
 	/* SELECTION							   */

@@ -21,8 +21,8 @@ class TLeptonFinder: public TLeptonAnalysis
 
 	TLeptonFinder(TChain *chain): TLeptonAnalysis(chain)
 	{
-		m_tree1.SetName("elSTACO");
-		m_tree2.SetName("muSTACO");
+		m_tree1.SetName("el");
+		m_tree2.SetName("mu");
 
 		TTree *LTreeArray[2] = {&m_tree1, &m_tree2};
 
@@ -50,15 +50,14 @@ class TLeptonFinder: public TLeptonAnalysis
 
 			tree->Branch("n", &m_l[i].n, "n" "/I");
 
-			tree->Branch("l_z0", m_l[i].l_z0, "l_z0[n]/F");
-			tree->Branch("l_d0", m_l[i].l_d0, "l_d0[n]/F");
-
 			tree->Branch("weight1", m_l[i].weight1, "weight1[n]/F");
 			tree->Branch("weight2", m_l[i].weight2, "weight2[n]/F");
 			tree->Branch("weight3", m_l[i].weight3, "weight3[n]/F");
 
+			tree->Branch("l_lepton", m_l[i].l_lepton, "l_lepton[n]/I");
 			tree->Branch("l_tight", m_l[i].l_tight, "l_tight[n]/I");
 			tree->Branch("l_triggerMatch", m_l[i].l_triggerMatch, "l_triggerMatch[n]/I");
+			tree->Branch("l_truthMatch", m_l[i].l_truthMatch, "l_truthMatch[n]/I");
 
 			tree->Branch("l_charge", m_l[i].l_charge, "l_charge[n]/F");
 			tree->Branch("l_e", m_l[i].l_e, "l_e[n]/F");
@@ -66,6 +65,8 @@ class TLeptonFinder: public TLeptonAnalysis
 			tree->Branch("l_eta", m_l[i].l_eta, "l_eta[n]/F");
 			tree->Branch("l_phi", m_l[i].l_phi, "l_phi[n]/F");
 
+			tree->Branch("l_z0", m_l[i].l_z0, "l_z0[n]/F");
+			tree->Branch("l_d0", m_l[i].l_d0, "l_d0[n]/F");
 
 			tree->Branch("l_tkIso20", m_l[i].l_tkIso20, "l_tkIso20[n]/F");
 			tree->Branch("l_clIso20", m_l[i].l_clIso20, "l_clIso20[n]/F");
@@ -110,21 +111,23 @@ class TLeptonFinder: public TLeptonAnalysis
 
 		Int_t n;
 
-		Float_t l_z0[MAX];
-		Float_t l_d0[MAX];
-
 		Float_t weight1[MAX];
 		Float_t weight2[MAX];
 		Float_t weight3[MAX];
 
+		Int_t l_lepton[MAX];
 		Int_t l_tight[MAX];
 		Int_t l_triggerMatch[MAX];
+		Int_t l_truthMatch[MAX];
 
 		Float_t l_charge[MAX];
 		Float_t l_e[MAX];
 		Float_t l_pt[MAX];
 		Float_t l_eta[MAX];
 		Float_t l_phi[MAX];
+
+		Float_t l_z0[MAX];
+		Float_t l_d0[MAX];
 
 		Float_t l_clIso20[MAX];
 		Float_t l_tkIso20[MAX];
@@ -135,8 +138,6 @@ class TLeptonFinder: public TLeptonAnalysis
 		Int_t l_nBlayerHits[MAX];
 		Int_t l_nPixelHits[MAX];
 		Float_t l_rTRT[MAX];
-
-		/**/
 
 		Float_t l_type[MAX];
 		Float_t l_origin[MAX];

@@ -206,6 +206,15 @@ Float_t TLeptonAnalysis::electronGetEt(Int_t index)
 
 /*-------------------------------------------------------------------------*/
 
+Float_t TLeptonAnalysis::electronGetRawEt(Int_t index)
+{
+	Int_t n = el_nPixHits->at(index) + el_nSCTHits->at(index);
+
+	return n >= 4 ? el_rawcl_E->at(index) / coshf(el_tracketa->at(index)) : el_rawcl_pt->at(index);
+}
+
+/*-------------------------------------------------------------------------*/
+
 void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 {
 #ifdef __IS_MC

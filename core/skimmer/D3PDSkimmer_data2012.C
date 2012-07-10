@@ -49,12 +49,14 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("el_cl_eta", 1);
 	chain->SetBranchStatus("el_cl_phi", 1);
 	chain->SetBranchStatus("el_cl_pt", 1);
+	chain->SetBranchStatus("el_rawcl_E", 1);
+	chain->SetBranchStatus("el_rawcl_pt", 1);
 	chain->SetBranchStatus("el_EF_index", 1);
 	chain->SetBranchStatus("el_etap", 1);
 	chain->SetBranchStatus("el_etas2", 1);
 	chain->SetBranchStatus("el_phis2", 1);
 	chain->SetBranchStatus("el_Etcone20", 1);
-	chain->SetBranchStatus("el_Etcone30", 1);
+	chain->SetBranchStatus("el_topoEtcone20", 1);
 	chain->SetBranchStatus("el_ED_median", 1);
 	chain->SetBranchStatus("el_loosePP", 1);
 	chain->SetBranchStatus("el_medium", 1);
@@ -67,7 +69,6 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("el_origin", 1);
 	chain->SetBranchStatus("el_originbkg", 1);
 	chain->SetBranchStatus("el_ptcone20", 1);
-	chain->SetBranchStatus("el_ptcone30", 1);
 	chain->SetBranchStatus("el_tight", 1);
 	chain->SetBranchStatus("el_trackd0", 1);
 	chain->SetBranchStatus("el_trackd0pvunbiased", 1);
@@ -124,7 +125,6 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("mu_staco_EFCB_index", 1);
 	chain->SetBranchStatus("mu_staco_eta", 1);
 	chain->SetBranchStatus("mu_staco_etcone20", 1);
-	chain->SetBranchStatus("mu_staco_etcone30", 1);
 	chain->SetBranchStatus("mu_staco_expectBLayerHit", 1);
 	chain->SetBranchStatus("mu_staco_id_d0", 1);
 	chain->SetBranchStatus("mu_staco_id_phi", 1);
@@ -155,7 +155,6 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("mu_staco_phi", 1);
 	chain->SetBranchStatus("mu_staco_pt", 1);
 	chain->SetBranchStatus("mu_staco_ptcone20", 1);
-	chain->SetBranchStatus("mu_staco_ptcone30", 1);
 	chain->SetBranchStatus("mu_staco_tight", 1);
 	chain->SetBranchStatus("mu_staco_d0_exPV", 1);
 	chain->SetBranchStatus("mu_staco_z0_exPV", 1);
@@ -175,7 +174,6 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("mu_calo_E", 1);
 	chain->SetBranchStatus("mu_calo_eta", 1);
 	chain->SetBranchStatus("mu_calo_etcone20", 1);
-	chain->SetBranchStatus("mu_calo_etcone30", 1);
 	chain->SetBranchStatus("mu_calo_expectBLayerHit", 1);
 	chain->SetBranchStatus("mu_calo_id_d0", 1);
 	chain->SetBranchStatus("mu_calo_id_phi", 1);
@@ -206,7 +204,6 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("mu_calo_phi", 1);
 	chain->SetBranchStatus("mu_calo_pt", 1);
 	chain->SetBranchStatus("mu_calo_ptcone20", 1);
-	chain->SetBranchStatus("mu_calo_ptcone30", 1);
 	chain->SetBranchStatus("mu_calo_tight", 1);
 	chain->SetBranchStatus("mu_calo_d0_exPV", 1);
 	chain->SetBranchStatus("mu_calo_z0_exPV", 1);
