@@ -244,6 +244,11 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_CB_PLUS_ST:
+			if(fabs(mu_staco_eta->at(index)) > 2.7f)
+			{
+				break;
+			}
+
 			pT_old = pT_new = mu_staco_pt->at(index);
 
 			m_stacoSM->SetSeed(EventNumber, index);
@@ -283,6 +288,11 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_STANDALONE:
+			if(fabs(mu_staco_eta->at(index)) > 2.7f)
+			{
+				break;
+			}
+
 			pT_old = pT_new = mu_staco_pt->at(index);
 
 			m_stacoSM->SetSeed(EventNumber, index);
@@ -678,7 +688,7 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 	if(type == TYPE_ELECTRON)
 	{
 		/*---------------------------------------------------------*/
-		/* ELECTRONS 1/2					   */
+		/* ELECTRONS (TRACKS) 1/2				   */
 		/*---------------------------------------------------------*/
 
 		for(Int_t xedni = 0; xedni < el_n; xedni++)
@@ -720,7 +730,7 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 		elNr9++;
 
 		/*---------------------------------------------------------*/
-		/* ELECTRONS 2/2					   */
+		/* ELECTRONS (CLUSTERS) 2/2				   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2012
 		for(Int_t xedni = 0; xedni < el_n; xedni++)
