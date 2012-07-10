@@ -27,7 +27,7 @@ ATLASFLAGS    =\
 -I MuonEfficiencyCorrections-02-01-01
 
 CXX           =g++
-CXXFLAGS      =-g -O2 -fPIC -ansi -Wall -DROOTCORE $(ROOTCFLAGS) $(ATLASFLAGS) -Wunused-variable
+CXXFLAGS      =-g -O3 -fPIC -ansi -Wall -DROOTCORE $(ROOTCFLAGS) $(ATLASFLAGS) -Wunused-variable
 
 LD            =g++
 LDFLAGS       =-g $(ROOTLDFLAGS) -L.
