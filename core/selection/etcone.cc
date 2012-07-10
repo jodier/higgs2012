@@ -20,14 +20,14 @@ Float_t TLeptonAnalysis::el_Etcone20_at(Int_t index)
 #endif
 #ifdef __YEAR2012
 	return CaloIsoCorrection::GetPtEDCorrectedTopoIsolation(
-		el_ED_median->at(i),
-		el_cl_E->at(i),
-		el_etas2->at(i),
-		el_etap->at(i),
-		el_cl_eta->at(i),
+		el_ED_median->at(index),
+		el_cl_E->at(index),
+		el_etas2->at(index),
+		el_etap->at(index),
+		el_cl_eta->at(index),
 		20,
 		__isMC,
-		el_topoEtcone20->at(i),
+		el_topoEtcone20->at(index),
 		false,
 		CaloIsoCorrection::ELECTRON
 	);
