@@ -354,7 +354,7 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 
 /*-------------------------------------------------------------------------*/
 
-#define __ELECTRON_CHECK(index) \
+#define __ELECTRON_CHECK_ID(index) \
 		if(el_author->at(index) != 1				\
 		   &&							\
 		   el_author->at(index) != 3				\
@@ -363,22 +363,6 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 		}							\
 									\
 		if(el_isEMOk_at(index) == false) {			\
-			continue;					\
-		}							\
-									\
-		if(fabs(el_cl_eta->at(index)) > 2.47f) {		\
-			continue;					\
-		}							\
-									\
-		if(electronGetEt(index) < __el_et) {			\
-			continue;					\
-		}							\
-									\
-		if((el_OQ->at(index) & 1446) != 0) {			\
-			continue;					\
-		}							\
-									\
-		if(fabs(el_trackz0pvunbiased->at(index)) > 10.0f) {	\
 			continue;					\
 		}
 
@@ -727,7 +711,7 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 			   el_Unrefittedtrack_qoverp->at(index) == el_Unrefittedtrack_qoverp->at(xedni)
 #endif
 			 ) {
-				__ELECTRON_CHECK(xedni);
+				__ELECTRON_CHECK_ID(xedni);
 
 				if(electronGetEt(index) < electronGetEt(xedni))
 				{
@@ -753,7 +737,7 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 				   &&
 				   dPhi < 5.0f * 0.025f
 				 ) {
-					__ELECTRON_CHECK(xedni);
+					__ELECTRON_CHECK_ID(xedni);
 
 					if(electronGetEt(index) < electronGetEt(xedni))
 					{
