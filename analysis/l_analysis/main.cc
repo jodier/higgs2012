@@ -636,9 +636,8 @@ void TLeptonFinder::Loop(void)
 	std::cout << "# MUON STACO                                                                #" << std::endl;
 	std::cout << "#############################################################################" << std::endl;
 
-	muNr14 += muNr13;
 	muNr13 += muNr12;
-	muNr14 += muNr12;
+	muNr14 += muNr13;
 
 	std::cout << "before any cut     : " << muNr0 << std::endl;
 	std::cout << "after vertex       : " << muNr1 << std::endl;
