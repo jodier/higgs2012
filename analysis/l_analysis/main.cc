@@ -616,7 +616,7 @@ void TLeptonFinder::Loop(void)
 	}
 
 	std::cout << "#############################################################################" << std::endl;
-	std::cout << "# ELECTRON STACO                                                            #" << std::endl;
+	std::cout << "# ELECTRONS                                                                  #" << std::endl;
 	std::cout << "#############################################################################" << std::endl;
 
 	std::cout << "before any cut   : " << elNr0 << std::endl;
@@ -633,7 +633,7 @@ void TLeptonFinder::Loop(void)
 	std::cout << "after e-µ overlap: " << elNr11 << std::endl;
 
 	std::cout << "#############################################################################" << std::endl;
-	std::cout << "# MUON STACO                                                                #" << std::endl;
+	std::cout << "# MUONS                                                                      #" << std::endl;
 	std::cout << "#############################################################################" << std::endl;
 
 	muNr13 += muNr12;
