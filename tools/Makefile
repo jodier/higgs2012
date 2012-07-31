@@ -21,7 +21,7 @@ ATLASFLAGS    =\
 -I HiggsZZ4lUtils-00-01-10 \
 -I PileupReweighting-00-02-05 \
 -I TrigMuonEfficiency-00-02-05 \
--I egammaAnalysisUtils-00-03-27 \
+-I egammaAnalysisUtils-00-03-28 \
 -I MuonIsolationCorrection-00-08 \
 -I MuonMomentumCorrections-00-06-08 \
 -I MuonEfficiencyCorrections-02-01-01

@@ -1,0 +1,80 @@
+10
+
+dir
+511778
+svn+ssh://svn.cern.ch/reps/atlasoff/Reconstruction/egamma/egammaAnalysis/egammaAnalysisUtils/tags/egammaAnalysisUtils-00-03-28
+svn+ssh://svn.cern.ch/reps/atlasoff
+
+
+
+2012-06-29T04:00:22.149669Z
+508113
+christos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4525493e-7705-40b1-a816-d608a930855b
+
+share
+dir
+
+Root
+dir
+
+cmt
+dir
+
+src
+dir
+
+ChangeLog
+file
+
+
+
+
+2012-07-30T15:03:59.000000Z
+e3c9aef14b8e7870e6902eb5e174d613
+2012-06-29T03:59:13.178486Z
+508112
+christos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+24930
+
+egammaAnalysisUtils
+dir
+
+util
+dir
+
