@@ -431,7 +431,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 				chain1_A = "EF_mu18_MG";
 				chain1_B = "";
 
-				chain2_A = "EF_2mu10";
+				chain2_A = "EF_2mu10_loose";
 				chain2_B = "";
 			}
 			else if(RunNumber == 186169) // I-K
@@ -447,7 +447,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 					chain1_A = "EF_mu18_MG";
 					chain1_B = "";
 
-					chain2_A = "EF_2mu10";
+					chain2_A = "EF_2mu10_loose";
 					chain2_B = "";
 				}
 				else
@@ -455,7 +455,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 					chain1_A = "EF_mu18_MG_medium";
 					chain1_B = "";
 
-					chain2_A = "EF_2mu10";
+					chain2_A = "EF_2mu10_loose";
 					chain2_B = "";
 				}
 			}
@@ -464,7 +464,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 				chain1_A = "EF_mu18_MG_medium";
 				chain1_B = "";
 
-				chain2_A = "EF_2mu10";
+				chain2_A = "EF_2mu10_loose";
 				chain2_B = "";
 			}
   #endif
@@ -487,7 +487,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 				chain1_A = "EF_mu18_MG";
 				chain1_B = "";
 
-				chain2_A = "EF_2mu10";
+				chain2_A = "EF_2mu10_loose";
 				chain2_B = "";
 			}
 			else if(lumiPeriod >= 'J' && lumiPeriod <= 'M')
@@ -495,7 +495,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 				chain1_A = "EF_mu18_MG_medium";
 				chain1_B = "";
 
-				chain2_A = "EF_2mu10";
+				chain2_A = "EF_2mu10_loose";
 				chain2_B = "";
 			}
   #endif
@@ -583,7 +583,6 @@ UInt_t TLeptonAnalysis::triggerMatch(
 							   Res2.first != false
 							 ) {
 								result |= (1 << 1);
-
 								break;
 							}
 						}

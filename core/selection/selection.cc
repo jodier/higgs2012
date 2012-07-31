@@ -48,13 +48,15 @@ Float_t TLeptonAnalysis::eventGetWeight1(void)
 #ifdef __IS_MC
 	Float_t weight = 1.0f;
 
-	if(mcevt_weight[0].size() > 0)
-	{
-		if(mcevt_weight[0][0].size() == 1)
-		{
-			weight = mcevt_weight[0][0][0];
-		}
-	}
+//	if(mcevt_weight[0].size() > 0)
+//	{
+//		if(mcevt_weight[0][0].size() == 1)
+//		{
+//			weight = mcevt_weight[0][0][0];
+//		}
+//	}
+	
+	weight = (*mcevt_weight)[0].at(0);
 
 	if(weight == 0.0f)
 	{
@@ -237,14 +239,7 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 
 			el_cl_E->at(index) = el_cl_E->at(index) * m_energyRescaler->getSmearingCorrectionMeV(
 				el_cl_eta->at(index),
-				el_cl_E->at(index),
-#ifdef __YEAR2011
-				0, mc_with_constant_term, "2011"
-#endif
-#ifdef __YEAR2012
-				0, mc_with_constant_term, "2012"
-#endif
-			);
+				el_cl_E->at(index));
 
 			break;
 
@@ -581,7 +576,7 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			if(mu_calo_caloMuonIdTag->at(index) < 11
 			   &&
-			   mu_calo_caloLRLikelihood->at(index) < 0.9f
+			   mu_calo_caloLRLikelihood->at(index) <= 0.9f
 			 ) {
 				goto __error;
 			}
