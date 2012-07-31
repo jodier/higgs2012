@@ -283,7 +283,7 @@ class TLeptonAnalysis: public TNTuple
 		/* VERTEX POSITION REWEIGHTING				   */
 		/*---------------------------------------------------------*/
 #if defined( __YEAR2012) && defined(__IS_MC)
-		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-03-27/share/zvtx_weights_2011_2012.root");
+		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-03-28/share/zvtx_weights_2011_2012.root");
 #endif
 		/*---------------------------------------------------------*/
 		/* PILEUP REWEIGHTING					   */
