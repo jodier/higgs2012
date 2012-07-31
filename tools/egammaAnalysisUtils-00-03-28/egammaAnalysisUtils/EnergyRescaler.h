@@ -156,11 +156,7 @@ class EnergyRescaler {
                 #ifdef ROOTCORE
                 ClassDef(calibMap,1)
                 #endif
-      }; 
-     
-      #ifdef ROOTCORE
-      ClassDef(EnergyRescaler,1)
-      #endif
+      };
 
    private:
       

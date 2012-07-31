@@ -786,12 +786,6 @@ public:
 
   std::vector< std::vector<float> > MCefficienciesRel172ICHEP_AFII_e12Tvh_loose1_ML;
   std::vector< std::vector<float> > MCefficienciesRel172ICHEP_AFII_e12Tvh_loose1_MLET;
-
-
-  #ifdef ROOTCORE
-  ClassDef(egammaSFclass,1)
-  #endif
-
 };
 
 #endif
