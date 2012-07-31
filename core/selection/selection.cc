@@ -773,10 +773,10 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 			}
 
 #ifdef __YEAR2011
-			if(sqrtf(__dR2(el_tracketa->at(index), mu_id_eta, el_trackphi->at(index), mu_id_phi)) < 0.02f * 0.02f)
+			if(__dR2(el_tracketa->at(index), mu_id_eta, el_trackphi->at(index), mu_id_phi) < 0.02f * 0.02f)
 #endif
 #ifdef __YEAR2012
-			if(sqrtf(__dR2(el_Unrefittedtrack_eta->at(index), mu_id_eta, el_Unrefittedtrack_phi->at(index), mu_id_phi)) < 0.02f * 0.02f)
+			if(__dR2(el_Unrefittedtrack_eta->at(index), mu_id_eta, el_Unrefittedtrack_phi->at(index), mu_id_phi) < 0.02f * 0.02f)
 #endif
 			{
 				return false;
