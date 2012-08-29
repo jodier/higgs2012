@@ -1,18 +1,18 @@
 #!/bin/sh
 
-OUTDS=user.etiouchi.l_analysis_Muon.data11_p997.version1_test2
+OUTDS=user.etiouchi.l_analysis.data12_periodA_muons_p1044_v1
 
 INDS=\
-data11_7TeV.00183081.physics_Muons.merge.NTUP_HSG2.r2603_p659_p996_p997/
+data12_8TeV.periodA.physics_Muons.PhysCont.NTUP_HSG2.grp13_v01_p1044/
 
-cp core/include/THiggsD3PD_DATA.h core/include/THiggsD3PD.h
+cp core/include/data12_THiggsD3PD.h core/include/THiggsD3PD.h
 
 prun --exec "l_analysis --grid=prun --enable-ER -o output.root \ %IN" --bexec "make ALL" \
 --athenaTag 17.0.4 \
 --writeInputToTxt "IN:input.txt" \
 --outDS $OUTDS \
 --inDS $INDS \
---extFile analysis/ilumicalc_period_AllYear_Higgs_4l_2e2mu.root,analysis/MC11c.prw.root \
+--extFile tools/ilumicalc_2012_period_AllYear_All_Good.root,tools/MC12a.prw.root \
 --outputs output.root \
 #--excludedSite ANALY_GLASGOW
 

@@ -242,6 +242,8 @@ class TLeptonAnalysis: public TNTuple
 #ifdef __YEAR2012
 	Float_t lumiPeriod2012A;
 	Float_t lumiPeriod2012B;
+	Float_t lumiPeriod2012C;
+	Float_t lumiPeriod2012D;
 #endif
 	/*-----------------------------------------------------------------*/
 
@@ -292,8 +294,11 @@ class TLeptonAnalysis: public TNTuple
 		m_pileupReweighting = new Root::TPileupReweighting("PileupReweightingTool");
 #ifdef __YEAR2011
 		m_pileupReweighting->SetUnrepresentedDataAction(2);
-		m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC11c.prw.root");
-		m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_period_AllYear_Higgs_4l_2e2mu.root");
+//		m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC11c.prw.root");
+//		m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_period_AllYear_Higgs_4l_2e2mu.root");
+
+		m_pileupReweighting->AddConfigFile("./tools/MC11c.prw.root");
+		m_pileupReweighting->AddLumiCalcFile("./tools/ilumicalc_period_AllYear_Higgs_4l_2e2mu.root");
 		m_pileupReweighting->SetDefaultChannel(109292);
 		m_pileupReweighting->Initialize();
 
@@ -311,13 +316,18 @@ class TLeptonAnalysis: public TNTuple
 #endif
 #ifdef __YEAR2012
 		m_pileupReweighting->SetUnrepresentedDataAction(2);
-		m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC12a.prw.root");
-		m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_2012_period_AllYear_Higgs_4l_2e2mu.root");
+//		m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC12a.prw.root");
+//		m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_2012_period_AllYear_All_Good.root");
+
+		m_pileupReweighting->AddConfigFile("./tools/MC12a.prw.root");
+		m_pileupReweighting->AddLumiCalcFile("./tools/ilumicalc_2012_period_AllYear_All_Good.root");
 		m_pileupReweighting->SetDefaultChannel(160156);
 		m_pileupReweighting->Initialize();
 
-		lumiPeriod2012A = m_pileupReweighting->GetIntegratedLumi(200804, 201556);
+		lumiPeriod2012A = m_pileupReweighting->GetIntegratedLumi(200841, 201556);
 		lumiPeriod2012B = m_pileupReweighting->GetIntegratedLumi(202660, 205113);
+		lumiPeriod2012C = m_pileupReweighting->GetIntegratedLumi(206368, 207397);
+		lumiPeriod2012D = m_pileupReweighting->GetIntegratedLumi(207447, 208720);
 #endif
 		/*---------------------------------------------------------*/
 		/* MUON SMEARING					   */
@@ -444,7 +454,7 @@ class TLeptonAnalysis: public TNTuple
 		m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainer(trig_RoI_EF_mu_TrigMuonEFInfoContainer);
 		m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus(trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus);
 
-    		// variable names in p956
+    		// variable names in p997
 		//m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainer(trig_RoI_EF_mu_TrigMuonEFInfoContainer_eMuonEFInfo);
 		//m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus(trig_RoI_EF_mu_TrigMuonEFInfoContainer_eMuonEFInfoStatus);
 

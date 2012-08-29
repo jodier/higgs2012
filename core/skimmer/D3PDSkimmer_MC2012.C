@@ -2,7 +2,7 @@ void D3PDSkimmer_MC2012(void)
 {
 	TChain *chain = new TChain("physics");
 
-	chain->Add("/quark1/tiouchi/mc12_8TeV.160156.PowhegPythia8_AU2CT10_ggH130_ZZ4lep.merge.NTUP_HSG2.e1191_s1469_s1470_r3542_r3549_p1044_tid00814271_00/NTUP_HSG2.00814271._000001.root.1");
+	chain->Add("/quark1/tiouchi/mc12_8TeV.160156.PowhegPythia8_AU2CT10_ggH130_ZZ4lep.merge.NTUP_HSG2.e1191_s1469_s1470_r3542_r3549_p1044/NTUP_HSG2.00814271._000001.root.1");
 
 	/*-----------------------------------------------------------------*/
 

@@ -2,7 +2,7 @@ void D3PDSkimmer_MC2011(void)
 {
 	TChain *chain = new TChain("physics");
 
-	chain->Add("/home/jodier/Bureau/higgs2012/core/skimmer/2011/NTUP_HSG2.675991._000001.root");
+	chain->Add("/quark1/tiouchi/mc11_7TeV.107653.AlpgenJimmyZeeNp3_pt20.merge.NTUP_HSG2.e835_s1299_s1300_r3043_r2993_p1054/NTUP_HSG2.00822488._000035.root.1");
 
 	/*-----------------------------------------------------------------*/
 

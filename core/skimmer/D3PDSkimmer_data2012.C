@@ -2,7 +2,7 @@ void D3PDSkimmer_data2012(void)
 {
 	TChain *chain = new TChain("physics");
 
-	chain->Add("");
+	chain->Add("/quark1/tiouchi/data12_8TeV.00203256.physics_Egamma.merge.NTUP_HSG2.f444_m1143_p1041_p1044_p1045/NTUP_HSG2.00825693._000002.root.1");
 
 	/*-----------------------------------------------------------------*/
 
