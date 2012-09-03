@@ -294,11 +294,11 @@ class TLeptonAnalysis: public TNTuple
 		m_pileupReweighting = new Root::TPileupReweighting("PileupReweightingTool");
 #ifdef __YEAR2011
 		m_pileupReweighting->SetUnrepresentedDataAction(2);
-//		m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC11c.prw.root");
-//		m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_period_AllYear_Higgs_4l_2e2mu.root");
+		m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC11c.prw.root");
+		m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_period_AllYear_Higgs_4l_2e2mu.root");
 
-		m_pileupReweighting->AddConfigFile("./tools/MC11c.prw.root");
-		m_pileupReweighting->AddLumiCalcFile("./tools/ilumicalc_period_AllYear_Higgs_4l_2e2mu.root");
+//		m_pileupReweighting->AddConfigFile("./tools/MC11c.prw.root");
+//		m_pileupReweighting->AddLumiCalcFile("./tools/ilumicalc_period_AllYear_Higgs_4l_2e2mu.root");
 		m_pileupReweighting->SetDefaultChannel(109292);
 		m_pileupReweighting->Initialize();
 
@@ -316,11 +316,11 @@ class TLeptonAnalysis: public TNTuple
 #endif
 #ifdef __YEAR2012
 		m_pileupReweighting->SetUnrepresentedDataAction(2);
-//		m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC12a.prw.root");
-//		m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_2012_period_AllYear_All_Good.root");
+		m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC12a.prw.root");
+		m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_2012_period_AllYear_All_Good.root");
 
-		m_pileupReweighting->AddConfigFile("./tools/MC12a.prw.root");
-		m_pileupReweighting->AddLumiCalcFile("./tools/ilumicalc_2012_period_AllYear_All_Good.root");
+//		m_pileupReweighting->AddConfigFile("./tools/MC12a.prw.root");
+//		m_pileupReweighting->AddLumiCalcFile("./tools/ilumicalc_2012_period_AllYear_All_Good.root");
 		m_pileupReweighting->SetDefaultChannel(160156);
 		m_pileupReweighting->Initialize();
 

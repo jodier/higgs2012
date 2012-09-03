@@ -79,7 +79,7 @@ clean:
 CLEAN:
 	@cd $(DIR)/tools && make clean && cd $(DIR)
 
-	rm -fr $(OBJS1) $(OBJS2) libcore.a l_analysis
+	rm -fr $(OBJS1) $(OBJS2) tools/*.a l_analysis
 
 #############################################################################
 
