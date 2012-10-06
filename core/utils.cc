@@ -57,11 +57,14 @@ Char_t getlumiPeriod(Int_t RunNumber)
 	else if(RunNumber >= 202660 && RunNumber <= 205113) {
 		result = 'B';
 	}
-	else if(RunNumber >= 206368 && RunNumber <= 207397) {
+	else if(RunNumber >= 206248 && RunNumber <= 207397) {
 		result = 'C';
 	}
-	else if(RunNumber >= 207447 && RunNumber <= 208720) {
+	else if(RunNumber >= 207447 && RunNumber <= 209025) {
 		result = 'D';
+	}
+	else if(RunNumber >= 209074 && RunNumber <= 210308) {
+		result = 'E';
 	}
 #endif
 	return result;

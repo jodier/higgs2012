@@ -23,7 +23,7 @@ ATLASFLAGS = -DSTANDALONE \
 -I tools/TrigMuonEfficiency-00-02-05 \
 -I tools/egammaAnalysisUtils-00-03-28 \
 -I tools/MuonIsolationCorrection-00-08 \
--I tools/MuonMomentumCorrections-00-06-08 \
+-I tools/MuonMomentumCorrections-00-07-00 \
 -I tools/MuonEfficiencyCorrections-02-01-01
 
 ATLASLIBS = -L./tools \

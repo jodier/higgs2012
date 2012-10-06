@@ -62,10 +62,11 @@ UInt_t TLeptonAnalysis::getElTrigger(void)
 		}
   #endif
   #ifdef __YEAR2012
-		/**/ if(RunNumber == 195847) // A-B
+		/**/ if(RunNumber == 195847) // A-E
 		{
 			if(EF_e24vhi_medium1 || EF_e60_medium1) {
 				elTrigger |= (1 << 0);
+			//	std::cout<<"event pass single trigger electronique"<<std::endl;
 			}
 			if(EF_2e12Tvh_loose1) {
 				elTrigger |= (1 << 1);
@@ -104,7 +105,7 @@ UInt_t TLeptonAnalysis::getElTrigger(void)
 		}
   #endif
   #ifdef __YEAR2012
-		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'B')
+		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E')
 		{
 			if(EF_e24vhi_medium1 || EF_e60_medium1) {
 				elTrigger |= (1 << 0);
@@ -183,7 +184,7 @@ UInt_t TLeptonAnalysis::getMuTrigger(void)
 		}
   #endif
   #ifdef __YEAR2012
-		/**/ if(RunNumber == 195847) // A-B
+		/**/ if(RunNumber == 195847) // A-E
 		{
 			if(EF_mu24i_tight || EF_mu36_tight) {
 				muTrigger |= (1 << 0);
@@ -216,7 +217,7 @@ UInt_t TLeptonAnalysis::getMuTrigger(void)
 		}
   #endif
   #ifdef __YEAR2012
-		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'B')
+		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E')
 		{
 			if(EF_mu24i_tight || EF_mu36_tight) {
 				muTrigger |= (1 << 0);
@@ -317,7 +318,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 			}
   #endif
   #ifdef __YEAR2012
-			/**/ if(RunNumber == 195847) // A-B
+			/**/ if(RunNumber == 195847) // A-E
 			{
 				chain1_A = "EF_e24vhi_medium1";
 				chain1_B = "EF_e60_medium1";
@@ -354,7 +355,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 			}
   #endif
   #ifdef __YEAR2012
-			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'B') // A-B
+			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E') // A-E
 			{
 				chain1_A = "EF_e24vhi_medium1";
 				chain1_B = "EF_e60_medium1";
@@ -469,7 +470,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 			}
   #endif
   #ifdef __YEAR2012
-			/**/ if(RunNumber == 195847) // A-B
+			/**/ if(RunNumber == 195847) // A-E
 			{
 				chain1_A = "EF_mu24i_tight";
 				chain1_B = "EF_mu36_tight";

@@ -23,7 +23,7 @@ ATLASFLAGS    =\
 -I TrigMuonEfficiency-00-02-05 \
 -I egammaAnalysisUtils-00-03-28 \
 -I MuonIsolationCorrection-00-08 \
--I MuonMomentumCorrections-00-06-08 \
+-I MuonMomentumCorrections-00-07-00 \
 -I MuonEfficiencyCorrections-02-01-01
 
 CXX           =g++
@@ -80,7 +80,7 @@ OBJS6         =\
 MuonIsolationCorrection-00-08/Root/CorrectCaloIso.o
 
 OBJS7         =\
-MuonMomentumCorrections-00-06-08/Root/SmearingClass.o
+MuonMomentumCorrections-00-07-00/Root/SmearingClass.o
 
 OBJS8         =\
 MuonEfficiencyCorrections-02-01-01/Root/AnalysisMuonConfigurableScaleFactors.o \

@@ -244,6 +244,7 @@ class TLeptonAnalysis: public TNTuple
 	Float_t lumiPeriod2012B;
 	Float_t lumiPeriod2012C;
 	Float_t lumiPeriod2012D;
+	Float_t lumiPeriod2012E;
 #endif
 	/*-----------------------------------------------------------------*/
 
@@ -324,19 +325,21 @@ class TLeptonAnalysis: public TNTuple
 		m_pileupReweighting->SetDefaultChannel(160156);
 		m_pileupReweighting->Initialize();
 
-		lumiPeriod2012A = m_pileupReweighting->GetIntegratedLumi(200841, 201556);
+		lumiPeriod2012A = m_pileupReweighting->GetIntegratedLumi(200804, 201556);
 		lumiPeriod2012B = m_pileupReweighting->GetIntegratedLumi(202660, 205113);
-		lumiPeriod2012C = m_pileupReweighting->GetIntegratedLumi(206368, 207397);
-		lumiPeriod2012D = m_pileupReweighting->GetIntegratedLumi(207447, 208720);
+		lumiPeriod2012C = m_pileupReweighting->GetIntegratedLumi(206248, 207397);
+		lumiPeriod2012D = m_pileupReweighting->GetIntegratedLumi(207447, 209025);
+		lumiPeriod2012E = m_pileupReweighting->GetIntegratedLumi(209074, 210308);
+
 #endif
 		/*---------------------------------------------------------*/
 		/* MUON SMEARING					   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2011
-		m_stacoSM = new MuonSmear::SmearingClass("Data11", "staco", "pT", ((((((("Rel17"))))))), "./tools/MuonMomentumCorrections-00-06-08/share/");
+		m_stacoSM = new MuonSmear::SmearingClass("Data11", "staco", "q_pT", "Rel17", "./tools/MuonMomentumCorrections-00-07-00/share/");
 #endif
 #ifdef __YEAR2012
-		m_stacoSM = new MuonSmear::SmearingClass("Data12", "staco", "pT", "Rel17.2_preliminary", "./tools/MuonMomentumCorrections-00-06-08/share/");
+		m_stacoSM = new MuonSmear::SmearingClass("Data12", "staco", "q_pT", "Rel17.2", "./tools/MuonMomentumCorrections-00-07-00/share/");
 #endif
 		/*---------------------------------------------------------*/
 		/* MUON SCALE FACTORS					   */
