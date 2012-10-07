@@ -122,7 +122,7 @@ namespace core
 #include <MuonMomentumCorrections/SmearingClass.h>
 #include <MuonIsolationCorrection/CorrectCaloIso.h>
 
-#include <egammaAnalysisUtils/EnergyRescaler.h>
+#include <egammaAnalysisUtils/EnergyRescalerUpgrade.h>
 #include <egammaAnalysisUtils/egammaSFclass.h>
 #include <egammaAnalysisUtils/VertexPositionReweightingTool.h>
 
@@ -215,7 +215,7 @@ class TLeptonAnalysis: public TNTuple
 	Analysis::AnalysisMuonConfigurableScaleFactors *m_stacoSASCF;
 	Analysis::AnalysisMuonConfigurableScaleFactors *m_caloMuSCF;
 
-	eg2011::EnergyRescaler *m_energyRescaler;
+	egRescaler::EnergyRescalerUpgrade m_energyRescaler;
 
 	egammaSFclass *m_egammaSF;
 
@@ -286,7 +286,7 @@ class TLeptonAnalysis: public TNTuple
 		/* VERTEX POSITION REWEIGHTING				   */
 		/*---------------------------------------------------------*/
 #if defined( __YEAR2012) && defined(__IS_MC)
-		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-03-28/share/zvtx_weights_2011_2012.root");
+		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-03-53/share/zvtx_weights_2011_2012.root");
 #endif
 		/*---------------------------------------------------------*/
 		/* PILEUP REWEIGHTING					   */
@@ -367,13 +367,11 @@ class TLeptonAnalysis: public TNTuple
 		/*---------------------------------------------------------*/
 		/* ELECTRON ENERGY RESCALER				   */
 		/*---------------------------------------------------------*/
-
-		m_energyRescaler = new eg2011::EnergyRescaler();
 #ifdef __YEAR2011
-		m_energyRescaler->useDefaultCalibConstants("2011");
+		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-03-53/share/EnergyRescalerData.root","2011","es2011a");
 #endif
 #ifdef __YEAR2012
-		m_energyRescaler->useDefaultCalibConstants("2012");
+		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-03-53/share/EnergyRescalerData.root","2012","es2012");
 #endif
 		/*---------------------------------------------------------*/
 		/* ELECTRON SCALE FACTORS				   */
@@ -420,7 +418,7 @@ class TLeptonAnalysis: public TNTuple
 		delete m_stacoSASCF;
 		delete m_caloMuSCF;
 
-		delete m_energyRescaler;
+	//	delete m_energyRescaler;
 
 		delete m_egammaSF;
 

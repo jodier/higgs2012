@@ -22,20 +22,18 @@ void TLeptonAnalysis::fixeEnergy(void)
 	for(Int_t i = 0; i < el_n; i++)
 	{
 #ifndef __IS_MC
-		el_cl_E->at(i) = m_energyRescaler->applyEnergyCorrectionMeV(
+		el_cl_E->at(i) = m_energyRescaler.applyEnergyCorrection(
 			el_cl_eta->at(i),
-			el_cl_phi->at(i),
 			el_cl_E->at(i),
-			electronGetEt(i),
-			0,
-			"ELECTRON"
+			egRescaler::EnergyRescalerUpgrade::Electron,
+			egRescaler::EnergyRescalerUpgrade::NOMINAL,
 		);
 #endif
 #ifdef __YEAR2011
-		el_cl_E->at(i) = el_cl_E->at(i) * m_energyRescaler->applyMCCalibrationMeV(
+		el_cl_E->at(i) = el_cl_E->at(i) * m_energyRescaler.applyMCCalibration(
 			el_cl_eta->at(i),
-			electronGetEt(i),
-			"ELECTRON"
+			el_cl_E->at(i),
+			egRescaler::EnergyRescalerUpgrade::Electron
 		);
 #endif
 	}
@@ -235,12 +233,11 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 		/*---------------------------------------------------------*/
 
 		case TYPE_ELECTRON:
-			m_energyRescaler->SetRandomSeed(EventNumber + 100 * index);
+			m_energyRescaler.SetRandomSeed(EventNumber + 100 * index);
 
-			el_cl_E->at(index) = el_cl_E->at(index) * m_energyRescaler->getSmearingCorrectionMeV(
+			el_cl_E->at(index) = el_cl_E->at(index) * m_energyRescaler.getSmearingCorrection(
 				el_cl_eta->at(index),
-				el_cl_E->at(index));
-
+				el_cl_E->at(index), egRescaler::EnergyRescalerUpgrade::NOMINAL);
 			break;
 
 		/*---------------------------------------------------------*/
@@ -726,7 +723,8 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 			if(index != xedni)
 			{
 				Float_t dEta = fabs(el_cl_eta->at(index) - el_cl_eta->at(xedni));
-				Float_t dPhi = fabs(el_cl_phi->at(index) - el_cl_phi->at(xedni));
+				//Float_t dPhi = fabs(el_cl_phi->at(index) - el_cl_phi->at(xedni));
+				Float_t dPhi = (fabs(el_cl_phi->at(index) - el_cl_phi->at(xedni)) > TMath::Pi())? 2*TMath::Pi()- fabs(el_cl_phi->at(index) - el_cl_phi->at(xedni)) : fabs(el_cl_phi->at(index) - el_cl_phi->at(xedni));
 
 				if(dEta < 3.0f * 0.025f
 				   &&

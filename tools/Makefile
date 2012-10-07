@@ -21,7 +21,7 @@ ATLASFLAGS    =\
 -I HiggsZZ4lUtils-00-01-10 \
 -I PileupReweighting-00-02-05 \
 -I TrigMuonEfficiency-00-02-05 \
--I egammaAnalysisUtils-00-03-28 \
+-I egammaAnalysisUtils-00-03-53 \
 -I MuonIsolationCorrection-00-08 \
 -I MuonMomentumCorrections-00-07-00 \
 -I MuonEfficiencyCorrections-02-01-01
@@ -60,21 +60,21 @@ TrigMuonEfficiency-00-02-05/Root/MuonHypothesis.o \
 TrigMuonEfficiency-00-02-05/Root/MuonTriggerMatching.o
 
 OBJS5         =\
-egammaAnalysisUtils-00-03-28/Root/CaloIsoCorrection.o \
-egammaAnalysisUtils-00-03-28/Root/checkOQ.o \
-egammaAnalysisUtils-00-03-28/Root/ConvertedPhotonScaleTool.o \
-egammaAnalysisUtils-00-03-28/Root/egammaSFclass.o \
-egammaAnalysisUtils-00-03-28/Root/egammaTriggerMatching.o \
-egammaAnalysisUtils-00-03-28/Root/EisoTool.o \
-egammaAnalysisUtils-00-03-28/Root/ElectronEfficiencySFTool.o \
-egammaAnalysisUtils-00-03-28/Root/ElectronLikelihoodTool.o \
-egammaAnalysisUtils-00-03-28/Root/EnergyRescaler.o \
-egammaAnalysisUtils-00-03-28/Root/EnergyRescalerUpgrade.o \
-egammaAnalysisUtils-00-03-28/Root/FsrPhotons.o \
-egammaAnalysisUtils-00-03-28/Root/IsEMPlusPlusDefs.o \
-egammaAnalysisUtils-00-03-28/Root/MultiLeptonDefs.o \
-egammaAnalysisUtils-00-03-28/Root/ProbeQualityCuts.o \
-egammaAnalysisUtils-00-03-28/Root/VertexPositionReweightingTool.o
+egammaAnalysisUtils-00-03-53/Root/CaloIsoCorrection.o \
+egammaAnalysisUtils-00-03-53/Root/checkOQ.o \
+egammaAnalysisUtils-00-03-53/Root/ConvertedPhotonScaleTool.o \
+egammaAnalysisUtils-00-03-53/Root/egammaSFclass.o \
+egammaAnalysisUtils-00-03-53/Root/egammaTriggerMatching.o \
+egammaAnalysisUtils-00-03-53/Root/EisoTool.o \
+egammaAnalysisUtils-00-03-53/Root/ElectronEfficiencySFTool.o \
+egammaAnalysisUtils-00-03-53/Root/ElectronLikelihoodTool.o \
+egammaAnalysisUtils-00-03-53/Root/EnergyRescaler.o \
+egammaAnalysisUtils-00-03-53/Root/EnergyRescalerUpgrade.o \
+egammaAnalysisUtils-00-03-53/Root/FsrPhotons.o \
+egammaAnalysisUtils-00-03-53/Root/IsEMPlusPlusDefs.o \
+egammaAnalysisUtils-00-03-53/Root/MultiLeptonDefs.o \
+egammaAnalysisUtils-00-03-53/Root/ProbeQualityCuts.o \
+egammaAnalysisUtils-00-03-53/Root/VertexPositionReweightingTool.o
 
 OBJS6         =\
 MuonIsolationCorrection-00-08/Root/CorrectCaloIso.o
