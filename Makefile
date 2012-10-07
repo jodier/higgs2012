@@ -24,7 +24,7 @@ ATLASFLAGS = -DSTANDALONE \
 -I tools/egammaAnalysisUtils-00-03-53 \
 -I tools/MuonIsolationCorrection-00-08 \
 -I tools/MuonMomentumCorrections-00-07-00 \
--I tools/MuonEfficiencyCorrections-02-01-01
+-I tools/MuonEfficiencyCorrections-02-01-03
 
 ATLASLIBS = -L./tools \
 -lggFReweighting \

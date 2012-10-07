@@ -24,7 +24,7 @@ ATLASFLAGS    =\
 -I egammaAnalysisUtils-00-03-53 \
 -I MuonIsolationCorrection-00-08 \
 -I MuonMomentumCorrections-00-07-00 \
--I MuonEfficiencyCorrections-02-01-01
+-I MuonEfficiencyCorrections-02-01-03
 
 CXX           =g++
 CXXFLAGS      =-g -O3 -fPIC -ansi -Wall -DROOTCORE $(ROOTCFLAGS) $(ATLASFLAGS) -Wunused-variable
@@ -83,9 +83,9 @@ OBJS7         =\
 MuonMomentumCorrections-00-07-00/Root/SmearingClass.o
 
 OBJS8         =\
-MuonEfficiencyCorrections-02-01-01/Root/AnalysisMuonConfigurableScaleFactors.o \
-MuonEfficiencyCorrections-02-01-01/Root/AnalysisMuonEfficiencyScaleFactors.o \
-MuonEfficiencyCorrections-02-01-01/Root/EtaPhiBinning.o
+MuonEfficiencyCorrections-02-01-03/Root/AnalysisMuonConfigurableScaleFactors.o \
+MuonEfficiencyCorrections-02-01-03/Root/AnalysisMuonEfficiencyScaleFactors.o \
+MuonEfficiencyCorrections-02-01-03/Root/EtaPhiBinning.o
 
 #############################################################################
 
