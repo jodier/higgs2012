@@ -296,10 +296,10 @@ class TLeptonAnalysis: public TNTuple
 #ifdef __YEAR2011
 		m_pileupReweighting->SetUnrepresentedDataAction(2);
 		//m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC11c.prw.root");
-		//m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_period_AllYear_Higgs_4l_2e2mu.root");
+		//m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_2011_AllYear_All_Good.root");
 
 		m_pileupReweighting->AddConfigFile("./tools/MC11c.prw.root");
-		m_pileupReweighting->AddLumiCalcFile("./tools/ilumicalc_period_AllYear_Higgs_4l_2e2mu.root");
+		m_pileupReweighting->AddLumiCalcFile("./tools/ilumicalc_2011_AllYear_All_Good.root");
 		m_pileupReweighting->SetDefaultChannel(109292);
 		m_pileupReweighting->Initialize();
 

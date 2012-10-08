@@ -19,7 +19,7 @@ ROOTLDFLAGS   = $(shell $(ROOTCONFIG) --ldflags)
 ATLASFLAGS    =\
 -I ggFReweighting-00-00-08 \
 -I HiggsZZ4lUtils-00-01-10 \
--I PileupReweighting-00-02-05 \
+-I PileupReweighting-00-02-06 \
 -I TrigMuonEfficiency-00-02-05 \
 -I egammaAnalysisUtils-00-03-53 \
 -I MuonIsolationCorrection-00-08 \
@@ -50,7 +50,7 @@ HiggsZZ4lUtils-00-01-10/Root/IsEMPlusPlusH4lDefs.o \
 HiggsZZ4lUtils-00-01-10/Root/MzzWeightFromMCFM.o
 
 OBJS3         =\
-PileupReweighting-00-02-05/Root/TPileupReweighting.o
+PileupReweighting-00-02-06/Root/TPileupReweighting.o
 
 OBJS4         =\
 TrigMuonEfficiency-00-02-05/Root/ElectronTriggerMatching.o \
