@@ -18,7 +18,7 @@ ROOTLDFLAGS   = $(shell $(ROOTCONFIG) --ldflags)
 
 ATLASFLAGS    =\
 -I ggFReweighting-00-00-08 \
--I HiggsZZ4lUtils-00-01-10 \
+-I HiggsZZ4lUtils-00-01-18 \
 -I PileupReweighting-00-02-06 \
 -I TrigMuonEfficiency-00-02-05 \
 -I egammaAnalysisUtils-00-03-53 \
@@ -41,13 +41,13 @@ OBJS1         =\
 ggFReweighting-00-00-08/ggFReweighting.o
 
 OBJS2         =\
-HiggsZZ4lUtils-00-01-10/Root/BkgCrossSection.o \
-HiggsZZ4lUtils-00-01-10/Root/ElectronMCClassification.o \
-HiggsZZ4lUtils-00-01-10/Root/ElectronRecoClassification.o \
-HiggsZZ4lUtils-00-01-10/Root/GetQuadVertexIndex.o \
-HiggsZZ4lUtils-00-01-10/Root/HiggsCrossSection.o \
-HiggsZZ4lUtils-00-01-10/Root/IsEMPlusPlusH4lDefs.o \
-HiggsZZ4lUtils-00-01-10/Root/MzzWeightFromMCFM.o
+HiggsZZ4lUtils-00-01-18/Root/BkgCrossSection.o \
+HiggsZZ4lUtils-00-01-18/Root/ElectronMCClassification.o \
+HiggsZZ4lUtils-00-01-18/Root/ElectronRecoClassification.o \
+HiggsZZ4lUtils-00-01-18/Root/GetQuadVertexIndex.o \
+HiggsZZ4lUtils-00-01-18/Root/HiggsCrossSection.o \
+HiggsZZ4lUtils-00-01-18/Root/IsEMPlusPlusH4lDefs.o \
+HiggsZZ4lUtils-00-01-18/Root/MzzWeightFromMCFM.o
 
 OBJS3         =\
 PileupReweighting-00-02-06/Root/TPileupReweighting.o
