@@ -451,7 +451,7 @@ class TLeptonAnalysis: public TNTuple
 		/* muon */
 		m_triggerNavigationVariables->set_trig_RoI_EF_mu_Muon_ROI(trig_RoI_EF_mu_Muon_ROI);
 
-
+		m_triggerNavigationVariables->set_trig_EF_trigmuonef_track_MuonType(trig_EF_trigmuonef_track_MuonType); 
 #ifdef __YEAR2011
 		m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainer(trig_RoI_EF_mu_TrigMuonEFInfoContainer_eMuonEFInfo);
 		m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus(trig_RoI_EF_mu_TrigMuonEFInfoContainer_eMuonEFInfoStatus);

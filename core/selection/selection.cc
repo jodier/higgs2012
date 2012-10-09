@@ -45,14 +45,6 @@ Float_t TLeptonAnalysis::eventGetWeight1(void)
 {
 #ifdef __IS_MC
 	Float_t weight = 1.0f;
-
-//	if(mcevt_weight[0].size() > 0)
-//	{
-//		if(mcevt_weight[0][0].size() == 1)
-//		{
-//			weight = mcevt_weight[0][0][0];
-//		}
-//	}
 	
 	weight = (*mcevt_weight)[0].at(0);
 

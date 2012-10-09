@@ -276,6 +276,7 @@ void D3PDSkimmer_MC2011(void)
 	chain->SetBranchStatus("trig_EF_trigmuonef_track_SA_pt", 1);
 	chain->SetBranchStatus("trig_EF_trigmuonef_track_SA_eta", 1);
 	chain->SetBranchStatus("trig_EF_trigmuonef_track_SA_phi", 1);
+	chain->SetBranchStatus("trig_EF_trigmuonef_track_MuonType", 1);
 	chain->SetBranchStatus("trig_EF_trigmugirl_track_CB_pt", 1);
 	chain->SetBranchStatus("trig_EF_trigmugirl_track_CB_eta", 1);
 	chain->SetBranchStatus("trig_EF_trigmugirl_track_CB_phi", 1);

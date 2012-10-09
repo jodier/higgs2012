@@ -231,6 +231,7 @@ public :
    std::vector<std::vector<float> > *trig_EF_trigmuonef_track_CB_pt;
    std::vector<std::vector<float> > *trig_EF_trigmuonef_track_CB_eta;
    std::vector<std::vector<float> > *trig_EF_trigmuonef_track_CB_phi;
+   std::vector<std::vector<int> > *trig_EF_trigmuonef_track_MuonType;
    std::vector<std::vector<float> > *trig_EF_trigmugirl_track_CB_pt;
    std::vector<std::vector<float> > *trig_EF_trigmugirl_track_CB_eta;
    std::vector<std::vector<float> > *trig_EF_trigmugirl_track_CB_phi;
@@ -451,6 +452,7 @@ public :
    TBranch        *b_trig_EF_trigmuonef_track_CB_pt;   //!
    TBranch        *b_trig_EF_trigmuonef_track_CB_eta;   //!
    TBranch        *b_trig_EF_trigmuonef_track_CB_phi;   //!
+   TBranch        *b_trig_EF_trigmuonef_track_MuonType;   //!
    TBranch        *b_trig_EF_trigmugirl_track_CB_pt;   //!
    TBranch        *b_trig_EF_trigmugirl_track_CB_eta;   //!
    TBranch        *b_trig_EF_trigmugirl_track_CB_phi;   //!
@@ -712,6 +714,7 @@ void THiggsD3PD::Init(TTree *tree)
    trig_EF_trigmuonef_track_CB_pt = 0;
    trig_EF_trigmuonef_track_CB_eta = 0;
    trig_EF_trigmuonef_track_CB_phi = 0;
+   trig_EF_trigmuonef_track_MuonType = 0;
    trig_EF_trigmugirl_track_CB_pt = 0;
    trig_EF_trigmugirl_track_CB_eta = 0;
    trig_EF_trigmugirl_track_CB_phi = 0;
@@ -934,6 +937,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("trig_EF_trigmuonef_track_CB_pt", &trig_EF_trigmuonef_track_CB_pt, &b_trig_EF_trigmuonef_track_CB_pt);
    fChain->SetBranchAddress("trig_EF_trigmuonef_track_CB_eta", &trig_EF_trigmuonef_track_CB_eta, &b_trig_EF_trigmuonef_track_CB_eta);
    fChain->SetBranchAddress("trig_EF_trigmuonef_track_CB_phi", &trig_EF_trigmuonef_track_CB_phi, &b_trig_EF_trigmuonef_track_CB_phi);
+   fChain->SetBranchAddress("trig_EF_trigmuonef_track_MuonType", &trig_EF_trigmuonef_track_MuonType, &b_trig_EF_trigmuonef_track_MuonType);
    fChain->SetBranchAddress("trig_EF_trigmugirl_track_CB_pt", &trig_EF_trigmugirl_track_CB_pt, &b_trig_EF_trigmugirl_track_CB_pt);
    fChain->SetBranchAddress("trig_EF_trigmugirl_track_CB_eta", &trig_EF_trigmugirl_track_CB_eta, &b_trig_EF_trigmugirl_track_CB_eta);
    fChain->SetBranchAddress("trig_EF_trigmugirl_track_CB_phi", &trig_EF_trigmugirl_track_CB_phi, &b_trig_EF_trigmugirl_track_CB_phi);
