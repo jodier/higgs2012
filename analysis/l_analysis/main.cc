@@ -93,7 +93,12 @@ void TLeptonFinder::Loop(void)
 #ifdef __IS_MC
 		Bool_t isOkVertex = (nPV3 > 0) && (0x00000000001);
 #else
+   #ifdef __YEAR2011
 		Bool_t isOkVertex = (nPV3 > 0) && (larError != 2);
+   #endif
+   #ifdef __YEAR2012
+		Bool_t isOkVertex = (nPV3 > 0) && (larError != 2) && ((coreFlags&0x40000) == 0);
+   #endif
 #endif
 		/*---------------------------------------------------------*/
 		/* TRIGGERS						   */
