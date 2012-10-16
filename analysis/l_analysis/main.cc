@@ -6,6 +6,11 @@
 
 #include "main.h"
 
+#ifdef __IS_MC
+  #include <HiggsZZ4lUtils/McOverlapRemoval.h>
+#endif
+	
+
 /*-------------------------------------------------------------------------*/
 
 void core::execute(TChain *chain)
@@ -61,13 +66,30 @@ void TLeptonFinder::Loop(void)
 	for(Long64_t event = 0; event < eventNr; event++)
 	{
 		/*---------------------------------------------------------*/
-
 		LoadEvent(event, eventNr);
 
 		if(event == 0)
 		{
 			triggerInit();
 		}
+
+		/*---------------------------------------------------------*/
+
+#ifdef __IS_MC
+//if ttbar
+		if(killEvent(105200, 146369, mc_n, mc_pt, mc_eta, mc_phi, mc_m, mc_status, mc_pdgId))
+			continue;
+//if ZZ PowHeg 4e
+		if(killEvent(126937, 167162, mc_n, mc_pt, mc_eta, mc_phi, mc_m, mc_status, mc_pdgId))
+			continue;
+//if ZZ PowHeg 2e2mu
+		if(killEvent(126938, 167163, mc_n, mc_pt, mc_eta, mc_phi, mc_m, mc_status, mc_pdgId))
+			continue;
+//if ZZ PowHeg 4mu
+		if(killEvent(126940, 167165, mc_n, mc_pt, mc_eta, mc_phi, mc_m, mc_status, mc_pdgId))
+			continue;
+#endif
+		/*---------------------------------------------------------*/
 
 		fixeEnergy();
 
@@ -97,7 +119,7 @@ void TLeptonFinder::Loop(void)
 		Bool_t isOkVertex = (nPV3 > 0) && (larError != 2);
    #endif
    #ifdef __YEAR2012
-		Bool_t isOkVertex = (nPV3 > 0) && (larError != 2) && ((coreFlags&0x40000) == 0);
+		Bool_t isOkVertex = (nPV3 > 0) && (larError != 2) && ((coreFlags&0x40000) == 0) && (tileError != 2);
    #endif
 #endif
 		/*---------------------------------------------------------*/

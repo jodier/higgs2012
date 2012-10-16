@@ -14,6 +14,7 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("EventNumber", 1);
 	chain->SetBranchStatus("lbn", 1);
 	chain->SetBranchStatus("larError", 1);
+	chain->SetBranchStatus("tileError", 1);
 	chain->SetBranchStatus("coreFlags", 1);
 
 	/*-----------------------------------------------------------------*/

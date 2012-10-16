@@ -28,6 +28,12 @@ void D3PDSkimmer_MC2012(void)
 	/*-----------------------------------------------------------------*/
 
 	chain->SetBranchStatus("mc_n", 1);
+	chain->SetBranchStatus("mc_pt", 1);
+	chain->SetBranchStatus("mc_m", 1);
+	chain->SetBranchStatus("mc_eta", 1);
+	chain->SetBranchStatus("mc_phi", 1);
+	chain->SetBranchStatus("mc_m", 1);
+	chain->SetBranchStatus("mc_status", 1);
 	chain->SetBranchStatus("mc_pdgId", 1);
 	chain->SetBranchStatus("mc_children", 1);
 	chain->SetBranchStatus("mc_child_index", 1);

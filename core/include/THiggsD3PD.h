@@ -49,6 +49,7 @@ public :
    Float_t         actualIntPerXing;
    Float_t         averageIntPerXing;
    UInt_t          larError;
+   UInt_t          tileError;
    UInt_t          coreFlags;
    Int_t           el_n;
    std::vector<float>   *el_charge;
@@ -254,6 +255,7 @@ public :
    TBranch        *b_actualIntPerXing;   //!
    TBranch        *b_averageIntPerXing;   //!
    TBranch        *b_larError;   //!
+   TBranch        *b_tileError;   //!
    TBranch        *b_coreFlags;   //!
    TBranch        *b_el_n;   //!
    TBranch        *b_el_charge;   //!
@@ -708,6 +710,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("actualIntPerXing", &actualIntPerXing, &b_actualIntPerXing);
    fChain->SetBranchAddress("averageIntPerXing", &averageIntPerXing, &b_averageIntPerXing);
    fChain->SetBranchAddress("larError", &larError, &b_larError);
+   fChain->SetBranchAddress("tileError", &tileError, &b_tileError);
    fChain->SetBranchAddress("coreFlags", &coreFlags, &b_coreFlags);
    fChain->SetBranchAddress("el_n", &el_n, &b_el_n);
    fChain->SetBranchAddress("el_charge", &el_charge, &b_el_charge);

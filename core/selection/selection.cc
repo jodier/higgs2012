@@ -26,7 +26,9 @@ void TLeptonAnalysis::fixeEnergy(void)
 			el_cl_eta->at(i),
 			el_cl_E->at(i),
 			egRescaler::EnergyRescalerUpgrade::Electron,
-			egRescaler::EnergyRescalerUpgrade::Nominal
+			egRescaler::EnergyRescalerUpgrade::Nominal,
+			1.0,
+			RunNumber
 		);
 #endif
 #ifdef __YEAR2011

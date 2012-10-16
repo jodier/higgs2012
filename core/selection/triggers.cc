@@ -501,7 +501,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 			}
   #endif
   #ifdef __YEAR2012
-			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'B')
+			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E')
 			{
 				chain1_A = "EF_mu24i_tight";
 				chain1_B = "EF_mu36_tight";
@@ -640,7 +640,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 
 /*-------------------------------------------------------------------------*/
 
-/* Info: use <BASE>/tools/hash to conpute the hashs
+/* Info: use <BASE>/tools/hash to compute the hashs
  */
 
 Int_t TLeptonAnalysis::triggerTrace(UInt_t result[])
