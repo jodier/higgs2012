@@ -286,7 +286,7 @@ class TLeptonAnalysis: public TNTuple
 		/* VERTEX POSITION REWEIGHTING				   */
 		/*---------------------------------------------------------*/
 #if defined( __YEAR2012) && defined(__IS_MC)
-		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-03-53/share/zvtx_weights_2011_2012.root");
+		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-03-55/share/zvtx_weights_2011_2012.root");
 #endif
 		/*---------------------------------------------------------*/
 		/* PILEUP REWEIGHTING					   */
@@ -368,10 +368,10 @@ class TLeptonAnalysis: public TNTuple
 		/* ELECTRON ENERGY RESCALER				   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2011
-		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-03-53/share/EnergyRescalerData.root","2011","es2011a");
+		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-03-55/share/EnergyRescalerData.root","2011","es2011a");
 #endif
 #ifdef __YEAR2012
-		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-03-53/share/EnergyRescalerData.root","2012","es2012");
+		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-03-55/share/EnergyRescalerData.root","2012","es2012");
 #endif
 		/*---------------------------------------------------------*/
 		/* ELECTRON SCALE FACTORS				   */

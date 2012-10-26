@@ -76,17 +76,8 @@ void TLeptonFinder::Loop(void)
 		/*---------------------------------------------------------*/
 
 #ifdef __IS_MC
-//if ttbar
-		if(killEvent(105200, 146369, mc_n, mc_pt, mc_eta, mc_phi, mc_m, mc_status, mc_pdgId))
-			continue;
-//if ZZ PowHeg 4e
-		if(killEvent(126937, 167162, mc_n, mc_pt, mc_eta, mc_phi, mc_m, mc_status, mc_pdgId))
-			continue;
-//if ZZ PowHeg 2e2mu
-		if(killEvent(126938, 167163, mc_n, mc_pt, mc_eta, mc_phi, mc_m, mc_status, mc_pdgId))
-			continue;
-//if ZZ PowHeg 4mu
-		if(killEvent(126940, 167165, mc_n, mc_pt, mc_eta, mc_phi, mc_m, mc_status, mc_pdgId))
+//For ZZ and ttbar remove event in mass region 110-150 GeV
+		if(killEvent(mc_channel_number, 146369, mc_n, mc_pt, mc_eta, mc_phi, mc_m, mc_status, mc_pdgId))
 			continue;
 #endif
 		/*---------------------------------------------------------*/
