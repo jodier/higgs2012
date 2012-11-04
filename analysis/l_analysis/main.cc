@@ -28,6 +28,7 @@ void core::execute(TChain *chain)
 
 	file.cd();
 
+	algo.m_tree0.Write();
 	algo.m_tree1.Write();
 	algo.m_tree2.Write();
 
@@ -335,6 +336,23 @@ void TLeptonFinder::Loop(void)
 #endif
 		/*---------------------------------------------------------*/
 		/*---------------------------------------------------------*/
+		/*- Event inforations					  -*/
+		/*---------------------------------------------------------*/
+		/*---------------------------------------------------------*/
+
+		m_RunNumber = RunNumber;
+		m_EventNumber = EventNumber;
+		m_LumiBlock = lbn;
+
+		m_nPV2 = nPV2;
+		m_nIntPerXing = averageIntPerXing;
+		m_EtMiss = MET_RefFinal_et;
+
+		m_elTrigger = isOkElTrigger;
+		m_muTrigger = isOkMuTrigger;
+
+		/*---------------------------------------------------------*/
+		/*---------------------------------------------------------*/
 		/*- ELECTRONS						  -*/
 		/*---------------------------------------------------------*/
 		/*---------------------------------------------------------*/
@@ -347,18 +365,6 @@ void TLeptonFinder::Loop(void)
 		for(Int_t i = 0; i < elIndexNr; i++)
 		{
 			Int_t index = elIndexArray[i];
-
-			/**/
-
-			m_l[0].RunNumber = RunNumber;
-			m_l[0].EventNumber = EventNumber;
-			m_l[0].LumiBlock = lbn;
-
-			m_l[0].nPV2 = nPV2;
-			m_l[0].nIntPerXing = averageIntPerXing;
-
-			m_l[0].elTrigger = isOkElTrigger;
-			m_l[0].muTrigger = isOkMuTrigger;
 
 			/**/
 
@@ -469,18 +475,6 @@ void TLeptonFinder::Loop(void)
 		for(Int_t i = 0; i < muCB_PLUS_STIndexNr; i++)
 		{
 			Int_t index = muCB_PLUS_STIndexArray[i];
-
-			/**/
-
-			m_l[1].RunNumber = RunNumber;
-			m_l[1].EventNumber = EventNumber;
-			m_l[1].LumiBlock = lbn;
-
-			m_l[1].nPV2 = nPV2;
-			m_l[1].nIntPerXing = averageIntPerXing;
-
-			m_l[1].elTrigger = isOkElTrigger;
-			m_l[1].muTrigger = isOkMuTrigger;
 
 			/**/
 
@@ -626,6 +620,7 @@ void TLeptonFinder::Loop(void)
 		   ||
 		   muCB_PLUS_STIndexNr >= 2
 		 ) {
+			m_tree0.Fill();
 			m_tree1.Fill();
 			m_tree2.Fill();
 		}

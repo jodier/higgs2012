@@ -16,35 +16,40 @@
 class TLeptonFinder: public TLeptonAnalysis
 {
   public:
+	TTree m_tree0;
 	TTree m_tree1;
 	TTree m_tree2;
 
 	TLeptonFinder(TChain *chain): TLeptonAnalysis(chain)
 	{
+		m_tree0.SetName("event");
 		m_tree1.SetName("el");
 		m_tree2.SetName("mu");
 
-		TTree *LTreeArray[2] = {&m_tree1, &m_tree2};
+		/*---------------------------------------------------------*/
+		/* General Informations					   */
+		/*---------------------------------------------------------*/
+
+		m_tree0.Branch("RunNumber", &m_RunNumber, "RunNumber/I");
+		m_tree0.Branch("EventNumber", &m_EventNumber, "EventNumber/I");
+		m_tree0.Branch("LumiBlock", &m_LumiBlock, "LumiBlock/I");
+
+		m_tree0.Branch("nPV2", &m_nPV2, "nPV2/I");
+		m_tree0.Branch("nIntPerXing", &m_nIntPerXing, "nIntPerXing/F");
+		m_tree0.Branch("EtMiss", &m_EtMiss, "EtMiss/F");
+
+		m_tree0.Branch("elTrigger", &m_elTrigger, "elTrigger/I");
+		m_tree0.Branch("muTrigger", &m_muTrigger, "muTrigger/I");
 
 		/*---------------------------------------------------------*/
-		/* LEPTON ANALYSIS					   */
+		/* LEPTON Informations					   */
 		/*---------------------------------------------------------*/
+
+		TTree *LTreeArray[2] = {&m_tree1, &m_tree2};
 
 		for(int i = 0; i < 2; i++)
 		{
 			TTree *tree = LTreeArray[i];
-
-			/**/
-
-			tree->Branch("RunNumber", &m_l[i].RunNumber, "RunNumber/I");
-			tree->Branch("EventNumber", &m_l[i].EventNumber, "EventNumber/I");
-			tree->Branch("LumiBlock", &m_l[i].LumiBlock, "LumiBlock/I");
-
-			tree->Branch("nPV2", &m_l[i].nPV2, "nPV2/I");
-			tree->Branch("nIntPerXing", &m_l[i].nIntPerXing, "nIntPerXing/F");
-
-			tree->Branch("elTrigger", &m_l[i].elTrigger, "elTrigger/I");
-			tree->Branch("muTrigger", &m_l[i].muTrigger, "muTrigger/I");
 
 			/**/
 
@@ -95,19 +100,19 @@ class TLeptonFinder: public TLeptonAnalysis
 
   private:
 
+	Int_t m_RunNumber;
+	Int_t m_EventNumber;
+	Int_t m_LumiBlock;
+
+	Int_t m_nPV2;
+	Float_t m_nIntPerXing;
+	Float_t m_EtMiss;
+
+	Int_t m_elTrigger;
+	Int_t m_muTrigger;
+
 	struct __lepton_s
 	{
-		Int_t RunNumber;
-		Int_t EventNumber;
-		Int_t LumiBlock;
-
-		Int_t nPV2;
-		Float_t nIntPerXing;
-
-		Int_t elTrigger;
-		Int_t muTrigger;
-
-		/**/
 
 		Int_t n;
 

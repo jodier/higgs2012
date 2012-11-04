@@ -209,6 +209,7 @@ public :
    std::vector<float>   *mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased;
    std::vector<int>     *mu_calo_truth_type;
    std::vector<int>     *mu_calo_truth_mothertype;
+   Float_t         MET_RefFinal_et;
    Int_t           vxp_n;
    std::vector<int>     *vxp_nTracks;
    std::vector<std::vector<double> > *mcevt_weight;
@@ -435,6 +436,7 @@ public :
    TBranch        *b_mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased;   //!
    TBranch        *b_mu_calo_truth_type;   //!
    TBranch        *b_mu_calo_truth_mothertype;   //!
+   TBranch        *b_MET_RefFinal_et;   //!
    TBranch        *b_vxp_n;   //!
    TBranch        *b_vxp_nTracks;   //!
    TBranch        *b_mcevt_weight;   //!
@@ -925,6 +927,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased", &mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased, &b_mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased);
    fChain->SetBranchAddress("mu_calo_truth_type", &mu_calo_truth_type, &b_mu_calo_truth_type);
    fChain->SetBranchAddress("mu_calo_truth_mothertype", &mu_calo_truth_mothertype, &b_mu_calo_truth_mothertype);
+   fChain->SetBranchAddress("MET_RefFinal_et", &MET_RefFinal_et, &b_MET_RefFinal_et);
    fChain->SetBranchAddress("vxp_n", &vxp_n, &b_vxp_n);
    fChain->SetBranchAddress("vxp_nTracks", &vxp_nTracks, &b_vxp_nTracks);
    fChain->SetBranchAddress("mcevt_weight", &mcevt_weight, &b_mcevt_weight);
