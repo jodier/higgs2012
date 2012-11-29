@@ -19,12 +19,12 @@ ROOTLDFLAGS   = $(shell $(ROOTCONFIG) --ldflags)
 ATLASFLAGS    =\
 -I ggFReweighting-00-00-08 \
 -I HiggsZZ4lUtils-00-01-25 \
--I PileupReweighting-00-02-06 \
+-I PileupReweighting-00-02-08 \
 -I TrigMuonEfficiency-00-02-17 \
--I egammaAnalysisUtils-00-03-55 \
+-I egammaAnalysisUtils-00-03-61 \
 -I MuonIsolationCorrection-00-08 \
--I MuonMomentumCorrections-00-07-00 \
--I MuonEfficiencyCorrections-02-01-03
+-I MuonMomentumCorrections-00-07-01 \
+-I MuonEfficiencyCorrections-02-01-05
 
 CXX           =g++
 CXXFLAGS      =-g -O3 -fPIC -ansi -Wall -DROOTCORE $(ROOTCFLAGS) $(ATLASFLAGS) -Wunused-variable
@@ -51,7 +51,7 @@ HiggsZZ4lUtils-00-01-25/Root/McOverlapRemoval.o \
 HiggsZZ4lUtils-00-01-25/Root/MzzWeightFromMCFM.o
 
 OBJS3         =\
-PileupReweighting-00-02-06/Root/TPileupReweighting.o
+PileupReweighting-00-02-08/Root/TPileupReweighting.o
 
 OBJS4         =\
 TrigMuonEfficiency-00-02-17/Root/ElectronTriggerMatching.o \
@@ -62,32 +62,32 @@ TrigMuonEfficiency-00-02-17/Root/MuonHypothesis.o \
 TrigMuonEfficiency-00-02-17/Root/MuonTriggerMatching.o
 
 OBJS5         =\
-egammaAnalysisUtils-00-03-55/Root/CaloIsoCorrection.o \
-egammaAnalysisUtils-00-03-55/Root/checkOQ.o \
-egammaAnalysisUtils-00-03-55/Root/ConvertedPhotonScaleTool.o \
-egammaAnalysisUtils-00-03-55/Root/egammaSFclass.o \
-egammaAnalysisUtils-00-03-55/Root/egammaTriggerMatching.o \
-egammaAnalysisUtils-00-03-55/Root/EisoTool.o \
-egammaAnalysisUtils-00-03-55/Root/ElectronEfficiencySFTool.o \
-egammaAnalysisUtils-00-03-55/Root/ElectronLikelihoodTool.o \
-egammaAnalysisUtils-00-03-55/Root/EnergyRescaler.o \
-egammaAnalysisUtils-00-03-55/Root/EnergyRescalerUpgrade.o \
-egammaAnalysisUtils-00-03-55/Root/FsrPhotons.o \
-egammaAnalysisUtils-00-03-55/Root/IsEMPlusPlusDefs.o \
-egammaAnalysisUtils-00-03-55/Root/MultiLeptonDefs.o \
-egammaAnalysisUtils-00-03-55/Root/ProbeQualityCuts.o \
-egammaAnalysisUtils-00-03-55/Root/VertexPositionReweightingTool.o
+egammaAnalysisUtils-00-03-61/Root/CaloIsoCorrection.o \
+egammaAnalysisUtils-00-03-61/Root/checkOQ.o \
+egammaAnalysisUtils-00-03-61/Root/ConvertedPhotonScaleTool.o \
+egammaAnalysisUtils-00-03-61/Root/egammaSFclass.o \
+egammaAnalysisUtils-00-03-61/Root/egammaTriggerMatching.o \
+egammaAnalysisUtils-00-03-61/Root/EisoTool.o \
+egammaAnalysisUtils-00-03-61/Root/ElectronEfficiencySFTool.o \
+egammaAnalysisUtils-00-03-61/Root/ElectronLikelihoodTool.o \
+egammaAnalysisUtils-00-03-61/Root/EnergyRescaler.o \
+egammaAnalysisUtils-00-03-61/Root/EnergyRescalerUpgrade.o \
+egammaAnalysisUtils-00-03-61/Root/FsrPhotons.o \
+egammaAnalysisUtils-00-03-61/Root/IsEMPlusPlusDefs.o \
+egammaAnalysisUtils-00-03-61/Root/MultiLeptonDefs.o \
+egammaAnalysisUtils-00-03-61/Root/ProbeQualityCuts.o \
+egammaAnalysisUtils-00-03-61/Root/VertexPositionReweightingTool.o
 
 OBJS6         =\
 MuonIsolationCorrection-00-08/Root/CorrectCaloIso.o
 
 OBJS7         =\
-MuonMomentumCorrections-00-07-00/Root/SmearingClass.o
+MuonMomentumCorrections-00-07-01/Root/SmearingClass.o
 
 OBJS8         =\
-MuonEfficiencyCorrections-02-01-03/Root/AnalysisMuonConfigurableScaleFactors.o \
-MuonEfficiencyCorrections-02-01-03/Root/AnalysisMuonEfficiencyScaleFactors.o \
-MuonEfficiencyCorrections-02-01-03/Root/EtaPhiBinning.o
+MuonEfficiencyCorrections-02-01-05/Root/AnalysisMuonConfigurableScaleFactors.o \
+MuonEfficiencyCorrections-02-01-05/Root/AnalysisMuonEfficiencyScaleFactors.o \
+MuonEfficiencyCorrections-02-01-05/Root/EtaPhiBinning.o
 
 #############################################################################
 
