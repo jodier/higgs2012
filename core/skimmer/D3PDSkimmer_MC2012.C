@@ -49,6 +49,7 @@ void D3PDSkimmer_MC2012(void)
 	/*-----------------------------------------------------------------*/
 
 	chain->SetBranchStatus("el_author", 1);
+	chain->SetBranchStatus("el_isEM", 1);
 	chain->SetBranchStatus("el_charge", 1);
 	chain->SetBranchStatus("el_etas2", 1);
 	chain->SetBranchStatus("el_cl_E", 1);
@@ -77,7 +78,9 @@ void D3PDSkimmer_MC2012(void)
 	chain->SetBranchStatus("el_ptcone20", 1);
 	chain->SetBranchStatus("el_tight", 1);
 	chain->SetBranchStatus("el_trackd0", 1);
+	chain->SetBranchStatus("el_trackd0pv", 1);
 	chain->SetBranchStatus("el_trackd0pvunbiased", 1);
+	chain->SetBranchStatus("el_tracksigd0pv", 1);
 	chain->SetBranchStatus("el_tracksigd0pvunbiased", 1);
 	chain->SetBranchStatus("el_tracketa", 1);
 	chain->SetBranchStatus("el_trackphi", 1);
@@ -104,11 +107,13 @@ void D3PDSkimmer_MC2012(void)
 	chain->SetBranchStatus("el_wstot", 1);
 	chain->SetBranchStatus("el_emaxs1", 1);
 	chain->SetBranchStatus("el_Emax2", 1);
+	chain->SetBranchStatus("el_ws3", 1);
 	chain->SetBranchStatus("el_deltaeta1", 1);
 	chain->SetBranchStatus("el_deltaphiRescaled", 1);
 	chain->SetBranchStatus("el_nBLHits", 1);
 	chain->SetBranchStatus("el_nBLayerOutliers", 1);
 	chain->SetBranchStatus("el_nSiHits", 1);
+	chain->SetBranchStatus("el_TRTHighTHitsRatio", 1);
 	chain->SetBranchStatus("el_nPixelDeadSensors", 1);
 	chain->SetBranchStatus("el_nPixelOutliers", 1);
 	chain->SetBranchStatus("el_nSCTDeadSensors", 1);
@@ -118,6 +123,7 @@ void D3PDSkimmer_MC2012(void)
 	chain->SetBranchStatus("el_nTRTHighTHits", 1);
 	chain->SetBranchStatus("el_nTRTHighTOutliers", 1);
 	chain->SetBranchStatus("el_expectBLayerHit", 1);
+	chain->SetBranchStatus("el_expectHitInBLayer", 1);
 	chain->SetBranchStatus("el_truth_mothertype", 1);
 	chain->SetBranchStatus("el_truth_type", 1);
 

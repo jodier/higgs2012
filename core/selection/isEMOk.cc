@@ -39,6 +39,7 @@ Bool_t TLeptonAnalysis::el_isEMOk_at(Int_t index)
 	);
 #endif
 #ifdef __YEAR2012
+
 	double Et_cl            = el_cl_E->at(index) / cosh(el_etas2->at(index));
 	double etas2            = el_etas2->at(index);
 	double rHad             = el_Ethad->at(index) / Et_cl;
@@ -85,6 +86,65 @@ Bool_t TLeptonAnalysis::el_isEMOk_at(Int_t index)
 		nPixDeadSensors, deltaPhiRescaled, dpOverp,
 		rTRT, nTRTTotal, nBlayerHits, expectBlayer
 	);
+
+
+/*	double eta              = el_etas2->at(index);
+	double Et               = electronGetEt(index);
+	double f3               = el_f3->at(index);
+	double rHad             = el_Ethad->at(index) / Et;
+	double rHad1            = el_Ethad1->at(index) / Et;
+	double Reta             = el_reta->at(index);
+	double w2               = el_weta2->at(index);
+	double f1               = el_f1->at(index);
+	double DEmaxs1          = (el_emaxs1->at(index) + el_Emax2->at(index) == 0) ? 0 : (el_emaxs1->at(index) - el_Emax2->at(index)) / (el_emaxs1->at(index) + el_Emax2->at(index));
+	double deltaEta         = el_deltaeta1->at(index);
+	double d0		= el_trackd0pv->at(index);
+	double TRratio		= el_TRTHighTHitsRatio->at(index);
+	double d0sigma		= el_tracksigd0pv->at(index);
+	double rphi		= el_rphi->at(index);
+	double ws3		= el_ws3->at(index);
+	double deltaPoverP	= 0.0;
+	for(unsigned int i = 0; i < el_refittedTrack_LMqoverp->at(index).size(); i++)
+	{
+		if(el_refittedTrack_author->at(index).at(i) == 4)
+		{
+			deltaPoverP = 1.0 - el_trackqoverp->at(index) / el_refittedTrack_LMqoverp->at(index).at(i);
+		}
+	}
+	double deltaphires	= el_deltaphiRescaled->at(index);
+	int    nSi              = el_nSiHits->at(index);
+	int nSiOutliers		= el_nPixelOutliers->at(index) + el_nSCTOutliers->at(index);
+	int    nPix             = el_nPixHits->at(index);
+	int nPixOutliers	= el_nPixelOutliers->at(index);
+	int nBlayer		= el_nBLHits->at(index);
+	int nBlayerOutliers	= el_nBLayerOutliers->at(index);
+	bool expectBlayer	= el_expectHitInBLayer->at(index);
+	int convBit		= el_isEM->at(index)&(0x1 << egammaPID::ConversionMatch_Electron);
+	double nPV2 = 0;
+	for(Int_t i = 0; i < Int_t(vxp_nTracks->size()); i++)
+	{
+		if(vxp_nTracks->at(i) >= 2) {
+			nPV2++;
+		}
+
+	}
+
+	int    nPixDeadSensors  = el_nPixelDeadSensors->at(index);
+
+	if(( expectBlayer && ((nBlayer + nBlayerOutliers) < 1) ) || ( (nPixDeadSensors + nPix) < 2 ))
+		return 0;
+
+	else
+		return m_ElectronLikelihoodTool->passLikelihood(LikeEnum::Loose,
+			    eta, Et, f3, rHad, rHad1,
+			    Reta, w2, f1, DEmaxs1,
+			    deltaEta, d0, TRratio,
+			    d0sigma, rphi, ws3,
+			    deltaPoverP, deltaphires,
+			    nSi, nSiOutliers, nPix, nPixOutliers,
+			    nBlayer, nBlayerOutliers, expectBlayer,
+			     convBit, nPV2); 
+*/
 #endif
 }
 

@@ -388,12 +388,7 @@ void TLeptonFinder::Loop(void)
 
 					m_l[0].l_z0[i] = el_trackz0pvunbiased->at(index);
 					m_l[0].l_d0[i] = el_trackd0pvunbiased->at(index);
-#ifdef __YEAR2011
 					m_l[0].l_clIso20[i] = el_Etcone20_at(index) / electronGetEt(index);
-#endif
-#ifdef __YEAR2012
-					m_l[0].l_clIso20[i] = el_Etcone20_at(index) / electronGetRawEt(index);
-#endif
 					m_l[0].l_tkIso20[i] = el_ptcone20->at(index) / electronGetEt(index);
 					m_l[0].l_d0sigma[i] = fabs((el_trackd0pvunbiased->at(index) - d0Bias) / el_tracksigd0pvunbiased->at(index));
 
@@ -423,7 +418,7 @@ void TLeptonFinder::Loop(void)
 #endif
 #ifdef __YEAR2012
 						if(deltaR_clust < 0.18f) {
-							m_l[0].l_clIso20[i] -= electronGetRawEt(xedni) / electronGetRawEt(index);
+							m_l[0].l_clIso20[i] -= electronGetRawEt(xedni) / electronGetEt(index);
 						}
 #endif
 					}

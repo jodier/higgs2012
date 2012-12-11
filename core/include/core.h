@@ -125,6 +125,8 @@ namespace core
 #include <egammaAnalysisUtils/EnergyRescalerUpgrade.h>
 #include <egammaAnalysisUtils/egammaSFclass.h>
 #include <egammaAnalysisUtils/VertexPositionReweightingTool.h>
+#include <egammaAnalysisUtils/ElectronLikelihoodTool.h>
+#include <egammaAnalysisUtils/egammaPIDdefs.h>
 
 #include <TrigMuonEfficiency/TriggerNavigationVariables.h>
 #include <TrigMuonEfficiency/ElectronTriggerMatching.h>
@@ -220,6 +222,7 @@ class TLeptonAnalysis: public TNTuple
 	egammaSFclass *m_egammaSF;
 
 	CorrectCaloIso *m_correctCaloIso;
+	ElectronLikelihoodTool  *m_ElectronLikelihoodTool;
 
 	TriggerNavigationVariables *m_triggerNavigationVariables;
 	ElectronTriggerMatching *m_elTriggerMatching;
@@ -364,6 +367,14 @@ class TLeptonAnalysis: public TNTuple
 		m_caloMuSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-05/share/", "CaloTag_2012_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
 		m_caloMuSCF->Initialise();
 #endif
+
+		/*---------------------------------------------------------*/
+		/* ELECTRON LIKELIHOOD ID				   */
+		/*---------------------------------------------------------*/
+#ifdef __YEAR2012
+		m_ElectronLikelihoodTool = new ElectronLikelihoodTool("./tools/egammaAnalysisUtils-00-03-61/share/ElectronLikelihoodPdfs.root");
+#endif
+	
 		/*---------------------------------------------------------*/
 		/* ELECTRON ENERGY RESCALER				   */
 		/*---------------------------------------------------------*/

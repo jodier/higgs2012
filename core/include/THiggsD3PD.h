@@ -54,6 +54,7 @@ public :
    Int_t           el_n;
    std::vector<float>   *el_charge;
    std::vector<int>     *el_author;
+   std::vector<unsigned int> *el_isEM;
    std::vector<unsigned int> *el_OQ;
    std::vector<int>     *el_type;
    std::vector<int>     *el_origin;
@@ -68,6 +69,7 @@ public :
    std::vector<float>   *el_Ethad1;
    std::vector<float>   *el_f1;
    std::vector<float>   *el_Emax2;
+   std::vector<float>   *el_ws3;
    std::vector<float>   *el_wstot;
    std::vector<float>   *el_emaxs1;
    std::vector<float>   *el_weta2;
@@ -91,6 +93,7 @@ public :
    std::vector<float>   *el_rawcl_E;
    std::vector<float>   *el_rawcl_pt;
    std::vector<float>   *el_trackd0;
+   std::vector<float>   *el_trackd0pv;
    std::vector<float>   *el_trackz0;
    std::vector<float>   *el_trackphi;
    std::vector<float>   *el_tracktheta;
@@ -110,10 +113,13 @@ public :
    std::vector<int>     *el_nTRTOutliers;
    std::vector<int>     *el_nTRTHighTOutliers;
    std::vector<int>     *el_expectBLayerHit;
+   std::vector<float>   *el_expectHitInBLayer;
    std::vector<int>     *el_nSiHits;
+   std::vector<float>   *el_TRTHighTHitsRatio;
    std::vector<float>   *el_trackd0pvunbiased;
    std::vector<float>   *el_trackz0pvunbiased;
    std::vector<float>   *el_tracksigd0pvunbiased;
+   std::vector<float>   *el_tracksigd0pv;
    std::vector<float>   *el_Unrefittedtrack_d0;
    std::vector<float>   *el_Unrefittedtrack_z0;
    std::vector<float>   *el_Unrefittedtrack_phi;
@@ -281,6 +287,7 @@ public :
    TBranch        *b_el_n;   //!
    TBranch        *b_el_charge;   //!
    TBranch        *b_el_author;   //!
+   TBranch        *b_el_isEM;   //!
    TBranch        *b_el_OQ;   //!
    TBranch        *b_el_type;   //!
    TBranch        *b_el_origin;   //!
@@ -295,6 +302,7 @@ public :
    TBranch        *b_el_Ethad1;   //!
    TBranch        *b_el_f1;   //!
    TBranch        *b_el_Emax2;   //!
+   TBranch        *b_el_ws3;   //!
    TBranch        *b_el_wstot;   //!
    TBranch        *b_el_emaxs1;   //!
    TBranch        *b_el_weta2;   //!
@@ -318,6 +326,7 @@ public :
    TBranch        *b_el_rawcl_E;   //!
    TBranch        *b_el_rawcl_pt;   //!
    TBranch        *b_el_trackd0;   //!
+   TBranch        *b_el_trackd0pv;   //!
    TBranch        *b_el_trackz0;   //!
    TBranch        *b_el_trackphi;   //!
    TBranch        *b_el_tracktheta;   //!
@@ -337,10 +346,13 @@ public :
    TBranch        *b_el_nTRTOutliers;   //!
    TBranch        *b_el_nTRTHighTOutliers;   //!
    TBranch        *b_el_expectBLayerHit;   //!
+   TBranch        *b_el_expectHitInBLayer;   //!
    TBranch        *b_el_nSiHits;   //!
+   TBranch        *b_el_TRTHighTHitsRatio;   //!
    TBranch        *b_el_trackd0pvunbiased;   //!
    TBranch        *b_el_trackz0pvunbiased;   //!
    TBranch        *b_el_tracksigd0pvunbiased;   //!
+   TBranch        *b_el_tracksigd0pv;   //!
    TBranch        *b_el_Unrefittedtrack_d0;   //!
    TBranch        *b_el_Unrefittedtrack_z0;   //!
    TBranch        *b_el_Unrefittedtrack_phi;   //!
@@ -554,6 +566,7 @@ void THiggsD3PD::Init(TTree *tree)
    // Set object pointer
    el_charge = 0;
    el_author = 0;
+   el_isEM = 0;
    el_OQ = 0;
    el_type = 0;
    el_origin = 0;
@@ -568,6 +581,7 @@ void THiggsD3PD::Init(TTree *tree)
    el_Ethad1 = 0;
    el_f1 = 0;
    el_Emax2 = 0;
+   el_ws3 = 0;
    el_wstot = 0;
    el_emaxs1 = 0;
    el_weta2 = 0;
@@ -591,6 +605,7 @@ void THiggsD3PD::Init(TTree *tree)
    el_rawcl_E = 0;
    el_rawcl_pt = 0;
    el_trackd0 = 0;
+   el_trackd0pv = 0;
    el_trackz0 = 0;
    el_trackphi = 0;
    el_tracktheta = 0;
@@ -610,10 +625,13 @@ void THiggsD3PD::Init(TTree *tree)
    el_nTRTOutliers = 0;
    el_nTRTHighTOutliers = 0;
    el_expectBLayerHit = 0;
+   el_expectHitInBLayer = 0;
    el_nSiHits = 0;
+   el_TRTHighTHitsRatio = 0;
    el_trackd0pvunbiased = 0;
    el_trackz0pvunbiased = 0;
    el_tracksigd0pvunbiased = 0;
+   el_tracksigd0pv = 0;
    el_Unrefittedtrack_d0 = 0;
    el_Unrefittedtrack_z0 = 0;
    el_Unrefittedtrack_phi = 0;
@@ -772,6 +790,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("el_n", &el_n, &b_el_n);
    fChain->SetBranchAddress("el_charge", &el_charge, &b_el_charge);
    fChain->SetBranchAddress("el_author", &el_author, &b_el_author);
+   fChain->SetBranchAddress("el_isEM", &el_isEM, &b_el_isEM);
    fChain->SetBranchAddress("el_OQ", &el_OQ, &b_el_OQ);
    fChain->SetBranchAddress("el_type", &el_type, &b_el_type);
    fChain->SetBranchAddress("el_origin", &el_origin, &b_el_origin);
@@ -786,6 +805,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("el_Ethad1", &el_Ethad1, &b_el_Ethad1);
    fChain->SetBranchAddress("el_f1", &el_f1, &b_el_f1);
    fChain->SetBranchAddress("el_Emax2", &el_Emax2, &b_el_Emax2);
+   fChain->SetBranchAddress("el_ws3", &el_ws3, &b_el_ws3);
    fChain->SetBranchAddress("el_wstot", &el_wstot, &b_el_wstot);
    fChain->SetBranchAddress("el_emaxs1", &el_emaxs1, &b_el_emaxs1);
    fChain->SetBranchAddress("el_weta2", &el_weta2, &b_el_weta2);
@@ -809,6 +829,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("el_rawcl_E", &el_rawcl_E, &b_el_rawcl_E);
    fChain->SetBranchAddress("el_rawcl_pt", &el_rawcl_pt, &b_el_rawcl_pt);
    fChain->SetBranchAddress("el_trackd0", &el_trackd0, &b_el_trackd0);
+   fChain->SetBranchAddress("el_trackd0pv", &el_trackd0pv, &b_el_trackd0pv);
    fChain->SetBranchAddress("el_trackz0", &el_trackz0, &b_el_trackz0);
    fChain->SetBranchAddress("el_trackphi", &el_trackphi, &b_el_trackphi);
    fChain->SetBranchAddress("el_tracktheta", &el_tracktheta, &b_el_tracktheta);
@@ -828,10 +849,13 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("el_nTRTOutliers", &el_nTRTOutliers, &b_el_nTRTOutliers);
    fChain->SetBranchAddress("el_nTRTHighTOutliers", &el_nTRTHighTOutliers, &b_el_nTRTHighTOutliers);
    fChain->SetBranchAddress("el_expectBLayerHit", &el_expectBLayerHit, &b_el_expectBLayerHit);
+   fChain->SetBranchAddress("el_expectHitInBLayer", &el_expectHitInBLayer, &b_el_expectHitInBLayer);
    fChain->SetBranchAddress("el_nSiHits", &el_nSiHits, &b_el_nSiHits);
+   fChain->SetBranchAddress("el_TRTHighTHitsRatio", &el_TRTHighTHitsRatio, &b_el_TRTHighTHitsRatio);
    fChain->SetBranchAddress("el_trackd0pvunbiased", &el_trackd0pvunbiased, &b_el_trackd0pvunbiased);
    fChain->SetBranchAddress("el_trackz0pvunbiased", &el_trackz0pvunbiased, &b_el_trackz0pvunbiased);
    fChain->SetBranchAddress("el_tracksigd0pvunbiased", &el_tracksigd0pvunbiased, &b_el_tracksigd0pvunbiased);
+   fChain->SetBranchAddress("el_tracksigd0pv", &el_tracksigd0pv, &b_el_tracksigd0pv);
    fChain->SetBranchAddress("el_Unrefittedtrack_d0", &el_Unrefittedtrack_d0, &b_el_Unrefittedtrack_d0);
    fChain->SetBranchAddress("el_Unrefittedtrack_z0", &el_Unrefittedtrack_z0, &b_el_Unrefittedtrack_z0);
    fChain->SetBranchAddress("el_Unrefittedtrack_phi", &el_Unrefittedtrack_phi, &b_el_Unrefittedtrack_phi);
