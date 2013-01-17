@@ -426,16 +426,15 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			smearObject(index, type);
 
-			if(fabs(mu_staco_eta->at(index)) > 2.7f) {
+			if(mu_staco_pt->at(index) < __mu_staco_pt) {
 				goto __error;
 			}
 
 			muNr4++;
 
-			if(mu_staco_pt->at(index) < __mu_staco_pt) {
+			if(fabs(mu_staco_eta->at(index)) > 2.7f) {
 				goto __error;
 			}
-
 			muNr5++;
 
 			if(mu_staco_expectBLayerHit->at(index) != 0 && mu_staco_nBLHits->at(index) <= 0) {
@@ -495,13 +494,13 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			muNr10++;
 
-			if(fabs(mu_staco_d0_exPV->at(index)) > 1.0f) {
+			if(fabs(mu_staco_trackd0pvunbiased->at(index)) > 1.0f) {
 				goto __error;
 			}
 
 			muNr11++;
 
-			if(fabs(mu_staco_z0_exPV->at(index)) > 10.0f) {
+			if(fabs(mu_staco_trackz0pvunbiased->at(index)) > 10.0f) {
 				goto __error;
 			}
 
@@ -522,19 +521,18 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			smearObject(index, type);
 
+			if(mu_staco_pt->at(index) < __mu_staco_pt) {
+				goto __error;
+			}
+
+			muNr4++;
+
 			if(fabs(mu_staco_eta->at(index)) < 2.5f
 			   ||
 			   fabs(mu_staco_eta->at(index)) > 2.7f
 			 ) {
 				goto __error;
 			}
-
-			muNr4++;
-
-			if(mu_staco_pt->at(index) < __mu_staco_pt) {
-				goto __error;
-			}
-
 			muNr5++;
 
 			if((mu_staco_nCSCEtaHits->at(index) + mu_staco_nCSCPhiHits->at(index)) <= 0
@@ -576,13 +574,13 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			smearObject(index, type);
 
-			if(fabs(mu_calo_eta->at(index)) > 0.1f) {
+			if(mu_calo_pt->at(index) < __mu_calo_pt) {
 				goto __error;
 			}
 
 			muNr4++;
 
-			if(mu_calo_pt->at(index) < __mu_calo_pt) {
+			if(fabs(mu_calo_eta->at(index)) > 0.1f) {
 				goto __error;
 			}
 
@@ -630,13 +628,13 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			muNr10++;
 
-			if(fabs(mu_calo_d0_exPV->at(index)) > 1.0f) {
+			if(fabs(mu_calo_trackd0pvunbiased->at(index)) > 1.0f) {
 				goto __error;
 			}
 
 			muNr11++;
 
-			if(fabs(mu_calo_z0_exPV->at(index)) > 10.0f) {
+			if(fabs(mu_calo_trackz0pvunbiased->at(index)) > 10.0f) {
 				goto __error;
 			}
 

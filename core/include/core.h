@@ -169,6 +169,7 @@ class TLeptonAnalysis: public TNTuple
 
 	UInt_t elTrigger;
 	UInt_t muTrigger;
+	UInt_t elmuTrigger;
 
 	/*-----------------------------------------------------------------*/
 	/* COUNTERS							   */
@@ -251,7 +252,7 @@ class TLeptonAnalysis: public TNTuple
 #endif
 	/*-----------------------------------------------------------------*/
 
-	TLeptonAnalysis(TChain *chain): TNTuple(chain), elTrigger(0), muTrigger(0)
+	TLeptonAnalysis(TChain *chain): TNTuple(chain), elTrigger(0), muTrigger(0), elmuTrigger(0)
 	{
 		/*---------------------------------------------------------*/
 		/* COUNTERS						   */
@@ -289,7 +290,7 @@ class TLeptonAnalysis: public TNTuple
 		/* VERTEX POSITION REWEIGHTING				   */
 		/*---------------------------------------------------------*/
 #if defined( __YEAR2012) && defined(__IS_MC)
-		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-03-61/share/zvtx_weights_2011_2012.root");
+		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-02/share/zvtx_weights_2011_2012.root");
 #endif
 		/*---------------------------------------------------------*/
 		/* PILEUP REWEIGHTING					   */
@@ -372,17 +373,17 @@ class TLeptonAnalysis: public TNTuple
 		/* ELECTRON LIKELIHOOD ID				   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2012
-		m_ElectronLikelihoodTool = new ElectronLikelihoodTool("./tools/egammaAnalysisUtils-00-03-61/share/ElectronLikelihoodPdfs.root");
+		m_ElectronLikelihoodTool = new ElectronLikelihoodTool("./tools/egammaAnalysisUtils-00-04-02/share/ElectronLikelihoodPdfs.root");
 #endif
 	
 		/*---------------------------------------------------------*/
 		/* ELECTRON ENERGY RESCALER				   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2011
-		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-03-61/share/EnergyRescalerData.root","2011","es2011a");
+		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-04-02/share/EnergyRescalerData.root","2011","es2011a");
 #endif
 #ifdef __YEAR2012
-		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-03-61/share/EnergyRescalerData.root","2012","es2012");
+		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-04-02/share/EnergyRescalerData.root","2012","es2012");
 #endif
 		/*---------------------------------------------------------*/
 		/* ELECTRON SCALE FACTORS				   */
@@ -466,6 +467,8 @@ class TLeptonAnalysis: public TNTuple
 #ifdef __YEAR2011
 		m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainer(trig_RoI_EF_mu_TrigMuonEFInfoContainer_eMuonEFInfo);
 		m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus(trig_RoI_EF_mu_TrigMuonEFInfoContainer_eMuonEFInfoStatus);
+		//m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainerStatus(trig_RoI_EF_mu_TrigMuonEFInfoContainer_MuonEFInfoStatus); //for EF_e10_medium_mu6"
+		//m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainer(trig_RoI_EF_mu_TrigMuonEFInfoContainer_MuonEFInfo); //for EF_e10_medium_mu6"
 #endif
 #ifdef __YEAR2012
 		m_triggerNavigationVariables->set_trig_RoI_EF_mu_TrigMuonEFInfoContainer(trig_RoI_EF_mu_TrigMuonEFInfoContainer);
@@ -564,6 +567,7 @@ class TLeptonAnalysis: public TNTuple
 
 	UInt_t getElTrigger(void);
 	UInt_t getMuTrigger(void);
+	UInt_t getElMuTrigger(void);
 
 	UInt_t triggerMatch(
 		Int_t index,

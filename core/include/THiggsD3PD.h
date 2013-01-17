@@ -44,6 +44,8 @@ public :
    Bool_t          EF_mu18_tight_mu8_EFFS;
    Bool_t          EF_mu24i_tight;
    Bool_t          EF_mu36_tight;
+   Bool_t          EF_e12Tvh_medium1_mu8;
+   Bool_t          EF_e24vhi_loose1_mu8;
    UInt_t          RunNumber;
    UInt_t          EventNumber;
    UInt_t          lbn;
@@ -116,6 +118,7 @@ public :
    std::vector<float>   *el_expectHitInBLayer;
    std::vector<int>     *el_nSiHits;
    std::vector<float>   *el_TRTHighTHitsRatio;
+   std::vector<float>   *el_TRTHighTOutliersRatio;
    std::vector<float>   *el_trackd0pvunbiased;
    std::vector<float>   *el_trackz0pvunbiased;
    std::vector<float>   *el_tracksigd0pvunbiased;
@@ -168,6 +171,9 @@ public :
    std::vector<int>     *mu_staco_nMDTEOHits;
    std::vector<float>   *mu_staco_trackIPEstimate_d0_unbiasedpvunbiased;
    std::vector<float>   *mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased;
+   std::vector<float>   *mu_staco_trackd0pvunbiased;
+   std::vector<float>   *mu_staco_trackz0pvunbiased;
+   std::vector<float>   *mu_staco_tracksigd0pvunbiased;
    std::vector<int>     *mu_staco_truth_type;
    std::vector<int>     *mu_staco_truth_mothertype;
    std::vector<int>     *mu_staco_EFCB_index;
@@ -213,6 +219,9 @@ public :
    std::vector<int>     *mu_calo_nMDTEOHits;
    std::vector<float>   *mu_calo_trackIPEstimate_d0_unbiasedpvunbiased;
    std::vector<float>   *mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased;
+   std::vector<float>   *mu_calo_trackd0pvunbiased;
+   std::vector<float>   *mu_calo_trackz0pvunbiased;
+   std::vector<float>   *mu_calo_tracksigd0pvunbiased;
    std::vector<int>     *mu_calo_truth_type;
    std::vector<int>     *mu_calo_truth_mothertype;
    Float_t         MET_RefFinal_et;
@@ -277,6 +286,8 @@ public :
    TBranch        *b_EF_mu18_tight_mu8_EFFS;   //!
    TBranch        *b_EF_mu24i_tight;   //!
    TBranch        *b_EF_mu36_tight;   //!
+   TBranch        *b_EF_e12Tvh_medium1_mu8;   //!
+   TBranch        *b_EF_e24vhi_loose1_mu8;   //!
    TBranch        *b_RunNumber;   //!
    TBranch        *b_EventNumber;   //!
    TBranch        *b_lbn;   //!
@@ -349,6 +360,7 @@ public :
    TBranch        *b_el_expectHitInBLayer;   //!
    TBranch        *b_el_nSiHits;   //!
    TBranch        *b_el_TRTHighTHitsRatio;   //!
+   TBranch        *b_el_TRTHighTOutliersRatio;   //!
    TBranch        *b_el_trackd0pvunbiased;   //!
    TBranch        *b_el_trackz0pvunbiased;   //!
    TBranch        *b_el_tracksigd0pvunbiased;   //!
@@ -401,6 +413,9 @@ public :
    TBranch        *b_mu_staco_nMDTEOHits;   //!
    TBranch        *b_mu_staco_trackIPEstimate_d0_unbiasedpvunbiased;   //!
    TBranch        *b_mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased;   //!
+   TBranch        *b_mu_staco_trackd0pvunbiased;   //!
+   TBranch        *b_mu_staco_trackz0pvunbiased;   //!
+   TBranch        *b_mu_staco_tracksigd0pvunbiased;   //!
    TBranch        *b_mu_staco_truth_type;   //!
    TBranch        *b_mu_staco_truth_mothertype;   //!
    TBranch        *b_mu_staco_EFCB_index;   //!
@@ -446,6 +461,9 @@ public :
    TBranch        *b_mu_calo_nMDTEOHits;   //!
    TBranch        *b_mu_calo_trackIPEstimate_d0_unbiasedpvunbiased;   //!
    TBranch        *b_mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased;   //!
+   TBranch        *b_mu_calo_trackd0pvunbiased;   //!
+   TBranch        *b_mu_calo_trackz0pvunbiased;   //!
+   TBranch        *b_mu_calo_tracksigd0pvunbiased;   //!
    TBranch        *b_mu_calo_truth_type;   //!
    TBranch        *b_mu_calo_truth_mothertype;   //!
    TBranch        *b_MET_RefFinal_et;   //!
@@ -628,6 +646,7 @@ void THiggsD3PD::Init(TTree *tree)
    el_expectHitInBLayer = 0;
    el_nSiHits = 0;
    el_TRTHighTHitsRatio = 0;
+   el_TRTHighTOutliersRatio = 0;
    el_trackd0pvunbiased = 0;
    el_trackz0pvunbiased = 0;
    el_tracksigd0pvunbiased = 0;
@@ -679,6 +698,9 @@ void THiggsD3PD::Init(TTree *tree)
    mu_staco_nMDTEOHits = 0;
    mu_staco_trackIPEstimate_d0_unbiasedpvunbiased = 0;
    mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased = 0;
+   mu_staco_trackd0pvunbiased = 0;
+   mu_staco_trackz0pvunbiased = 0;
+   mu_staco_tracksigd0pvunbiased = 0;
    mu_staco_truth_type = 0;
    mu_staco_truth_mothertype = 0;
    mu_staco_EFCB_index = 0;
@@ -723,6 +745,9 @@ void THiggsD3PD::Init(TTree *tree)
    mu_calo_nMDTEOHits = 0;
    mu_calo_trackIPEstimate_d0_unbiasedpvunbiased = 0;
    mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased = 0;
+   mu_calo_trackd0pvunbiased = 0;
+   mu_calo_trackz0pvunbiased = 0;
+   mu_calo_tracksigd0pvunbiased = 0;
    mu_calo_truth_type = 0;
    mu_calo_truth_mothertype = 0;
    vxp_nTracks = 0;
@@ -780,6 +805,8 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("EF_mu18_tight_mu8_EFFS", &EF_mu18_tight_mu8_EFFS, &b_EF_mu18_tight_mu8_EFFS);
    fChain->SetBranchAddress("EF_mu24i_tight", &EF_mu24i_tight, &b_EF_mu24i_tight);
    fChain->SetBranchAddress("EF_mu36_tight", &EF_mu36_tight, &b_EF_mu36_tight);
+   fChain->SetBranchAddress("EF_e12Tvh_medium1_mu8", &EF_e12Tvh_medium1_mu8, &b_EF_e12Tvh_medium1_mu8);
+   fChain->SetBranchAddress("EF_e24vhi_loose1_mu8", &EF_e24vhi_loose1_mu8, &b_EF_e24vhi_loose1_mu8);
    fChain->SetBranchAddress("RunNumber", &RunNumber, &b_RunNumber);
    fChain->SetBranchAddress("EventNumber", &EventNumber, &b_EventNumber);
    fChain->SetBranchAddress("lbn", &lbn, &b_lbn);
@@ -852,6 +879,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("el_expectHitInBLayer", &el_expectHitInBLayer, &b_el_expectHitInBLayer);
    fChain->SetBranchAddress("el_nSiHits", &el_nSiHits, &b_el_nSiHits);
    fChain->SetBranchAddress("el_TRTHighTHitsRatio", &el_TRTHighTHitsRatio, &b_el_TRTHighTHitsRatio);
+   fChain->SetBranchAddress("el_TRTHighTOutliersRatio", &el_TRTHighTOutliersRatio, &b_el_TRTHighTOutliersRatio);
    fChain->SetBranchAddress("el_trackd0pvunbiased", &el_trackd0pvunbiased, &b_el_trackd0pvunbiased);
    fChain->SetBranchAddress("el_trackz0pvunbiased", &el_trackz0pvunbiased, &b_el_trackz0pvunbiased);
    fChain->SetBranchAddress("el_tracksigd0pvunbiased", &el_tracksigd0pvunbiased, &b_el_tracksigd0pvunbiased);
@@ -904,6 +932,9 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_staco_nMDTEOHits", &mu_staco_nMDTEOHits, &b_mu_staco_nMDTEOHits);
    fChain->SetBranchAddress("mu_staco_trackIPEstimate_d0_unbiasedpvunbiased", &mu_staco_trackIPEstimate_d0_unbiasedpvunbiased, &b_mu_staco_trackIPEstimate_d0_unbiasedpvunbiased);
    fChain->SetBranchAddress("mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased", &mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased, &b_mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased);
+   fChain->SetBranchAddress("mu_staco_trackd0pvunbiased", &mu_staco_trackd0pvunbiased, &b_mu_staco_trackd0pvunbiased);
+   fChain->SetBranchAddress("mu_staco_trackz0pvunbiased", &mu_staco_trackz0pvunbiased, &b_mu_staco_trackz0pvunbiased);
+   fChain->SetBranchAddress("mu_staco_tracksigd0pvunbiased", &mu_staco_tracksigd0pvunbiased, &b_mu_staco_tracksigd0pvunbiased);
    fChain->SetBranchAddress("mu_staco_truth_type", &mu_staco_truth_type, &b_mu_staco_truth_type);
    fChain->SetBranchAddress("mu_staco_truth_mothertype", &mu_staco_truth_mothertype, &b_mu_staco_truth_mothertype);
    fChain->SetBranchAddress("mu_staco_EFCB_index", &mu_staco_EFCB_index, &b_mu_staco_EFCB_index);
@@ -949,6 +980,9 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_calo_nMDTEOHits", &mu_calo_nMDTEOHits, &b_mu_calo_nMDTEOHits);
    fChain->SetBranchAddress("mu_calo_trackIPEstimate_d0_unbiasedpvunbiased", &mu_calo_trackIPEstimate_d0_unbiasedpvunbiased, &b_mu_calo_trackIPEstimate_d0_unbiasedpvunbiased);
    fChain->SetBranchAddress("mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased", &mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased, &b_mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased);
+   fChain->SetBranchAddress("mu_calo_trackd0pvunbiased", &mu_calo_trackd0pvunbiased, &b_mu_calo_trackd0pvunbiased);
+   fChain->SetBranchAddress("mu_calo_trackz0pvunbiased", &mu_calo_trackz0pvunbiased, &b_mu_calo_trackz0pvunbiased);
+   fChain->SetBranchAddress("mu_calo_tracksigd0pvunbiased", &mu_calo_tracksigd0pvunbiased, &b_mu_calo_tracksigd0pvunbiased);
    fChain->SetBranchAddress("mu_calo_truth_type", &mu_calo_truth_type, &b_mu_calo_truth_type);
    fChain->SetBranchAddress("mu_calo_truth_mothertype", &mu_calo_truth_mothertype, &b_mu_calo_truth_mothertype);
    fChain->SetBranchAddress("MET_RefFinal_et", &MET_RefFinal_et, &b_MET_RefFinal_et);

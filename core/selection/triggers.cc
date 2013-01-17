@@ -238,7 +238,58 @@ UInt_t TLeptonAnalysis::getMuTrigger(void)
 }
 
 /*-------------------------------------------------------------------------*/
+UInt_t TLeptonAnalysis::getElMuTrigger(void){
 
+	if(core::OF == false)
+	{
+		elmuTrigger = 0x00;
+#ifdef __IS_MC
+  #ifdef __YEAR2011
+		/**/ if(RunNumber == 180164 // B-D
+			||
+			RunNumber == 183003 // E-H
+			||
+			RunNumber == 186169 // I-K
+			||
+			RunNumber == 189751) // L-M
+		 ) {
+
+			if(EF_e10_medium_mu6) {
+				elmuTrigger |= (1 << 1);
+			}
+		}
+  #endif
+  #ifdef __YEAR2012
+		/**/ if(RunNumber == 195847) // A-E
+		{
+			if(EF_e12Tvh_medium1_mu8 || EF_e24vhi_loose1_mu8) {
+				elmuTrigger |= (1 << 1);
+			}
+		}
+  #endif
+#else
+		char lumiPeriod = getlumiPeriod(RunNumber);
+  #ifdef __YEAR2011
+		/**/ if(lumiPeriod >= 'B' && lumiPeriod <= 'M')
+		{
+			if(EF_e10_medium_mu6) {
+				elmuTrigger |= (1 << 1);
+			}
+		}
+  #endif
+  #ifdef __YEAR2012
+		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E')
+		{
+			if(EF_e12Tvh_medium1_mu8 || EF_e24vhi_loose1_mu8) {
+				elmuTrigger |= (1 << 1);
+			}
+		}
+  #endif
+#endif
+	}
+	return elmuTrigger;
+}
+/*-------------------------------------------------------------------------*/
 UInt_t TLeptonAnalysis::triggerMatch(
 	Int_t index,
 	TLeptonType type
@@ -249,6 +300,8 @@ UInt_t TLeptonAnalysis::triggerMatch(
 	std::string chain1_B = "";
 	std::string chain2_A = "";
 	std::string chain2_B = "";
+	std::string chain3_A = "";
+	std::string chain3_B = "";
 
 	Int_t n;
 
@@ -316,6 +369,18 @@ UInt_t TLeptonAnalysis::triggerMatch(
 				chain2_A = "EF_2e12Tvh_medium";
 				chain2_B = "";
 			}
+
+			/**/ if(RunNumber == 180164 // B-D
+				||
+				RunNumber == 183003 // E-H
+				||
+				RunNumber == 186169 // I-K
+				||
+				RunNumber == 189751) // L-M
+		 		) {
+					chain3_A = "EF_e10_medium_mu6";
+					chain3_B = "";
+			}
   #endif
   #ifdef __YEAR2012
 			/**/ if(RunNumber == 195847) // A-E
@@ -325,6 +390,9 @@ UInt_t TLeptonAnalysis::triggerMatch(
 
 				chain2_A = "EF_2e12Tvh_loose1";
 				chain2_B = "";
+
+				chain3_A = "EF_e12Tvh_medium1_mu8";
+				chain3_B = "EF_e24vhi_loose1_mu8";
 			}
   #endif
 #else
@@ -353,6 +421,12 @@ UInt_t TLeptonAnalysis::triggerMatch(
 				chain2_A = "EF_2e12Tvh_medium";
 				chain2_B = "";
 			}
+
+			/**/ if(lumiPeriod >= 'B' && lumiPeriod <= 'M')
+			{
+				chain3_A = "EF_e10_medium_mu6";
+				chain3_B = "";
+			}
   #endif
   #ifdef __YEAR2012
 			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E') // A-E
@@ -362,6 +436,9 @@ UInt_t TLeptonAnalysis::triggerMatch(
 
 				chain2_A = "EF_2e12Tvh_loose1";
 				chain2_B = "";
+
+				chain3_A = "EF_e12Tvh_medium1_mu8";
+				chain3_B = "EF_e24vhi_loose1_mu8";
 			}
   #endif
 #endif
@@ -412,6 +489,50 @@ UInt_t TLeptonAnalysis::triggerMatch(
 
 							break;
 						}
+					}
+				}
+			}
+
+			if (mu_staco_n != 0){
+				n = mu_staco_n;
+
+				for(Int_t xedni = 0; xedni < n; xedni++)
+				{
+					tlv2.SetPtEtaPhiE(
+						mu_staco_pt->at(xedni),
+						mu_staco_eta->at(xedni),
+						mu_staco_phi->at(xedni),
+						mu_staco_E->at(xedni)
+					);
+
+					if((chain3_A.length() > 0 && m_elTriggerMatching->matchElectronMuon(tlv1, tlv2, chain3_A) != false)
+					  ||
+					  (chain3_B.length() > 0 && m_elTriggerMatching->matchElectronMuon(tlv1, tlv2, chain3_B) != false)
+				 	 ){
+						result |= (1 << 3);
+						break;
+					}
+				}
+			}
+
+			if((result & (1 << 3)) == 8 && mu_calo_n != 0){
+				n = mu_calo_n;
+
+				for(Int_t xedni = 0; xedni < n; xedni++)
+				{
+					tlv2.SetPtEtaPhiE(
+						mu_staco_pt->at(xedni),
+						mu_staco_eta->at(xedni),
+						mu_staco_phi->at(xedni),
+						mu_staco_E->at(xedni)
+					);
+
+					if((chain3_A.length() > 0 && m_elTriggerMatching->matchElectronMuon(tlv1, tlv2, chain3_A) != false)
+				 	 ||
+				 	 (chain3_B.length() > 0 && m_elTriggerMatching->matchElectronMuon(tlv1, tlv2, chain3_B) != false)
+					 ){
+						result |= (1 << 3);
+						break;
 					}
 				}
 			}
@@ -468,6 +589,18 @@ UInt_t TLeptonAnalysis::triggerMatch(
 				chain2_A = "EF_2mu10_loose";
 				chain2_B = "";
 			}
+
+			/**/ if(RunNumber == 180164 // B-D
+				||
+				RunNumber == 183003 // E-H
+				||
+				RunNumber == 186169 // I-K
+				||
+				RunNumber == 189751) // L-M
+		 		) {
+					chain3_A = "EF_e10_medium_mu6";
+					chain3_B = "";
+				}
   #endif
   #ifdef __YEAR2012
 			/**/ if(RunNumber == 195847) // A-E
@@ -477,6 +610,9 @@ UInt_t TLeptonAnalysis::triggerMatch(
 
 				chain2_A = "EF_2mu13";
 				chain2_B = "EF_mu18_tight_mu8_EFFS";
+
+				chain3_A = "EF_e12Tvh_medium1_mu8";
+				chain3_B = "EF_e24vhi_loose1_mu8";
 
 				symmetric_B = false;
 			}
@@ -499,6 +635,12 @@ UInt_t TLeptonAnalysis::triggerMatch(
 				chain2_A = "EF_2mu10_loose";
 				chain2_B = "";
 			}
+
+			/**/ if(lumiPeriod >= 'B' && lumiPeriod <= 'M')
+			{
+				chain3_A = "EF_e10_medium_mu6";
+				chain3_B = "";
+			}
   #endif
   #ifdef __YEAR2012
 			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E')
@@ -508,6 +650,9 @@ UInt_t TLeptonAnalysis::triggerMatch(
 
 				chain2_A = "EF_2mu13";
 				chain2_B = "EF_mu18_tight_mu8_EFFS";
+
+				chain3_A = "EF_e12Tvh_medium1_mu8";
+				chain3_B = "EF_e24vhi_loose1_mu8";
 
 				symmetric_B = false;
 			}
@@ -626,6 +771,26 @@ UInt_t TLeptonAnalysis::triggerMatch(
 								break;
 							}
 						}
+					}
+				}
+			}
+
+			if (el_n != 0){
+				for(Int_t xedni = 0; xedni < el_n; xedni++)
+				{
+					tlv2.SetPtEtaPhiE(
+						el_cl_E->at(xedni) / coshf(el_tracketa->at(xedni)),
+						el_tracketa->at(xedni),
+						el_trackphi->at(xedni),
+						el_cl_E->at(xedni)
+					);
+
+					if((chain3_A.length() > 0 && m_elTriggerMatching->matchElectronMuon(tlv1, tlv2, chain3_A) != false)
+				 	 ||
+				 	 (chain3_B.length() > 0 && m_elTriggerMatching->matchElectronMuon(tlv1, tlv2, chain3_B) != false)
+					 ){
+						result |= (1 << 3);
+						break;
 					}
 				}
 			}

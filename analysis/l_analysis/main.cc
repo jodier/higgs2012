@@ -120,7 +120,8 @@ void TLeptonFinder::Loop(void)
 
 		Bool_t isOkElTrigger = getElTrigger();
 		Bool_t isOkMuTrigger = getMuTrigger();
-
+		Bool_t isOkElMuTrigger = getElMuTrigger();
+		//Bool_t isOkElMuTrigger = false;
 		/*---------------------------------------------------------*/
 		/* SELECTIONS						   */
 		/*---------------------------------------------------------*/
@@ -141,6 +142,8 @@ void TLeptonFinder::Loop(void)
 			if(isOkElTrigger != false
 			   ||
 			   isOkMuTrigger != false
+			   ||
+			   isOkElMuTrigger != false
 			 ) {
 				elNr2 += el_n;
 				muNr2 += mu_staco_n + mu_calo_n;
@@ -492,12 +495,12 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_eta[i] = mu_staco_eta->at(index);
 					m_l[1].l_phi[i] = mu_staco_phi->at(index);
 
-					m_l[1].l_z0[i] = mu_staco_z0_exPV->at(index);
-					m_l[1].l_d0[i] = mu_staco_d0_exPV->at(index);
+					m_l[1].l_z0[i] = mu_staco_trackz0pvunbiased->at(index);
+					m_l[1].l_d0[i] = mu_staco_trackd0pvunbiased->at(index);
 
 					m_l[1].l_clIso20[i] = mu_staco_etcone20->at(index) / mu_staco_pt->at(index);
 					m_l[1].l_tkIso20[i] = mu_staco_ptcone20->at(index) / mu_staco_pt->at(index);
-					m_l[1].l_d0sigma[i] = fabs((mu_staco_trackIPEstimate_d0_unbiasedpvunbiased->at(index) - d0Bias) / mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased->at(index));
+					m_l[1].l_d0sigma[i] = fabs((mu_staco_trackd0pvunbiased->at(index) - d0Bias) / mu_staco_tracksigd0pvunbiased->at(index));
 
 					if(mu_staco_isStandAloneMuon->at(index) != false)
 					{
@@ -558,12 +561,12 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_eta[i] = mu_calo_eta->at(index);
 					m_l[1].l_phi[i] = mu_calo_phi->at(index);
 
-					m_l[1].l_z0[i] = mu_calo_z0_exPV->at(index);
-					m_l[1].l_d0[i] = mu_calo_d0_exPV->at(index);
+					m_l[1].l_z0[i] = mu_calo_trackz0pvunbiased->at(index);
+					m_l[1].l_d0[i] = mu_calo_trackd0pvunbiased->at(index);
 
 					m_l[1].l_clIso20[i] = mu_calo_etcone20->at(index) / mu_calo_pt->at(index);
 					m_l[1].l_tkIso20[i] = mu_calo_ptcone20->at(index) / mu_calo_pt->at(index);
-					m_l[1].l_d0sigma[i] = fabs((mu_calo_trackIPEstimate_d0_unbiasedpvunbiased->at(index) - d0Bias) / mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased->at(index));
+					m_l[1].l_d0sigma[i] = fabs((mu_calo_trackd0pvunbiased->at(index) - d0Bias) / mu_calo_tracksigd0pvunbiased->at(index));
 
 					for(Int_t j = i + 1; j < muCaloIndexNr; j++)
 					{
@@ -651,8 +654,8 @@ void TLeptonFinder::Loop(void)
 	std::cout << "after vertex       : " << muNr1 << std::endl;
 	std::cout << "after trigger      : " << muNr2 << std::endl;
 	std::cout << "after author       : " << muNr3 << std::endl;
-	std::cout << "after |η|          : " << muNr4 << std::endl;
-	std::cout << "after pt           : " << muNr5 << std::endl;
+	std::cout << "after pt          : " << muNr4 << std::endl;
+	std::cout << "after |η|           : " << muNr5 << std::endl;
 	std::cout << "after b-Layer      : " << muNr6 << std::endl;
 	std::cout << "after Pix          : " << muNr7 << std::endl;
 	std::cout << "after SCT          : " << muNr8 << std::endl;

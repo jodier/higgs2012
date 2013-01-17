@@ -110,6 +110,7 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("el_nBLayerOutliers", 1);
 	chain->SetBranchStatus("el_nSiHits", 1);
 	chain->SetBranchStatus("el_TRTHighTHitsRatio", 1);
+	chain->SetBranchStatus("el_TRTHighTOutliersRatio", 1);
 	chain->SetBranchStatus("el_nPixelDeadSensors", 1);
 	chain->SetBranchStatus("el_nPixelOutliers", 1);
 	chain->SetBranchStatus("el_nSCTDeadSensors", 1);
@@ -168,6 +169,9 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("mu_staco_z0_exPV", 1);
 	chain->SetBranchStatus("mu_staco_trackIPEstimate_d0_unbiasedpvunbiased", 1);
 	chain->SetBranchStatus("mu_staco_trackIPEstimate_sigd0_unbiasedpvunbiased", 1);
+	chain->SetBranchStatus("mu_staco_trackd0pvunbiased", 1);
+	chain->SetBranchStatus("mu_staco_trackz0pvunbiased", 1);
+	chain->SetBranchStatus("mu_staco_tracksigd0pvunbiased", 1);
 	chain->SetBranchStatus("mu_staco_truth_mothertype", 1);
 	chain->SetBranchStatus("mu_staco_truth_type", 1);
 
@@ -217,6 +221,9 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("mu_calo_z0_exPV", 1);
 	chain->SetBranchStatus("mu_calo_trackIPEstimate_d0_unbiasedpvunbiased", 1);
 	chain->SetBranchStatus("mu_calo_trackIPEstimate_sigd0_unbiasedpvunbiased", 1);
+	chain->SetBranchStatus("mu_calo_trackd0pvunbiased", 1);
+	chain->SetBranchStatus("mu_calo_trackz0pvunbiased", 1);
+	chain->SetBranchStatus("mu_calo_tracksigd0pvunbiased", 1);
 	chain->SetBranchStatus("mu_calo_truth_mothertype", 1);
 	chain->SetBranchStatus("mu_calo_truth_type", 1);
 
@@ -253,6 +260,8 @@ void D3PDSkimmer_data2012(void)
 	chain->SetBranchStatus("EF_2e12Tvh_loose1", 1);
 	chain->SetBranchStatus("EF_mu24i_tight", 1);
 	chain->SetBranchStatus("EF_mu36_tight", 1);
+	chain->SetBranchStatus("EF_e12Tvh_medium1_mu8", 1);
+	chain->SetBranchStatus("EF_e24vhi_loose1_mu8", 1);
 	chain->SetBranchStatus("EF_2mu13", 1);
 	chain->SetBranchStatus("EF_mu18_tight_mu8_EFFS", 1);
 
