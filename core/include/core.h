@@ -13,6 +13,7 @@
 #include <iostream>
 
 #include <TChain.h>
+#include <TH2.h>
 
 /*-------------------------------------------------------------------------*/
 
@@ -209,6 +210,19 @@ class TLeptonAnalysis: public TNTuple
 	/*-----------------------------------------------------------------*/
 #if defined( __YEAR2012) && defined(__IS_MC)
 	VertexPositionReweightingTool *m_VertexPositionReweighting;
+
+	// d0 smearing
+	TH2F *smearD0[3];
+	TRandom3 smearD0_rand;
+	TAxis *smearD0_x;
+	TAxis *smearD0_y;
+
+	// z0 smearing
+	TH2F *smearZ0[3];
+	TRandom3 smearZ0_rand;
+	TAxis *smearZ0_x;
+	TAxis *smearZ0_y;
+
 #endif
 	Root::TPileupReweighting *m_pileupReweighting;
 
@@ -292,6 +306,43 @@ class TLeptonAnalysis: public TNTuple
 #if defined( __YEAR2012) && defined(__IS_MC)
 		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-02/share/zvtx_weights_2011_2012.root");
 #endif
+
+		/*---------------------------------------------------------*/
+		/* IP SMEARING						   */
+		/*---------------------------------------------------------*/
+#if defined( __YEAR2012) && defined(__IS_MC)
+		TFile *d0_smearing_file = new TFile("./tools/impact_parameter_smearing.root");
+		std::cout << " d0 smearing confi file : ./tools//impact_parameter_smearing.root "<<std::endl;
+		smearD0[0] = (TH2F*)d0_smearing_file->Get("smearD0_0");
+		smearD0[1] = (TH2F*)d0_smearing_file->Get("smearD0_1");
+		smearD0[2] = (TH2F*)d0_smearing_file->Get("smearD0_2");
+		smearD0[0]->SetDirectory(0);
+		smearD0[1]->SetDirectory(0);
+		smearD0[2]->SetDirectory(0);
+		smearD0_x = smearD0[0]->GetXaxis();
+		smearD0_y = smearD0[0]->GetYaxis();
+		d0_smearing_file->Close();
+
+		TFile *z0_smearing_file = new TFile("./tools/impact_parameter_smearing.root");
+		std::cout << " z0 smearing confi file : ./tools/impact_parameter_smearing.root "<<std::endl;
+		smearZ0[0] = (TH2F*)z0_smearing_file->Get("smearZ0_0");
+		smearZ0[1] = (TH2F*)z0_smearing_file->Get("smearZ0_1");
+		smearZ0[2] = (TH2F*)z0_smearing_file->Get("smearZ0_2");
+		smearZ0[0]->SetDirectory(0);
+		smearZ0[1]->SetDirectory(0);
+		smearZ0[2]->SetDirectory(0);
+		smearZ0_x = smearZ0[0]->GetXaxis();
+		smearZ0_y = smearZ0[0]->GetYaxis();
+		z0_smearing_file->Close();    
+
+#endif
+		/*---------------------------------------------------------*/
+		/* VERTEX POSITION REWEIGHTING				   */
+		/*---------------------------------------------------------*/
+#if defined( __YEAR2012) && defined(__IS_MC)
+		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-02/share/zvtx_weights_2011_2012.root");
+#endif
+
 		/*---------------------------------------------------------*/
 		/* PILEUP REWEIGHTING					   */
 		/*---------------------------------------------------------*/
@@ -534,6 +585,9 @@ class TLeptonAnalysis: public TNTuple
 		Int_t index,
 		TLeptonType type
 	);
+
+	void Z0smearObject(Int_t index, TLeptonType type);
+	void D0smearObject(Int_t index, TLeptonType type);
 
 	Bool_t checkObject(
 		Int_t index,

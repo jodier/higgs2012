@@ -121,7 +121,7 @@ void TLeptonFinder::Loop(void)
 		Bool_t isOkElTrigger = getElTrigger();
 		Bool_t isOkMuTrigger = getMuTrigger();
 		Bool_t isOkElMuTrigger = getElMuTrigger();
-		//Bool_t isOkElMuTrigger = false;
+
 		/*---------------------------------------------------------*/
 		/* SELECTIONS						   */
 		/*---------------------------------------------------------*/
@@ -339,7 +339,7 @@ void TLeptonFinder::Loop(void)
 #endif
 		/*---------------------------------------------------------*/
 		/*---------------------------------------------------------*/
-		/*- Event inforations					  -*/
+		/*- Event informations					  -*/
 		/*---------------------------------------------------------*/
 		/*---------------------------------------------------------*/
 
@@ -374,6 +374,10 @@ void TLeptonFinder::Loop(void)
 			switch(elTypeArray[i])
 			{
 				case TYPE_ELECTRON:
+
+					Z0smearObject(index, TYPE_ELECTRON);
+					D0smearObject(index, TYPE_ELECTRON);
+
 					m_l[0].weight1[i] = eventGetWeight1();
 					m_l[0].weight2[i] = eventGetWeight2();
 					m_l[0].weight3[i] = eventGetWeight3(index, TYPE_ELECTRON);
@@ -390,7 +394,7 @@ void TLeptonFinder::Loop(void)
 					m_l[0].l_phi[i] = electronGetPhiDirection(index);
 
 					m_l[0].l_z0[i] = el_trackz0pvunbiased->at(index);
-					m_l[0].l_d0[i] = el_trackd0pvunbiased->at(index);
+					m_l[0].l_d0[i] = el_trackd0pvunbiased->at(index) - d0Bias;
 					m_l[0].l_clIso20[i] = el_Etcone20_at(index) / electronGetEt(index);
 					m_l[0].l_tkIso20[i] = el_ptcone20->at(index) / electronGetEt(index);
 					m_l[0].l_d0sigma[i] = fabs((el_trackd0pvunbiased->at(index) - d0Bias) / el_tracksigd0pvunbiased->at(index));
@@ -480,6 +484,10 @@ void TLeptonFinder::Loop(void)
 			{
 				case TYPE_MUON_CB_PLUS_ST:
 				case TYPE_MUON_STANDALONE:
+
+					Z0smearObject(index, TYPE_MUON_CB_PLUS_ST);
+					D0smearObject(index, TYPE_MUON_CB_PLUS_ST);
+
 					m_l[1].weight1[i] = eventGetWeight1();
 					m_l[1].weight2[i] = eventGetWeight2();
 					m_l[1].weight3[i] = eventGetWeight3(index, muCB_PLUS_STTypeArray[i]);
@@ -496,11 +504,19 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_phi[i] = mu_staco_phi->at(index);
 
 					m_l[1].l_z0[i] = mu_staco_trackz0pvunbiased->at(index);
-					m_l[1].l_d0[i] = mu_staco_trackd0pvunbiased->at(index);
+
+					if (muCB_PLUS_STTypeArray[i] != TYPE_MUON_STANDALONE){
+						m_l[1].l_d0[i] = mu_staco_trackd0pvunbiased->at(index) - d0Bias;
+						m_l[1].l_d0sigma[i] = fabs((mu_staco_trackd0pvunbiased->at(index) - d0Bias) / mu_staco_tracksigd0pvunbiased->at(index));
+					}
+					else {
+						m_l[1].l_d0[i] = mu_staco_trackd0pvunbiased->at(index);
+						m_l[1].l_d0sigma[i] = fabs((mu_staco_trackd0pvunbiased->at(index)) / mu_staco_tracksigd0pvunbiased->at(index));
+					}
 
 					m_l[1].l_clIso20[i] = mu_staco_etcone20->at(index) / mu_staco_pt->at(index);
 					m_l[1].l_tkIso20[i] = mu_staco_ptcone20->at(index) / mu_staco_pt->at(index);
-					m_l[1].l_d0sigma[i] = fabs((mu_staco_trackd0pvunbiased->at(index) - d0Bias) / mu_staco_tracksigd0pvunbiased->at(index));
+
 
 					if(mu_staco_isStandAloneMuon->at(index) != false)
 					{
@@ -546,6 +562,10 @@ void TLeptonFinder::Loop(void)
 					break;
 
 				case TYPE_MUON_CALO:
+
+					Z0smearObject(index, TYPE_MUON_CALO);
+					D0smearObject(index, TYPE_MUON_CALO);
+
 					m_l[1].weight1[i] = eventGetWeight1();
 					m_l[1].weight2[i] = eventGetWeight2();
 					m_l[1].weight3[i] = eventGetWeight3(index, TYPE_MUON_CALO);
@@ -562,7 +582,7 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_phi[i] = mu_calo_phi->at(index);
 
 					m_l[1].l_z0[i] = mu_calo_trackz0pvunbiased->at(index);
-					m_l[1].l_d0[i] = mu_calo_trackd0pvunbiased->at(index);
+					m_l[1].l_d0[i] = mu_calo_trackd0pvunbiased->at(index) - d0Bias;
 
 					m_l[1].l_clIso20[i] = mu_calo_etcone20->at(index) / mu_calo_pt->at(index);
 					m_l[1].l_tkIso20[i] = mu_calo_ptcone20->at(index) / mu_calo_pt->at(index);

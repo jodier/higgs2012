@@ -340,6 +340,143 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 
 /*-------------------------------------------------------------------------*/
 
+void TLeptonAnalysis::Z0smearObject(Int_t index, TLeptonType type)
+{
+#if defined( __YEAR2012) && defined(__IS_MC)
+
+	smearZ0_rand.SetSeed(EventNumber  + 100 *index);
+	Double_t smear_Z0 = 0.0;
+
+	Int_t nBL = 0;
+	Double_t eta = 0.0;
+	Double_t pt = 0.0;
+
+	switch(type)
+	{
+		case TYPE_ELECTRON:
+			nBL = el_nBLHits->at(index);
+			eta = el_tracketa->at(index);
+			pt = el_trackpt->at(index);
+			break;
+
+		case TYPE_MUON_CB_PLUS_ST:
+			nBL = mu_staco_nBLHits->at(index);
+			eta = mu_staco_eta->at(index);
+			pt = mu_staco_pt->at(index);
+			break;
+
+		case TYPE_MUON_STANDALONE:
+			break;
+
+		case TYPE_MUON_CALO:
+			nBL = mu_calo_nBLHits->at(index);
+			eta = mu_calo_eta->at(index);
+			pt = mu_calo_pt->at(index);
+			break;
+	}
+
+	if (nBL>=0 && (type != TYPE_MUON_STANDALONE)){
+		if (nBL >= 2) nBL = 2;
+		Double_t sinTheta = 1./cosh(eta);
+		//Double_t p        = pt*cosh(eta);
+		Double_t p_quant  = 1./sqrt(pt*pt*sinTheta)/1000.;
+		Int_t Xbin        = smearZ0_x->FindFixBin(eta);
+		Int_t Ybin        = smearZ0_y->FindFixBin(p_quant);
+		Double_t sigma    = smearZ0[nBL]->GetBinContent(Xbin,Ybin);
+ 
+		smear_Z0=smearZ0_rand.Gaus(0, sigma);
+	}
+
+	switch(type)
+	{
+		case TYPE_ELECTRON:
+			el_trackz0pvunbiased->at(index) = el_trackz0pvunbiased->at(index) + smear_Z0;
+			break;
+
+		case TYPE_MUON_CB_PLUS_ST:
+			mu_staco_trackz0pvunbiased->at(index) = mu_staco_trackz0pvunbiased->at(index) + smear_Z0;
+			break;
+
+		case TYPE_MUON_STANDALONE:
+			break;
+
+		case TYPE_MUON_CALO:
+			mu_calo_trackz0pvunbiased->at(index) = mu_calo_trackz0pvunbiased->at(index) + smear_Z0;
+			break;
+	}
+#endif
+}
+
+/*-------------------------------------------------------------------------*/
+
+void TLeptonAnalysis::D0smearObject(Int_t index, TLeptonType type)
+{
+#if defined( __YEAR2012) && defined(__IS_MC)
+
+	smearD0_rand.SetSeed(EventNumber  + 100 *index);
+	Double_t smear_D0 = 0.0;
+
+	Int_t nBL = 0;
+	Double_t eta = 0.0;
+	Double_t pt = 0.0;
+
+	switch(type)
+	{
+		case TYPE_ELECTRON:
+			nBL = el_nBLHits->at(index);
+			eta = el_tracketa->at(index);
+			pt = el_trackpt->at(index);
+			break;
+
+		case TYPE_MUON_CB_PLUS_ST:
+			nBL = mu_staco_nBLHits->at(index);
+			eta = mu_staco_eta->at(index);
+			pt = mu_staco_pt->at(index);
+			break;
+
+		case TYPE_MUON_STANDALONE:
+			break;
+
+		case TYPE_MUON_CALO:
+			nBL = mu_calo_nBLHits->at(index);
+			eta = mu_calo_eta->at(index);
+			pt = mu_calo_pt->at(index);
+			break;
+	}
+
+	if (nBL>=0 && (type != TYPE_MUON_STANDALONE)){
+		if (nBL >= 2) nBL = 2;
+		Double_t sinTheta = 1./cosh(eta);
+		//Double_t p        = pt*cosh(eta);
+		Double_t p_quant  = 1./sqrt(pt*pt*sinTheta)/1000.;
+		Int_t Xbin        = smearD0_x->FindFixBin(eta);
+		Int_t Ybin        = smearD0_y->FindFixBin(p_quant);
+		Double_t sigma    = smearD0[nBL]->GetBinContent(Xbin,Ybin);
+ 
+		smear_D0=smearD0_rand.Gaus(0, sigma);
+	}
+
+	switch(type)
+	{
+		case TYPE_ELECTRON:
+			el_trackz0pvunbiased->at(index) = el_trackd0pvunbiased->at(index) + smear_D0;
+			break;
+
+		case TYPE_MUON_CB_PLUS_ST:
+			mu_staco_trackd0pvunbiased->at(index) = mu_staco_trackd0pvunbiased->at(index) + smear_D0;
+			break;
+
+		case TYPE_MUON_STANDALONE:
+			break;
+
+		case TYPE_MUON_CALO:
+			mu_calo_trackd0pvunbiased->at(index) = mu_calo_trackd0pvunbiased->at(index) + smear_D0;
+			break;
+	}
+#endif
+}
+/*-------------------------------------------------------------------------*/
+
 #define __ELECTRON_CHECK_ID(index) \
 		if(el_author->at(index) != 1				\
 		   &&							\
