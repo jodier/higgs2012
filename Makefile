@@ -18,13 +18,13 @@ ROOTLDFLAGS   = $(shell $(ROOTCONFIG) --ldflags)
 
 ATLASFLAGS = -DSTANDALONE \
 -I tools/ggFReweighting-00-00-08 \
--I tools/HiggsZZ4lUtils-00-01-25 \
--I tools/PileupReweighting-00-02-08 \
+-I tools/HiggsZZ4lUtils-00-01-32 \
+-I tools/PileupReweighting-00-02-09 \
 -I tools/TrigMuonEfficiency-00-02-23 \
--I tools/egammaAnalysisUtils-00-04-02 \
+-I tools/egammaAnalysisUtils-00-04-12 \
 -I tools/MuonIsolationCorrection-00-08 \
 -I tools/MuonMomentumCorrections-00-07-01 \
--I tools/MuonEfficiencyCorrections-02-01-05
+-I tools/MuonEfficiencyCorrections-02-01-10
 
 ATLASLIBS = -L./tools \
 -lggFReweighting \

@@ -130,15 +130,13 @@ Float_t TLeptonAnalysis::eventGetWeight3(Int_t index, TLeptonType type)
 
 			weight = m_stacoSCF->scaleFactor(mu_staco_charge->at(index), tlv);
 
-			if(eta > 2.5
-			   &&
-			   eta < 2.7
-			 ) {
+			if(mu_staco_isStandAloneMuon->at(index) != false)
+			  {
 #ifdef __YEAR2011
-				weight *= m_stacoSASCF->scaleFactor(tlv);
+				weight = m_stacoSASCF->scaleFactor(tlv);
 #endif
 #ifdef __YEAR2012
-				weight *= m_stacoSASCF->scaleFactor(mu_staco_charge->at(index), tlv);
+				weight = m_stacoSASCF->scaleFactor(mu_staco_charge->at(index), tlv);
 #endif
 			}
 
@@ -250,11 +248,12 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 
 			/**/ if(mu_staco_isCombinedMuon->at(index) != false)
 			{
-				Float_t pt_ME = (mu_staco_me_qoverp_exPV->at(index) != 0.0f) ? sin(mu_staco_me_theta_exPV->at(index)) / fabs(mu_staco_me_qoverp_exPV->at(index)) : 0.0f;
-				Float_t pt_ID = (mu_staco_id_qoverp_exPV->at(index) != 0.0f) ? sin(mu_staco_id_theta_exPV->at(index)) / fabs(mu_staco_id_qoverp_exPV->at(index)) : 0.0f;
+
+				Float_t pt_MS = (mu_staco_me_qoverp->at(index) != 0.0f) ? sin(mu_staco_me_theta->at(index)) / fabs(mu_staco_me_qoverp->at(index)) : 0.0f;
+				Float_t pt_ID = (mu_staco_id_qoverp->at(index) != 0.0f) ? sin(mu_staco_id_theta->at(index)) / fabs(mu_staco_id_qoverp->at(index)) : 0.0f;
 
 				m_stacoSM->Event(
-					pt_ME,
+					pt_MS,
 					pt_ID,
 					pT_old,
 					mu_staco_eta->at(index)
@@ -852,7 +851,6 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 			if(index != xedni)
 			{
 				Float_t dEta = fabs(el_cl_eta->at(index) - el_cl_eta->at(xedni));
-				//Float_t dPhi = fabs(el_cl_phi->at(index) - el_cl_phi->at(xedni));
 				Float_t dPhi = (fabs(el_cl_phi->at(index) - el_cl_phi->at(xedni)) > TMath::Pi())? 2*TMath::Pi()- fabs(el_cl_phi->at(index) - el_cl_phi->at(xedni)) : fabs(el_cl_phi->at(index) - el_cl_phi->at(xedni));
 
 				if(dEta < 3.0f * 0.025f
@@ -888,26 +886,28 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 				case TYPE_MUON_STANDALONE:
 					mu_id_eta = -logf(tanf(0.5f * mu_staco_id_theta->at(xedni)));
 					mu_id_phi = mu_staco_id_phi->at(xedni);
+
+#ifdef __YEAR2011
+					if(__dR2(el_tracketa->at(index), mu_id_eta, el_trackphi->at(index), mu_id_phi) < 0.02f * 0.02f)
+#endif
+#ifdef __YEAR2012
+					if(__dR2(el_Unrefittedtrack_eta->at(index), mu_id_eta, el_Unrefittedtrack_phi->at(index), mu_id_phi) < 0.02f * 0.02f)
+#endif
+					{
+						return false;
+					}
+
 					break;
 
 				case TYPE_MUON_CALO:
-					mu_id_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(xedni)));
-					mu_id_phi = mu_calo_id_phi->at(xedni);
+					//mu_id_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(xedni)));
+					//mu_id_phi = mu_calo_id_phi->at(xedni);
 					break;
 
 				default:
 					return false;
 			}
 
-#ifdef __YEAR2011
-			if(__dR2(el_tracketa->at(index), mu_id_eta, el_trackphi->at(index), mu_id_phi) < 0.02f * 0.02f)
-#endif
-#ifdef __YEAR2012
-			if(__dR2(el_Unrefittedtrack_eta->at(index), mu_id_eta, el_Unrefittedtrack_phi->at(index), mu_id_phi) < 0.02f * 0.02f)
-#endif
-			{
-				return false;
-			}
 		}
 
 		elNr11++;

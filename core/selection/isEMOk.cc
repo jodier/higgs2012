@@ -3,7 +3,7 @@
 #include "../include/core.h"
 
 #ifdef __YEAR2011
-  #include <HiggsZZ4lUtils/IsEMPlusPlusH4lDefs.h>
+  #include <egammaAnalysisUtils/H4l2011Defs.h>
 #endif
 
 #ifdef __YEAR2012
@@ -19,7 +19,7 @@ Bool_t TLeptonAnalysis::el_isEMOk_at(Int_t index)
 
 	float Et_cl = el_cl_E->at(index) / coshf(eta_s2);
 
-	return isLoosePlusPlusH4l(
+	return passH4l2011(
 		eta_s2,
 		Et_cl,
 		el_Ethad->at(index) / Et_cl,

@@ -263,6 +263,15 @@ class TLeptonAnalysis: public TNTuple
 	Float_t lumiPeriod2012C;
 	Float_t lumiPeriod2012D;
 	Float_t lumiPeriod2012E;
+	Float_t lumiPeriod2012F;
+	Float_t lumiPeriod2012G;
+	Float_t lumiPeriod2012H;
+	Float_t lumiPeriod2012I;
+	Float_t lumiPeriod2012J;
+	Float_t lumiPeriod2012K;
+	Float_t lumiPeriod2012L;
+	Float_t lumiPeriod2012M;
+
 #endif
 	/*-----------------------------------------------------------------*/
 
@@ -304,7 +313,7 @@ class TLeptonAnalysis: public TNTuple
 		/* VERTEX POSITION REWEIGHTING				   */
 		/*---------------------------------------------------------*/
 #if defined( __YEAR2012) && defined(__IS_MC)
-		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-02/share/zvtx_weights_2011_2012.root");
+		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-12/share/zvtx_weights_2011_2012.root");
 #endif
 
 		/*---------------------------------------------------------*/
@@ -340,7 +349,7 @@ class TLeptonAnalysis: public TNTuple
 		/* VERTEX POSITION REWEIGHTING				   */
 		/*---------------------------------------------------------*/
 #if defined( __YEAR2012) && defined(__IS_MC)
-		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-02/share/zvtx_weights_2011_2012.root");
+		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-12/share/zvtx_weights_2011_2012.root");
 #endif
 
 		/*---------------------------------------------------------*/
@@ -350,9 +359,6 @@ class TLeptonAnalysis: public TNTuple
 		m_pileupReweighting = new Root::TPileupReweighting("PileupReweightingTool");
 #ifdef __YEAR2011
 		m_pileupReweighting->SetUnrepresentedDataAction(2);
-		//m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC11c.prw.root");
-		//m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_2011_AllYear_All_Good.root");
-
 		m_pileupReweighting->AddConfigFile("./tools/MC11c.prw.root");
 		m_pileupReweighting->AddLumiCalcFile("./tools/ilumicalc_2011_AllYear_All_Good.root");
 		m_pileupReweighting->SetDefaultChannel(109292);
@@ -372,19 +378,24 @@ class TLeptonAnalysis: public TNTuple
 #endif
 #ifdef __YEAR2012
 		m_pileupReweighting->SetUnrepresentedDataAction(2);
-		//m_pileupReweighting->AddConfigFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/MC12a.prw.root");
-		//m_pileupReweighting->AddLumiCalcFile("/afs/cern.ch/atlas/groups/HSG2/ExtendedPileUpReweight4l/ilumicalc_2012_AllYear_All_Good.root");
-
 		m_pileupReweighting->AddConfigFile("./tools/MC12a.prw.root");
 		m_pileupReweighting->AddLumiCalcFile("./tools/ilumicalc_2012_AllYear_All_Good.root");
 		m_pileupReweighting->SetDefaultChannel(160156);
 		m_pileupReweighting->Initialize();
 
-		lumiPeriod2012A = m_pileupReweighting->GetIntegratedLumi(200804, 201556);
-		lumiPeriod2012B = m_pileupReweighting->GetIntegratedLumi(202660, 205113);
-		lumiPeriod2012C = m_pileupReweighting->GetIntegratedLumi(206248, 207397);
-		lumiPeriod2012D = m_pileupReweighting->GetIntegratedLumi(207447, 209025);
-		lumiPeriod2012E = m_pileupReweighting->GetIntegratedLumi(209074, 210308);
+		lumiPeriod2012A = m_pileupReweighting->GetIntegratedLumi(200804,201556);
+		lumiPeriod2012B = m_pileupReweighting->GetIntegratedLumi(202660,205113);
+		lumiPeriod2012C = m_pileupReweighting->GetIntegratedLumi(206248,207397);
+		lumiPeriod2012D = m_pileupReweighting->GetIntegratedLumi(207447,209025);
+		lumiPeriod2012E = m_pileupReweighting->GetIntegratedLumi(209074,210308);
+		lumiPeriod2012F = 0.0; 
+		lumiPeriod2012G = m_pileupReweighting->GetIntegratedLumi(211522,212272);
+		lumiPeriod2012H = m_pileupReweighting->GetIntegratedLumi(212619,213359); 
+		lumiPeriod2012I = m_pileupReweighting->GetIntegratedLumi(213431,213819); 
+		lumiPeriod2012J = m_pileupReweighting->GetIntegratedLumi(213900,215091); 
+		lumiPeriod2012K = 0.0;
+		lumiPeriod2012L = m_pileupReweighting->GetIntegratedLumi(215414,215643); 
+		lumiPeriod2012M = m_pileupReweighting->GetIntegratedLumi(216399,216432);// 2012 lumiPeriod A-M
 
 #endif
 		/*---------------------------------------------------------*/
@@ -395,28 +406,31 @@ class TLeptonAnalysis: public TNTuple
 #endif
 #ifdef __YEAR2012
 		m_stacoSM = new MuonSmear::SmearingClass("Data12", "staco", "q_pT", "Rel17.2", "./tools/MuonMomentumCorrections-00-07-01/share/");
+		m_stacoSM->UseScale(1);
+		m_stacoSM->UseImprovedCombine();
+
 #endif
 		/*---------------------------------------------------------*/
 		/* MUON SCALE FACTORS					   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2011
-		m_stacoSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-05/share/", "STACO_CB_plus_ST_2011_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverPeriods);
+		m_stacoSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-10/share/", "STACO_CB_plus_ST_2011_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverPeriods);
 		m_stacoSCF->Initialise();
 
-		m_stacoSASCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-05/share/", "STACOHighEta.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::Default);
+		m_stacoSASCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-10/share/", "STACOHighEta.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::Default);
 		m_stacoSASCF->Initialise();
 
-		m_caloMuSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-05/share/", "CaloTag_2011_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverPeriods);
+		m_caloMuSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-10/share/", "CaloTag_2011_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverPeriods);
 		m_caloMuSCF->Initialise();
 #endif
 #ifdef __YEAR2012
-		m_stacoSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-05/share/", "STACO_CB_plus_ST_2012_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
+		m_stacoSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-10/share/", "STACO_CB_plus_ST_2012_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
 		m_stacoSCF->Initialise();
 
-		m_stacoSASCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-05/share/", "STACO_CB_plus_ST_2012_SFms.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
+		m_stacoSASCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-10/share/", "STACO_CB_plus_ST_2012_SFms.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
 		m_stacoSASCF->Initialise();
 
-		m_caloMuSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-05/share/", "CaloTag_2012_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
+		m_caloMuSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-10/share/", "CaloTag_2012_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
 		m_caloMuSCF->Initialise();
 #endif
 
@@ -424,17 +438,17 @@ class TLeptonAnalysis: public TNTuple
 		/* ELECTRON LIKELIHOOD ID				   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2012
-		m_ElectronLikelihoodTool = new ElectronLikelihoodTool("./tools/egammaAnalysisUtils-00-04-02/share/ElectronLikelihoodPdfs.root");
+		m_ElectronLikelihoodTool = new ElectronLikelihoodTool("./tools/egammaAnalysisUtils-00-04-12/share/ElectronLikelihoodPdfs.root");
 #endif
 	
 		/*---------------------------------------------------------*/
 		/* ELECTRON ENERGY RESCALER				   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2011
-		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-04-02/share/EnergyRescalerData.root","2011","es2011a");
+		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-04-12/share/EnergyRescalerData.root","2011","es2011a");
 #endif
 #ifdef __YEAR2012
-		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-04-02/share/EnergyRescalerData.root","2012","es2012");
+		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-04-12/share/EnergyRescalerData.root","2012","es2012");
 #endif
 		/*---------------------------------------------------------*/
 		/* ELECTRON SCALE FACTORS				   */

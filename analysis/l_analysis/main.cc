@@ -172,81 +172,6 @@ void TLeptonFinder::Loop(void)
 				}
 
 				/*-----------------------------------------*/
-				/* CALO MUONS				   */
-				/*-----------------------------------------*/
-
-				for(Int_t i = 0; i < mu_calo_n; i++)
-				{
-					if(checkObject(i, TYPE_MUON_CALO, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
-					{
-						muCaloIndexArray[muCaloIndexNr] = i;
-						muCaloTypeArray[muCaloIndexNr] = TYPE_MUON_CALO;
-
-						muCaloIndexNr++;
-					}
-				}
-
-				/*-----------------------------------------*/
-				/* CALO - CB_PLUS_ST OVERLAP		   */
-				/*-----------------------------------------*/
-
-				Int_t tmp1 = muCB_PLUS_STIndexNr;
-
-				for(Int_t i = 0; i < muCaloIndexNr; i++)
-				{
-					Bool_t isOk = true;
-
-					Int_t index = muCaloIndexArray[i];
-
-					Float_t calo_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(index)));
-					Float_t calo_phi = mu_calo_id_phi->at(index);
-
-					for(Int_t j = 0; j < tmp1; j++)
-					{
-						Int_t xedni = muCB_PLUS_STIndexArray[j];
-
-						Float_t cb_plus_st_eta;
-						Float_t cb_plus_st_phi;
-
-						switch(muCB_PLUS_STTypeArray[j])
-						{
-							case TYPE_MUON_CB_PLUS_ST:
-							case TYPE_MUON_STANDALONE:
-								cb_plus_st_eta = mu_staco_eta->at(xedni);
-								cb_plus_st_phi = mu_staco_phi->at(xedni);
-								break;
-
-							case TYPE_MUON_CALO:
-								cb_plus_st_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(xedni)));
-								cb_plus_st_phi = mu_calo_id_phi->at(xedni);
-								break;
-
-							default:
-								std::cout << "Oula !!!" << std::endl;
-
-								exit(1);
-						}
-
-						if(__dR2(calo_eta, cb_plus_st_eta, calo_phi, cb_plus_st_phi) < 0.1f * 0.1f)
-						{
-							isOk = false;
-
-							muNr13--;
-
-							break;
-						}
-					}
-
-					if(isOk != false)
-					{
-						muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = muCaloIndexArray[i];
-						muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = muCaloTypeArray[i];
-
-						muCB_PLUS_STIndexNr++;
-					}
-				}
-
-				/*-----------------------------------------*/
 				/* STANDALONE - CB_PLUS_ST OVERLAP	   */
 				/*-----------------------------------------*/
 
@@ -323,6 +248,97 @@ void TLeptonFinder::Loop(void)
 							elIndexNr++;
 						}
 					}
+				}
+
+				/*-----------------------------------------*/
+				/* CALO MUONS				   */
+				/*-----------------------------------------*/
+
+				for(Int_t i = 0; i < mu_calo_n; i++)
+				{
+					if(checkObject(i, TYPE_MUON_CALO, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
+					{
+						muCaloIndexArray[muCaloIndexNr] = i;
+						muCaloTypeArray[muCaloIndexNr] = TYPE_MUON_CALO;
+
+						muCaloIndexNr++;
+					}
+				}
+
+				/*-----------------------------------------*/
+				/* CALO - CB_PLUS_ST/ELECTRONS OVERLAP 	   */
+				/*-----------------------------------------*/
+
+				Int_t tmp1 = muCB_PLUS_STIndexNr;
+				Int_t tmp3 = elIndexNr;
+
+
+				for(Int_t i = 0; i < muCaloIndexNr; i++)
+				{
+					Bool_t isOk_mu_CB_ST = true;
+					Bool_t isOk_el = true;
+
+					Int_t index = muCaloIndexArray[i];
+
+					Float_t calo_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(index)));
+					Float_t calo_phi = mu_calo_id_phi->at(index);
+
+					for(Int_t j = 0; j < tmp1; j++)
+					{
+						Int_t xedni = muCB_PLUS_STIndexArray[j];
+
+						Float_t cb_plus_st_eta;
+						Float_t cb_plus_st_phi;
+
+						switch(muCB_PLUS_STTypeArray[j])
+						{
+							case TYPE_MUON_CB_PLUS_ST:
+							case TYPE_MUON_STANDALONE:
+								cb_plus_st_eta = mu_staco_eta->at(xedni);
+								cb_plus_st_phi = mu_staco_phi->at(xedni);
+								break;
+
+							case TYPE_MUON_CALO:
+								cb_plus_st_eta = -logf(tanf(0.5f * mu_calo_id_theta->at(xedni)));
+								cb_plus_st_phi = mu_calo_id_phi->at(xedni);
+								break;
+
+							default:
+								std::cout << "Oula !!!" << std::endl;
+
+								exit(1);
+						}
+
+						if(__dR2(calo_eta, cb_plus_st_eta, calo_phi, cb_plus_st_phi) < 0.1f * 0.1f)
+						{
+							isOk_mu_CB_ST = false;
+
+							break;
+						}
+					}
+
+					if(isOk_mu_CB_ST != false){
+						for(Int_t j = 0; j < tmp3; j++)
+						{
+							Int_t xedni = elIndexArray[j];
+
+							if(__dR2(el_Unrefittedtrack_eta->at(xedni), calo_eta, el_Unrefittedtrack_phi->at(xedni), calo_phi) < 0.02f * 0.02f)
+							{
+								isOk_el = false;
+
+								break;
+							}
+						}
+					}
+
+					if((isOk_mu_CB_ST != false) && (isOk_el != false))
+					{
+						muCB_PLUS_STIndexArray[muCB_PLUS_STIndexNr] = muCaloIndexArray[i];
+						muCB_PLUS_STTypeArray[muCB_PLUS_STIndexNr] = muCaloTypeArray[i];
+
+						muCB_PLUS_STIndexNr++;
+					}
+					else muNr13--;
 				}
 
 				/*-----------------------------------------*/

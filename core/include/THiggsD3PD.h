@@ -148,8 +148,8 @@ public :
    std::vector<float>   *mu_staco_z0_exPV;
    std::vector<float>   *mu_staco_id_theta_exPV;
    std::vector<float>   *mu_staco_id_qoverp_exPV;
-   std::vector<float>   *mu_staco_me_theta_exPV;
-   std::vector<float>   *mu_staco_me_qoverp_exPV;
+   std::vector<float>   *mu_staco_me_theta;
+   std::vector<float>   *mu_staco_me_qoverp;
    std::vector<float>   *mu_staco_id_d0;
    std::vector<float>   *mu_staco_id_z0;
    std::vector<float>   *mu_staco_id_phi;
@@ -191,6 +191,7 @@ public :
    std::vector<int>     *mu_calo_isStandAloneMuon;
    std::vector<int>     *mu_calo_isCombinedMuon;
    std::vector<int>     *mu_calo_isSegmentTaggedMuon;
+   std::vector<int>     *mu_calo_isCaloMuonId;
    std::vector<int>     *mu_calo_tight;
    std::vector<float>   *mu_calo_d0_exPV;
    std::vector<float>   *mu_calo_z0_exPV;
@@ -390,8 +391,8 @@ public :
    TBranch        *b_mu_staco_z0_exPV;   //!
    TBranch        *b_mu_staco_id_theta_exPV;   //!
    TBranch        *b_mu_staco_id_qoverp_exPV;   //!
-   TBranch        *b_mu_staco_me_theta_exPV;   //!
-   TBranch        *b_mu_staco_me_qoverp_exPV;   //!
+   TBranch        *b_mu_staco_me_theta;   //!
+   TBranch        *b_mu_staco_me_qoverp;   //!
    TBranch        *b_mu_staco_id_d0;   //!
    TBranch        *b_mu_staco_id_z0;   //!
    TBranch        *b_mu_staco_id_phi;   //!
@@ -433,6 +434,7 @@ public :
    TBranch        *b_mu_calo_isStandAloneMuon;   //!
    TBranch        *b_mu_calo_isCombinedMuon;   //!
    TBranch        *b_mu_calo_isSegmentTaggedMuon;   //!
+   TBranch        *b_mu_calo_isCaloMuonId;   //!
    TBranch        *b_mu_calo_tight;   //!
    TBranch        *b_mu_calo_d0_exPV;   //!
    TBranch        *b_mu_calo_z0_exPV;   //!
@@ -675,8 +677,8 @@ void THiggsD3PD::Init(TTree *tree)
    mu_staco_z0_exPV = 0;
    mu_staco_id_theta_exPV = 0;
    mu_staco_id_qoverp_exPV = 0;
-   mu_staco_me_theta_exPV = 0;
-   mu_staco_me_qoverp_exPV = 0;
+   mu_staco_me_theta = 0;
+   mu_staco_me_qoverp = 0;
    mu_staco_id_d0 = 0;
    mu_staco_id_z0 = 0;
    mu_staco_id_phi = 0;
@@ -717,6 +719,7 @@ void THiggsD3PD::Init(TTree *tree)
    mu_calo_isStandAloneMuon = 0;
    mu_calo_isCombinedMuon = 0;
    mu_calo_isSegmentTaggedMuon = 0;
+   mu_calo_isCaloMuonId = 0;
    mu_calo_tight = 0;
    mu_calo_d0_exPV = 0;
    mu_calo_z0_exPV = 0;
@@ -909,8 +912,8 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_staco_z0_exPV", &mu_staco_z0_exPV, &b_mu_staco_z0_exPV);
    fChain->SetBranchAddress("mu_staco_id_theta_exPV", &mu_staco_id_theta_exPV, &b_mu_staco_id_theta_exPV);
    fChain->SetBranchAddress("mu_staco_id_qoverp_exPV", &mu_staco_id_qoverp_exPV, &b_mu_staco_id_qoverp_exPV);
-   fChain->SetBranchAddress("mu_staco_me_theta_exPV", &mu_staco_me_theta_exPV, &b_mu_staco_me_theta_exPV);
-   fChain->SetBranchAddress("mu_staco_me_qoverp_exPV", &mu_staco_me_qoverp_exPV, &b_mu_staco_me_qoverp_exPV);
+   fChain->SetBranchAddress("mu_staco_me_theta", &mu_staco_me_theta, &b_mu_staco_me_theta);
+   fChain->SetBranchAddress("mu_staco_me_qoverp", &mu_staco_me_qoverp, &b_mu_staco_me_qoverp);
    fChain->SetBranchAddress("mu_staco_id_d0", &mu_staco_id_d0, &b_mu_staco_id_d0);
    fChain->SetBranchAddress("mu_staco_id_z0", &mu_staco_id_z0, &b_mu_staco_id_z0);
    fChain->SetBranchAddress("mu_staco_id_phi", &mu_staco_id_phi, &b_mu_staco_id_phi);
@@ -952,6 +955,7 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_calo_isStandAloneMuon", &mu_calo_isStandAloneMuon, &b_mu_calo_isStandAloneMuon);
    fChain->SetBranchAddress("mu_calo_isCombinedMuon", &mu_calo_isCombinedMuon, &b_mu_calo_isCombinedMuon);
    fChain->SetBranchAddress("mu_calo_isSegmentTaggedMuon", &mu_calo_isSegmentTaggedMuon, &b_mu_calo_isSegmentTaggedMuon);
+   fChain->SetBranchAddress("mu_calo_isCaloMuonId", &mu_calo_isCaloMuonId, &b_mu_calo_isCaloMuonId);
    fChain->SetBranchAddress("mu_calo_tight", &mu_calo_tight, &b_mu_calo_tight);
    fChain->SetBranchAddress("mu_calo_d0_exPV", &mu_calo_d0_exPV, &b_mu_calo_d0_exPV);
    fChain->SetBranchAddress("mu_calo_z0_exPV", &mu_calo_z0_exPV, &b_mu_calo_z0_exPV);

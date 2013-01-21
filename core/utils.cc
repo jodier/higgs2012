@@ -77,7 +77,9 @@ Float_t __dR2(
 	Float_t phi1, Float_t phi2
 ) {
 	Float_t dEta = eta1 - eta2;
-	Float_t dPhi = phi1 - phi2;
+	Float_t dPhi = (fabs(phi1-phi2) > TMath::Pi()) ? 2*TMath::Pi()-fabs(phi1-phi2) : fabs(phi1-phi2);
+
+/*	Float_t dPhi = phi1 - phi2;
 
 	while(dPhi < -M_PI) {
 		dPhi += 2.0 * M_PI;
@@ -86,7 +88,7 @@ Float_t __dR2(
 	while(dPhi >= +M_PI) {
 		dPhi -= 2.0 * M_PI;
 	}
-
+*/
 	return dEta * dEta + dPhi * dPhi;
 }
 
