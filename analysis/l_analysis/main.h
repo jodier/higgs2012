@@ -60,9 +60,11 @@ class TLeptonFinder: public TLeptonAnalysis
 			tree->Branch("weight3", m_l[i].weight3, "weight3[n]/F");
 
 			tree->Branch("l_lepton", m_l[i].l_lepton, "l_lepton[n]/I");
+			tree->Branch("l_id", m_l[i].l_id, "l_id[n]/I");
 			tree->Branch("l_tight", m_l[i].l_tight, "l_tight[n]/I");
 			tree->Branch("l_triggerMatch", m_l[i].l_triggerMatch, "l_triggerMatch[n]/I");
 			tree->Branch("l_truthMatch", m_l[i].l_truthMatch, "l_truthMatch[n]/I");
+
 
 			tree->Branch("l_charge", m_l[i].l_charge, "l_charge[n]/F");
 			tree->Branch("l_e", m_l[i].l_e, "l_e[n]/F");
@@ -121,9 +123,11 @@ class TLeptonFinder: public TLeptonAnalysis
 		Float_t weight3[MAX];
 
 		Int_t l_lepton[MAX];
+		Int_t l_id[MAX];
 		Int_t l_tight[MAX];
 		Int_t l_triggerMatch[MAX];
 		Int_t l_truthMatch[MAX];
+
 
 		Float_t l_charge[MAX];
 		Float_t l_e[MAX];

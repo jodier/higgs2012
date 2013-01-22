@@ -484,7 +484,7 @@ void TLeptonAnalysis::D0smearObject(Int_t index, TLeptonType type)
 			continue;					\
 		}							\
 									\
-		if(el_isEMOk_at(index) == false) {			\
+		if(el_isEMOk_at(index) == 0x00) {		\
 			continue;					\
 		}
 
@@ -515,7 +515,7 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			elNr3++;
 
-			if(el_isEMOk_at(index) == false) {
+			if(el_isEMOk_at(index) == 0x00) {
 				goto __error;
 			}
 

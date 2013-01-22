@@ -105,7 +105,7 @@ UInt_t TLeptonAnalysis::getElTrigger(void)
 		}
   #endif
   #ifdef __YEAR2012
-		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E')
+		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'M')
 		{
 			if(EF_e24vhi_medium1 || EF_e60_medium1) {
 				elTrigger |= (1 << 0);
@@ -217,7 +217,7 @@ UInt_t TLeptonAnalysis::getMuTrigger(void)
 		}
   #endif
   #ifdef __YEAR2012
-		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E')
+		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'M')
 		{
 			if(EF_mu24i_tight || EF_mu36_tight) {
 				muTrigger |= (1 << 0);
@@ -278,7 +278,7 @@ UInt_t TLeptonAnalysis::getElMuTrigger(void){
 		}
   #endif
   #ifdef __YEAR2012
-		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E')
+		/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'M')
 		{
 			if(EF_e12Tvh_medium1_mu8 || EF_e24vhi_loose1_mu8) {
 				elmuTrigger |= (1 << 1);
@@ -429,7 +429,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 			}
   #endif
   #ifdef __YEAR2012
-			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E') // A-E
+			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'M') 
 			{
 				chain1_A = "EF_e24vhi_medium1";
 				chain1_B = "EF_e60_medium1";
@@ -643,7 +643,7 @@ UInt_t TLeptonAnalysis::triggerMatch(
 			}
   #endif
   #ifdef __YEAR2012
-			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'E')
+			/**/ if(lumiPeriod >= 'A' && lumiPeriod <= 'M')
 			{
 				chain1_A = "EF_mu24i_tight";
 				chain1_B = "EF_mu36_tight";
@@ -890,6 +890,24 @@ Int_t TLeptonAnalysis::triggerTrace(UInt_t result[])
 
 		if(EF_mu18_tight_mu8_EFFS != 0) {
 			result[nr++] = 0x61E98BBD;
+		}
+#endif
+		/*---------------------------------------------------------*/
+		/* ELECTRONS - MUONS						   */
+		/*---------------------------------------------------------*/
+#ifdef __YEAR2011
+		if(EF_e10_medium_mu6 != 0) {
+			result[nr++] = 0xCFDDC019;
+		}
+
+#endif
+#ifdef __YEAR2012
+		if(EF_e12Tvh_medium1_mu8 != 0) {
+			result[nr++] = 0x8C1CAEB4;
+		}
+
+		if(EF_e24vhi_loose1_mu8 != 0) {
+			result[nr++] = 0xC79D3D20;
 		}
 #endif
 		/*---------------------------------------------------------*/

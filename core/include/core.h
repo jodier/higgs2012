@@ -128,6 +128,7 @@ namespace core
 #include <egammaAnalysisUtils/VertexPositionReweightingTool.h>
 #include <egammaAnalysisUtils/ElectronLikelihoodTool.h>
 #include <egammaAnalysisUtils/egammaPIDdefs.h>
+#include <egammaAnalysisUtils/MultiLeptonMenu.h>
 
 #include <TrigMuonEfficiency/TriggerNavigationVariables.h>
 #include <TrigMuonEfficiency/ElectronTriggerMatching.h>
@@ -238,6 +239,7 @@ class TLeptonAnalysis: public TNTuple
 
 	CorrectCaloIso *m_correctCaloIso;
 	ElectronLikelihoodTool  *m_ElectronLikelihoodTool;
+	MultiLeptonMenu m_MultiLeptonMenu;
 
 	TriggerNavigationVariables *m_triggerNavigationVariables;
 	ElectronTriggerMatching *m_elTriggerMatching;
@@ -588,7 +590,7 @@ class TLeptonAnalysis: public TNTuple
 	Float_t electronGetEt(Int_t index);
 	Float_t electronGetRawEt(Int_t index);
 
-	Bool_t el_isEMOk_at(Int_t index);
+	UInt_t el_isEMOk_at(Int_t index);
 	Float_t el_Etcone20_at(Int_t index);
 
 	/*-----------------------------------------------------------------*/

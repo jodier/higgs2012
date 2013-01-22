@@ -65,6 +65,7 @@ void TLeptonFinder::Loop(void)
 	const Long64_t eventNr = fChain->GetEntries();
 
 	for(Long64_t event = 0; event < eventNr; event++)
+//	for(Long64_t event = 0; event < 10000; event++)
 	{
 		/*---------------------------------------------------------*/
 		LoadEvent(event, eventNr);
@@ -321,11 +322,10 @@ void TLeptonFinder::Loop(void)
 						for(Int_t j = 0; j < tmp3; j++)
 						{
 							Int_t xedni = elIndexArray[j];
-
+							if((el_isEMOk_at(xedni) & (1<<1)) != 2) continue;
 							if(__dR2(el_Unrefittedtrack_eta->at(xedni), calo_eta, el_Unrefittedtrack_phi->at(xedni), calo_phi) < 0.02f * 0.02f)
 							{
 								isOk_el = false;
-
 								break;
 							}
 						}
@@ -381,6 +381,8 @@ void TLeptonFinder::Loop(void)
 
 		m_l[0].n = elIndexNr;
 
+		Int_t isOkLeadZ = 0;
+
 		for(Int_t i = 0; i < elIndexNr; i++)
 		{
 			Int_t index = elIndexArray[i];
@@ -399,6 +401,7 @@ void TLeptonFinder::Loop(void)
 					m_l[0].weight3[i] = eventGetWeight3(index, TYPE_ELECTRON);
 
 					m_l[0].l_lepton[i] = TYPE_ELECTRON;
+					m_l[0].l_id[i] = el_isEMOk_at(index);
 					m_l[0].l_tight[i] = el_tight->at(index) != 0;
 					m_l[0].l_triggerMatch[i] = triggerMatch(index, TYPE_ELECTRON);
 					m_l[0].l_truthMatch[i] = truthMatch(index, TYPE_ELECTRON);
@@ -472,7 +475,13 @@ void TLeptonFinder::Loop(void)
 					m_l[0].l_originbkg[i]= -999999;
 					m_l[0].l_truth_type[i] = -999999;
 					m_l[0].l_truth_mothertype[i] = -999999;
+
 #endif
+
+					//--------------------------------------//
+					// Zleading leptons Id check		//
+					//--------------------------------------//
+					if ((el_isEMOk_at(index) & (1<<1)) == 2 ){ isOkLeadZ++;}
 					break;
 
 				default:
@@ -509,6 +518,7 @@ void TLeptonFinder::Loop(void)
 					m_l[1].weight3[i] = eventGetWeight3(index, muCB_PLUS_STTypeArray[i]);
 
 					m_l[1].l_lepton[i] = muCB_PLUS_STTypeArray[i];
+					m_l[1].l_id[i] = 0x00;
 					m_l[1].l_tight[i] = mu_staco_tight->at(index) != 0;
 					m_l[1].l_triggerMatch[i] = triggerMatch(index, muCB_PLUS_STTypeArray[i]);
 					m_l[1].l_truthMatch[i] = truthMatch(index, muCB_PLUS_STTypeArray[i]);
@@ -587,6 +597,7 @@ void TLeptonFinder::Loop(void)
 					m_l[1].weight3[i] = eventGetWeight3(index, TYPE_MUON_CALO);
 
 					m_l[1].l_lepton[i] = TYPE_MUON_CALO;
+					m_l[1].l_id[i] = 0x00;
 					m_l[1].l_tight[i] = mu_calo_tight->at(index) != 0;
 					m_l[1].l_triggerMatch[i] = triggerMatch(index, TYPE_MUON_CALO);
 					m_l[1].l_truthMatch[i] = truthMatch(index, TYPE_MUON_CALO);
@@ -650,9 +661,9 @@ void TLeptonFinder::Loop(void)
 
 		/*---------------------------------------------------------*/
 
-		if((((((elIndexNr))))) >= 2
-		   ||
-		   muCB_PLUS_STIndexNr >= 2
+		if( ((elIndexNr >= 2) && (isOkLeadZ >= 2))
+		     ||
+		    (muCB_PLUS_STIndexNr >= 2)
 		 ) {
 			m_tree0.Fill();
 			m_tree1.Fill();

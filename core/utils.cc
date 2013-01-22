@@ -66,6 +66,26 @@ Char_t getlumiPeriod(Int_t RunNumber)
 	else if(RunNumber >= 209074 && RunNumber <= 210308) {
 		result = 'E';
 	}
+	else if(RunNumber >= 211522 && RunNumber <= 212272) {
+		result = 'G';
+	}
+	else if(RunNumber >= 212619 && RunNumber <= 213359) {
+		result = 'H';
+	}
+	else if(RunNumber >= 213431 && RunNumber <= 213819) {
+		result = 'I';
+	}
+	else if(RunNumber >= 213900 && RunNumber <= 215091) {
+		result = 'J';
+	}
+	else if(RunNumber >= 215414 && RunNumber <= 215643) {
+		result = 'L';
+	}
+	else if(RunNumber >= 216399 && RunNumber <= 216432) {
+		result = 'M';
+	}
+
+
 #endif
 	return result;
 }
@@ -79,16 +99,6 @@ Float_t __dR2(
 	Float_t dEta = eta1 - eta2;
 	Float_t dPhi = (fabs(phi1-phi2) > TMath::Pi()) ? 2*TMath::Pi()-fabs(phi1-phi2) : fabs(phi1-phi2);
 
-/*	Float_t dPhi = phi1 - phi2;
-
-	while(dPhi < -M_PI) {
-		dPhi += 2.0 * M_PI;
-	}
-
-	while(dPhi >= +M_PI) {
-		dPhi -= 2.0 * M_PI;
-	}
-*/
 	return dEta * dEta + dPhi * dPhi;
 }
 

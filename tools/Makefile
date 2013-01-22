@@ -47,7 +47,8 @@ HiggsZZ4lUtils-00-01-32/Root/ElectronRecoClassification.o \
 HiggsZZ4lUtils-00-01-32/Root/GetQuadVertexIndex.o \
 HiggsZZ4lUtils-00-01-32/Root/HiggsCrossSection.o \
 HiggsZZ4lUtils-00-01-32/Root/McOverlapRemoval.o \
-HiggsZZ4lUtils-00-01-32/Root/MzzWeightFromMCFM.o
+HiggsZZ4lUtils-00-01-32/Root/MzzWeightFromMCFM.o \
+HiggsZZ4lUtils-00-01-32/Root/ElectronLikelihoodToolHSG2Helper.o
 
 OBJS3         =\
 PileupReweighting-00-02-09/Root/TPileupReweighting.o
@@ -74,7 +75,7 @@ egammaAnalysisUtils-00-04-12/Root/EnergyRescaler.o \
 egammaAnalysisUtils-00-04-12/Root/EnergyRescalerUpgrade.o \
 egammaAnalysisUtils-00-04-12/Root/FsrPhotons.o \
 egammaAnalysisUtils-00-04-12/Root/H4l2011Defs.o \
-egammaAnalysisUtils-00-04-12/Root/MultiLeptonDefs_HCP2012.o \
+egammaAnalysisUtils-00-04-12/Root/MultiLeptonMenu.o \
 egammaAnalysisUtils-00-04-12/Root/ProbeQualityCuts.o \
 egammaAnalysisUtils-00-04-12/Root/VertexPositionReweightingTool.o
 
