@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Tue Aug 28 18:10:54 2012 by ROOT version 5.32/00
+// Tue Aug 28 18:12:01 2012 by ROOT version 5.32/00
 // from TTree physics/physics
 // found on file: result.root
 //////////////////////////////////////////////////////////
@@ -12,11 +12,12 @@
 #include <TChain.h>
 #include <TFile.h>
 
-#define __IS_DATA
+#define __IS_MC
 
 #define __YEAR2012
 
 // Header file for the classes stored in the TTree if any.
+#include <vector>
 #include <vector>
 #include <vector>
 #include <vector>
@@ -50,14 +51,19 @@ public :
    UInt_t          lbn;
    Float_t         actualIntPerXing;
    Float_t         averageIntPerXing;
+   UInt_t          mc_channel_number;
    UInt_t          larError;
-   UInt_t          tileError;
-   UInt_t          coreFlags;
    Int_t           el_n;
    std::vector<float>   *el_charge;
    std::vector<int>     *el_author;
    std::vector<unsigned int> *el_isEM;
    std::vector<unsigned int> *el_OQ;
+   std::vector<int>     *el_type;
+   std::vector<int>     *el_origin;
+   std::vector<int>     *el_typebkg;
+   std::vector<int>     *el_originbkg;
+   std::vector<int>     *el_truth_type;
+   std::vector<int>     *el_truth_mothertype;
    std::vector<int>     *el_medium;
    std::vector<int>     *el_tight;
    std::vector<int>     *el_loose;
@@ -73,11 +79,14 @@ public :
    std::vector<float>   *el_f3;
    std::vector<float>   *el_Etcone20;
    std::vector<float>   *el_ptcone20;
+   std::vector<float>   *el_Etcone30;
+   std::vector<float>   *el_ptcone30;
    std::vector<float>   *el_deltaeta1;
    std::vector<float>   *el_deltaphiRescaled;
    std::vector<float>   *el_reta;
    std::vector<float>   *el_rphi;
    std::vector<float>   *el_topoEtcone20;
+   std::vector<float>   *el_topoEtcone30;
    std::vector<float>   *el_etap;
    std::vector<std::vector<int> > *el_refittedTrack_author;
    std::vector<std::vector<float> > *el_refittedTrack_LMqoverp;
@@ -135,6 +144,8 @@ public :
    std::vector<int>     *mu_staco_author;
    std::vector<float>   *mu_staco_etcone20;
    std::vector<float>   *mu_staco_ptcone20;
+   std::vector<float>   *mu_staco_etcone30;
+   std::vector<float>   *mu_staco_ptcone30;
    std::vector<int>     *mu_staco_isStandAloneMuon;
    std::vector<int>     *mu_staco_isCombinedMuon;
    std::vector<int>     *mu_staco_isSegmentTaggedMuon;
@@ -143,8 +154,8 @@ public :
    std::vector<float>   *mu_staco_z0_exPV;
    std::vector<float>   *mu_staco_id_theta_exPV;
    std::vector<float>   *mu_staco_id_qoverp_exPV;
-   std::vector<float>   *mu_staco_me_theta_exPV;
-   std::vector<float>   *mu_staco_me_qoverp_exPV;
+   std::vector<float>   *mu_staco_me_theta;
+   std::vector<float>   *mu_staco_me_qoverp;
    std::vector<float>   *mu_staco_id_d0;
    std::vector<float>   *mu_staco_id_z0;
    std::vector<float>   *mu_staco_id_phi;
@@ -169,6 +180,8 @@ public :
    std::vector<float>   *mu_staco_trackd0pvunbiased;
    std::vector<float>   *mu_staco_trackz0pvunbiased;
    std::vector<float>   *mu_staco_tracksigd0pvunbiased;
+   std::vector<int>     *mu_staco_truth_type;
+   std::vector<int>     *mu_staco_truth_mothertype;
    std::vector<int>     *mu_staco_EFCB_index;
    Int_t           mu_calo_n;
    std::vector<float>   *mu_calo_E;
@@ -179,11 +192,14 @@ public :
    std::vector<int>     *mu_calo_author;
    std::vector<float>   *mu_calo_etcone20;
    std::vector<float>   *mu_calo_ptcone20;
+   std::vector<float>   *mu_calo_etcone30;
+   std::vector<float>   *mu_calo_ptcone30;
    std::vector<unsigned short> *mu_calo_caloMuonIdTag;
    std::vector<double>  *mu_calo_caloLRLikelihood;
    std::vector<int>     *mu_calo_isStandAloneMuon;
    std::vector<int>     *mu_calo_isCombinedMuon;
    std::vector<int>     *mu_calo_isSegmentTaggedMuon;
+   std::vector<int>     *mu_calo_isCaloMuonId;
    std::vector<int>     *mu_calo_tight;
    std::vector<float>   *mu_calo_d0_exPV;
    std::vector<float>   *mu_calo_z0_exPV;
@@ -215,9 +231,22 @@ public :
    std::vector<float>   *mu_calo_trackd0pvunbiased;
    std::vector<float>   *mu_calo_trackz0pvunbiased;
    std::vector<float>   *mu_calo_tracksigd0pvunbiased;
+   std::vector<int>     *mu_calo_truth_type;
+   std::vector<int>     *mu_calo_truth_mothertype;
    Float_t         MET_RefFinal_et;
    Int_t           vxp_n;
    std::vector<int>     *vxp_nTracks;
+   std::vector<std::vector<double> > *mcevt_weight;
+   Int_t           mc_n;
+   std::vector<float>   *mc_pt;
+   std::vector<float>   *mc_m;
+   std::vector<float>   *mc_eta;
+   std::vector<float>   *mc_phi;
+   std::vector<int>     *mc_status;
+   std::vector<int>     *mc_pdgId;
+   std::vector<std::vector<int> > *mc_children;
+   std::vector<float>   *mc_vx_z;
+   std::vector<std::vector<int> > *mc_child_index;
    UInt_t          trig_DB_SMK;
    std::vector<float>   *trig_L1_mu_eta;
    std::vector<float>   *trig_L1_mu_phi;
@@ -273,14 +302,19 @@ public :
    TBranch        *b_lbn;   //!
    TBranch        *b_actualIntPerXing;   //!
    TBranch        *b_averageIntPerXing;   //!
+   TBranch        *b_mc_channel_number;   //!
    TBranch        *b_larError;   //!
-   TBranch        *b_tileError;   //!
-   TBranch        *b_coreFlags;   //!
    TBranch        *b_el_n;   //!
    TBranch        *b_el_charge;   //!
    TBranch        *b_el_author;   //!
    TBranch        *b_el_isEM;   //!
    TBranch        *b_el_OQ;   //!
+   TBranch        *b_el_type;   //!
+   TBranch        *b_el_origin;   //!
+   TBranch        *b_el_typebkg;   //!
+   TBranch        *b_el_originbkg;   //!
+   TBranch        *b_el_truth_type;   //!
+   TBranch        *b_el_truth_mothertype;   //!
    TBranch        *b_el_medium;   //!
    TBranch        *b_el_tight;   //!
    TBranch        *b_el_loose;   //!
@@ -296,11 +330,14 @@ public :
    TBranch        *b_el_f3;   //!
    TBranch        *b_el_Etcone20;   //!
    TBranch        *b_el_ptcone20;   //!
+   TBranch        *b_el_Etcone30;   //!
+   TBranch        *b_el_ptcone30;   //!
    TBranch        *b_el_deltaeta1;   //!
    TBranch        *b_el_deltaphiRescaled;   //!
    TBranch        *b_el_reta;   //!
    TBranch        *b_el_rphi;   //!
    TBranch        *b_el_topoEtcone20;   //!
+   TBranch        *b_el_topoEtcone30;   //!
    TBranch        *b_el_etap;   //!
    TBranch        *b_el_refittedTrack_author;   //!
    TBranch        *b_el_refittedTrack_LMqoverp;   //!
@@ -358,6 +395,8 @@ public :
    TBranch        *b_mu_staco_author;   //!
    TBranch        *b_mu_staco_etcone20;   //!
    TBranch        *b_mu_staco_ptcone20;   //!
+   TBranch        *b_mu_staco_etcone30;   //!
+   TBranch        *b_mu_staco_ptcone30;   //!
    TBranch        *b_mu_staco_isStandAloneMuon;   //!
    TBranch        *b_mu_staco_isCombinedMuon;   //!
    TBranch        *b_mu_staco_isSegmentTaggedMuon;   //!
@@ -366,8 +405,8 @@ public :
    TBranch        *b_mu_staco_z0_exPV;   //!
    TBranch        *b_mu_staco_id_theta_exPV;   //!
    TBranch        *b_mu_staco_id_qoverp_exPV;   //!
-   TBranch        *b_mu_staco_me_theta_exPV;   //!
-   TBranch        *b_mu_staco_me_qoverp_exPV;   //!
+   TBranch        *b_mu_staco_me_theta;   //!
+   TBranch        *b_mu_staco_me_qoverp;   //!
    TBranch        *b_mu_staco_id_d0;   //!
    TBranch        *b_mu_staco_id_z0;   //!
    TBranch        *b_mu_staco_id_phi;   //!
@@ -392,6 +431,8 @@ public :
    TBranch        *b_mu_staco_trackd0pvunbiased;   //!
    TBranch        *b_mu_staco_trackz0pvunbiased;   //!
    TBranch        *b_mu_staco_tracksigd0pvunbiased;   //!
+   TBranch        *b_mu_staco_truth_type;   //!
+   TBranch        *b_mu_staco_truth_mothertype;   //!
    TBranch        *b_mu_staco_EFCB_index;   //!
    TBranch        *b_mu_calo_n;   //!
    TBranch        *b_mu_calo_E;   //!
@@ -402,11 +443,14 @@ public :
    TBranch        *b_mu_calo_author;   //!
    TBranch        *b_mu_calo_etcone20;   //!
    TBranch        *b_mu_calo_ptcone20;   //!
+   TBranch        *b_mu_calo_etcone30;   //!
+   TBranch        *b_mu_calo_ptcone30;   //!
    TBranch        *b_mu_calo_caloMuonIdTag;   //!
    TBranch        *b_mu_calo_caloLRLikelihood;   //!
    TBranch        *b_mu_calo_isStandAloneMuon;   //!
    TBranch        *b_mu_calo_isCombinedMuon;   //!
    TBranch        *b_mu_calo_isSegmentTaggedMuon;   //!
+   TBranch        *b_mu_calo_isCaloMuonId;   //!
    TBranch        *b_mu_calo_tight;   //!
    TBranch        *b_mu_calo_d0_exPV;   //!
    TBranch        *b_mu_calo_z0_exPV;   //!
@@ -438,9 +482,22 @@ public :
    TBranch        *b_mu_calo_trackd0pvunbiased;   //!
    TBranch        *b_mu_calo_trackz0pvunbiased;   //!
    TBranch        *b_mu_calo_tracksigd0pvunbiased;   //!
+   TBranch        *b_mu_calo_truth_type;   //!
+   TBranch        *b_mu_calo_truth_mothertype;   //!
    TBranch        *b_MET_RefFinal_et;   //!
    TBranch        *b_vxp_n;   //!
    TBranch        *b_vxp_nTracks;   //!
+   TBranch        *b_mcevt_weight;   //!
+   TBranch        *b_mc_n;   //!
+   TBranch        *b_mc_pt;   //!
+   TBranch        *b_mc_m;   //!
+   TBranch        *b_mc_eta;   //!
+   TBranch        *b_mc_phi;   //!
+   TBranch        *b_mc_status;   //!
+   TBranch        *b_mc_pdgId;   //!
+   TBranch        *b_mc_children;   //!
+   TBranch        *b_mc_vx_z;   //!
+   TBranch        *b_mc_child_index;   //!
    TBranch        *b_trig_DB_SMK;   //!
    TBranch        *b_trig_L1_mu_eta;   //!
    TBranch        *b_trig_L1_mu_phi;   //!
@@ -547,6 +604,12 @@ void THiggsD3PD::Init(TTree *tree)
    el_author = 0;
    el_isEM = 0;
    el_OQ = 0;
+   el_type = 0;
+   el_origin = 0;
+   el_typebkg = 0;
+   el_originbkg = 0;
+   el_truth_type = 0;
+   el_truth_mothertype = 0;
    el_medium = 0;
    el_tight = 0;
    el_loose = 0;
@@ -562,11 +625,14 @@ void THiggsD3PD::Init(TTree *tree)
    el_f3 = 0;
    el_Etcone20 = 0;
    el_ptcone20 = 0;
+   el_Etcone30 = 0;
+   el_ptcone30 = 0;
    el_deltaeta1 = 0;
    el_deltaphiRescaled = 0;
    el_reta = 0;
    el_rphi = 0;
    el_topoEtcone20 = 0;
+   el_topoEtcone30 = 0;
    el_etap = 0;
    el_refittedTrack_author = 0;
    el_refittedTrack_LMqoverp = 0;
@@ -623,6 +689,8 @@ void THiggsD3PD::Init(TTree *tree)
    mu_staco_author = 0;
    mu_staco_etcone20 = 0;
    mu_staco_ptcone20 = 0;
+   mu_staco_etcone30 = 0;
+   mu_staco_ptcone30 = 0;
    mu_staco_isStandAloneMuon = 0;
    mu_staco_isCombinedMuon = 0;
    mu_staco_isSegmentTaggedMuon = 0;
@@ -631,8 +699,8 @@ void THiggsD3PD::Init(TTree *tree)
    mu_staco_z0_exPV = 0;
    mu_staco_id_theta_exPV = 0;
    mu_staco_id_qoverp_exPV = 0;
-   mu_staco_me_theta_exPV = 0;
-   mu_staco_me_qoverp_exPV = 0;
+   mu_staco_me_theta = 0;
+   mu_staco_me_qoverp = 0;
    mu_staco_id_d0 = 0;
    mu_staco_id_z0 = 0;
    mu_staco_id_phi = 0;
@@ -657,6 +725,8 @@ void THiggsD3PD::Init(TTree *tree)
    mu_staco_trackd0pvunbiased = 0;
    mu_staco_trackz0pvunbiased = 0;
    mu_staco_tracksigd0pvunbiased = 0;
+   mu_staco_truth_type = 0;
+   mu_staco_truth_mothertype = 0;
    mu_staco_EFCB_index = 0;
    mu_calo_E = 0;
    mu_calo_pt = 0;
@@ -666,11 +736,14 @@ void THiggsD3PD::Init(TTree *tree)
    mu_calo_author = 0;
    mu_calo_etcone20 = 0;
    mu_calo_ptcone20 = 0;
+   mu_calo_etcone30 = 0;
+   mu_calo_ptcone30 = 0;
    mu_calo_caloMuonIdTag = 0;
    mu_calo_caloLRLikelihood = 0;
    mu_calo_isStandAloneMuon = 0;
    mu_calo_isCombinedMuon = 0;
    mu_calo_isSegmentTaggedMuon = 0;
+   mu_calo_isCaloMuonId = 0;
    mu_calo_tight = 0;
    mu_calo_d0_exPV = 0;
    mu_calo_z0_exPV = 0;
@@ -702,7 +775,14 @@ void THiggsD3PD::Init(TTree *tree)
    mu_calo_trackd0pvunbiased = 0;
    mu_calo_trackz0pvunbiased = 0;
    mu_calo_tracksigd0pvunbiased = 0;
+   mu_calo_truth_type = 0;
+   mu_calo_truth_mothertype = 0;
    vxp_nTracks = 0;
+   mcevt_weight = 0;
+   mc_pdgId = 0;
+   mc_children = 0;
+   mc_vx_z = 0;
+   mc_child_index = 0;
    trig_L1_mu_eta = 0;
    trig_L1_mu_phi = 0;
    trig_L1_mu_thrName = 0;
@@ -759,14 +839,19 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("lbn", &lbn, &b_lbn);
    fChain->SetBranchAddress("actualIntPerXing", &actualIntPerXing, &b_actualIntPerXing);
    fChain->SetBranchAddress("averageIntPerXing", &averageIntPerXing, &b_averageIntPerXing);
+   fChain->SetBranchAddress("mc_channel_number", &mc_channel_number, &b_mc_channel_number);
    fChain->SetBranchAddress("larError", &larError, &b_larError);
-   fChain->SetBranchAddress("tileError", &tileError, &b_tileError);
-   fChain->SetBranchAddress("coreFlags", &coreFlags, &b_coreFlags);
    fChain->SetBranchAddress("el_n", &el_n, &b_el_n);
    fChain->SetBranchAddress("el_charge", &el_charge, &b_el_charge);
    fChain->SetBranchAddress("el_author", &el_author, &b_el_author);
    fChain->SetBranchAddress("el_isEM", &el_isEM, &b_el_isEM);
    fChain->SetBranchAddress("el_OQ", &el_OQ, &b_el_OQ);
+   fChain->SetBranchAddress("el_type", &el_type, &b_el_type);
+   fChain->SetBranchAddress("el_origin", &el_origin, &b_el_origin);
+   fChain->SetBranchAddress("el_typebkg", &el_typebkg, &b_el_typebkg);
+   fChain->SetBranchAddress("el_originbkg", &el_originbkg, &b_el_originbkg);
+   fChain->SetBranchAddress("el_truth_type", &el_truth_type, &b_el_truth_type);
+   fChain->SetBranchAddress("el_truth_mothertype", &el_truth_mothertype, &b_el_truth_mothertype);
    fChain->SetBranchAddress("el_medium", &el_medium, &b_el_medium);
    fChain->SetBranchAddress("el_tight", &el_tight, &b_el_tight);
    fChain->SetBranchAddress("el_loose", &el_loose, &b_el_loose);
@@ -782,11 +867,14 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("el_f3", &el_f3, &b_el_f3);
    fChain->SetBranchAddress("el_Etcone20", &el_Etcone20, &b_el_Etcone20);
    fChain->SetBranchAddress("el_ptcone20", &el_ptcone20, &b_el_ptcone20);
+   fChain->SetBranchAddress("el_Etcone30", &el_Etcone30, &b_el_Etcone30);
+   fChain->SetBranchAddress("el_ptcone30", &el_ptcone30, &b_el_ptcone30);
    fChain->SetBranchAddress("el_deltaeta1", &el_deltaeta1, &b_el_deltaeta1);
    fChain->SetBranchAddress("el_deltaphiRescaled", &el_deltaphiRescaled, &b_el_deltaphiRescaled);
    fChain->SetBranchAddress("el_reta", &el_reta, &b_el_reta);
    fChain->SetBranchAddress("el_rphi", &el_rphi, &b_el_rphi);
    fChain->SetBranchAddress("el_topoEtcone20", &el_topoEtcone20, &b_el_topoEtcone20);
+   fChain->SetBranchAddress("el_topoEtcone30", &el_topoEtcone30, &b_el_topoEtcone30);
    fChain->SetBranchAddress("el_etap", &el_etap, &b_el_etap);
    fChain->SetBranchAddress("el_refittedTrack_author", &el_refittedTrack_author, &b_el_refittedTrack_author);
    fChain->SetBranchAddress("el_refittedTrack_LMqoverp", &el_refittedTrack_LMqoverp, &b_el_refittedTrack_LMqoverp);
@@ -844,6 +932,8 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_staco_author", &mu_staco_author, &b_mu_staco_author);
    fChain->SetBranchAddress("mu_staco_etcone20", &mu_staco_etcone20, &b_mu_staco_etcone20);
    fChain->SetBranchAddress("mu_staco_ptcone20", &mu_staco_ptcone20, &b_mu_staco_ptcone20);
+   fChain->SetBranchAddress("mu_staco_etcone30", &mu_staco_etcone30, &b_mu_staco_etcone30);
+   fChain->SetBranchAddress("mu_staco_ptcone30", &mu_staco_ptcone30, &b_mu_staco_ptcone30);
    fChain->SetBranchAddress("mu_staco_isStandAloneMuon", &mu_staco_isStandAloneMuon, &b_mu_staco_isStandAloneMuon);
    fChain->SetBranchAddress("mu_staco_isCombinedMuon", &mu_staco_isCombinedMuon, &b_mu_staco_isCombinedMuon);
    fChain->SetBranchAddress("mu_staco_isSegmentTaggedMuon", &mu_staco_isSegmentTaggedMuon, &b_mu_staco_isSegmentTaggedMuon);
@@ -852,8 +942,8 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_staco_z0_exPV", &mu_staco_z0_exPV, &b_mu_staco_z0_exPV);
    fChain->SetBranchAddress("mu_staco_id_theta_exPV", &mu_staco_id_theta_exPV, &b_mu_staco_id_theta_exPV);
    fChain->SetBranchAddress("mu_staco_id_qoverp_exPV", &mu_staco_id_qoverp_exPV, &b_mu_staco_id_qoverp_exPV);
-   fChain->SetBranchAddress("mu_staco_me_theta_exPV", &mu_staco_me_theta_exPV, &b_mu_staco_me_theta_exPV);
-   fChain->SetBranchAddress("mu_staco_me_qoverp_exPV", &mu_staco_me_qoverp_exPV, &b_mu_staco_me_qoverp_exPV);
+   fChain->SetBranchAddress("mu_staco_me_theta", &mu_staco_me_theta, &b_mu_staco_me_theta);
+   fChain->SetBranchAddress("mu_staco_me_qoverp", &mu_staco_me_qoverp, &b_mu_staco_me_qoverp);
    fChain->SetBranchAddress("mu_staco_id_d0", &mu_staco_id_d0, &b_mu_staco_id_d0);
    fChain->SetBranchAddress("mu_staco_id_z0", &mu_staco_id_z0, &b_mu_staco_id_z0);
    fChain->SetBranchAddress("mu_staco_id_phi", &mu_staco_id_phi, &b_mu_staco_id_phi);
@@ -878,6 +968,8 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_staco_trackd0pvunbiased", &mu_staco_trackd0pvunbiased, &b_mu_staco_trackd0pvunbiased);
    fChain->SetBranchAddress("mu_staco_trackz0pvunbiased", &mu_staco_trackz0pvunbiased, &b_mu_staco_trackz0pvunbiased);
    fChain->SetBranchAddress("mu_staco_tracksigd0pvunbiased", &mu_staco_tracksigd0pvunbiased, &b_mu_staco_tracksigd0pvunbiased);
+   fChain->SetBranchAddress("mu_staco_truth_type", &mu_staco_truth_type, &b_mu_staco_truth_type);
+   fChain->SetBranchAddress("mu_staco_truth_mothertype", &mu_staco_truth_mothertype, &b_mu_staco_truth_mothertype);
    fChain->SetBranchAddress("mu_staco_EFCB_index", &mu_staco_EFCB_index, &b_mu_staco_EFCB_index);
    fChain->SetBranchAddress("mu_calo_n", &mu_calo_n, &b_mu_calo_n);
    fChain->SetBranchAddress("mu_calo_E", &mu_calo_E, &b_mu_calo_E);
@@ -888,11 +980,14 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_calo_author", &mu_calo_author, &b_mu_calo_author);
    fChain->SetBranchAddress("mu_calo_etcone20", &mu_calo_etcone20, &b_mu_calo_etcone20);
    fChain->SetBranchAddress("mu_calo_ptcone20", &mu_calo_ptcone20, &b_mu_calo_ptcone20);
+   fChain->SetBranchAddress("mu_calo_etcone30", &mu_calo_etcone30, &b_mu_calo_etcone30);
+   fChain->SetBranchAddress("mu_calo_ptcone30", &mu_calo_ptcone30, &b_mu_calo_ptcone30);
    fChain->SetBranchAddress("mu_calo_caloMuonIdTag", &mu_calo_caloMuonIdTag, &b_mu_calo_caloMuonIdTag);
    fChain->SetBranchAddress("mu_calo_caloLRLikelihood", &mu_calo_caloLRLikelihood, &b_mu_calo_caloLRLikelihood);
    fChain->SetBranchAddress("mu_calo_isStandAloneMuon", &mu_calo_isStandAloneMuon, &b_mu_calo_isStandAloneMuon);
    fChain->SetBranchAddress("mu_calo_isCombinedMuon", &mu_calo_isCombinedMuon, &b_mu_calo_isCombinedMuon);
    fChain->SetBranchAddress("mu_calo_isSegmentTaggedMuon", &mu_calo_isSegmentTaggedMuon, &b_mu_calo_isSegmentTaggedMuon);
+   fChain->SetBranchAddress("mu_calo_isCaloMuonId", &mu_calo_isCaloMuonId, &b_mu_calo_isCaloMuonId);
    fChain->SetBranchAddress("mu_calo_tight", &mu_calo_tight, &b_mu_calo_tight);
    fChain->SetBranchAddress("mu_calo_d0_exPV", &mu_calo_d0_exPV, &b_mu_calo_d0_exPV);
    fChain->SetBranchAddress("mu_calo_z0_exPV", &mu_calo_z0_exPV, &b_mu_calo_z0_exPV);
@@ -924,9 +1019,22 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("mu_calo_trackd0pvunbiased", &mu_calo_trackd0pvunbiased, &b_mu_calo_trackd0pvunbiased);
    fChain->SetBranchAddress("mu_calo_trackz0pvunbiased", &mu_calo_trackz0pvunbiased, &b_mu_calo_trackz0pvunbiased);
    fChain->SetBranchAddress("mu_calo_tracksigd0pvunbiased", &mu_calo_tracksigd0pvunbiased, &b_mu_calo_tracksigd0pvunbiased);
+   fChain->SetBranchAddress("mu_calo_truth_type", &mu_calo_truth_type, &b_mu_calo_truth_type);
+   fChain->SetBranchAddress("mu_calo_truth_mothertype", &mu_calo_truth_mothertype, &b_mu_calo_truth_mothertype);
    fChain->SetBranchAddress("MET_RefFinal_et", &MET_RefFinal_et, &b_MET_RefFinal_et);
    fChain->SetBranchAddress("vxp_n", &vxp_n, &b_vxp_n);
    fChain->SetBranchAddress("vxp_nTracks", &vxp_nTracks, &b_vxp_nTracks);
+   fChain->SetBranchAddress("mcevt_weight", &mcevt_weight, &b_mcevt_weight);
+   fChain->SetBranchAddress("mc_n", &mc_n, &b_mc_n);
+   fChain->SetBranchAddress("mc_pt", &mc_pt, &b_mc_pt);
+   fChain->SetBranchAddress("mc_m", &mc_m, &b_mc_m);
+   fChain->SetBranchAddress("mc_eta", &mc_eta, &b_mc_eta);
+   fChain->SetBranchAddress("mc_phi", &mc_phi, &b_mc_phi);
+   fChain->SetBranchAddress("mc_status", &mc_status, &b_mc_status);
+   fChain->SetBranchAddress("mc_pdgId", &mc_pdgId, &b_mc_pdgId);
+   fChain->SetBranchAddress("mc_children", &mc_children, &b_mc_children);
+   fChain->SetBranchAddress("mc_vx_z", &mc_vx_z, &b_mc_vx_z);
+   fChain->SetBranchAddress("mc_child_index", &mc_child_index, &b_mc_child_index);
    fChain->SetBranchAddress("trig_DB_SMK", &trig_DB_SMK, &b_trig_DB_SMK);
    fChain->SetBranchAddress("trig_L1_mu_eta", &trig_L1_mu_eta, &b_trig_L1_mu_eta);
    fChain->SetBranchAddress("trig_L1_mu_phi", &trig_L1_mu_phi, &b_trig_L1_mu_phi);

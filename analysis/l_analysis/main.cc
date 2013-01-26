@@ -64,6 +64,17 @@ void TLeptonFinder::Loop(void)
 
 	const Long64_t eventNr = fChain->GetEntries();
 
+	//---------------------------------------------------------//
+	// Higgs cutflow
+	//---------------------------------------------------------//
+
+	Int_t higgsNr0 = 0;
+	Int_t higgsNr1 = 0;
+	Int_t higgsNr2 = 0;
+	Int_t higgsNr3 = 0;
+
+	//---------------------------------------------------------//
+
 	for(Long64_t event = 0; event < eventNr; event++)
 //	for(Long64_t event = 0; event < 10000; event++)
 	{
@@ -135,8 +146,14 @@ void TLeptonFinder::Loop(void)
 		elNr0 += el_n;
 		muNr0 += mu_staco_n + mu_calo_n;
 
+		Int_t isOK_id = 0;				
+
 		if(isOkVertex != false)
 		{
+			higgsNr0 += 1;
+			higgsNr1 += 1;
+			higgsNr2 += 1;
+
 			elNr1 += el_n;
 			muNr1 += mu_staco_n + mu_calo_n;
 
@@ -146,6 +163,8 @@ void TLeptonFinder::Loop(void)
 			   ||
 			   isOkElMuTrigger != false
 			 ) {
+				higgsNr3 += 1;
+
 				elNr2 += el_n;
 				muNr2 += mu_staco_n + mu_calo_n;
 
@@ -236,6 +255,7 @@ void TLeptonFinder::Loop(void)
 				/* ELECTRONS				   */
 				/*-----------------------------------------*/
 
+
 				for(Int_t i = 0; i < el_n; i++)
 				{
 					if(checkObject(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
@@ -247,6 +267,7 @@ void TLeptonFinder::Loop(void)
 							elTypeArray[elIndexNr] = TYPE_ELECTRON;
 
 							elIndexNr++;
+							if( (el_isEMOk_at(i) & (1 << 3)) == 8) isOK_id++;
 						}
 					}
 				}
@@ -322,7 +343,8 @@ void TLeptonFinder::Loop(void)
 						for(Int_t j = 0; j < tmp3; j++)
 						{
 							Int_t xedni = elIndexArray[j];
-							if((el_isEMOk_at(xedni) & (1<<1)) != 2) continue;
+							//if((el_isEMOk_at(xedni) & (1<<0)) != 1) continue; //LH
+							if((el_isEMOk_at(xedni) & (1<<3)) != 8) continue; //ML
 							if(__dR2(el_Unrefittedtrack_eta->at(xedni), calo_eta, el_Unrefittedtrack_phi->at(xedni), calo_phi) < 0.02f * 0.02f)
 							{
 								isOk_el = false;
@@ -381,8 +403,6 @@ void TLeptonFinder::Loop(void)
 
 		m_l[0].n = elIndexNr;
 
-		Int_t isOkLeadZ = 0;
-
 		for(Int_t i = 0; i < elIndexNr; i++)
 		{
 			Int_t index = elIndexArray[i];
@@ -409,47 +429,22 @@ void TLeptonFinder::Loop(void)
 					m_l[0].l_charge[i] = el_charge->at(index);
 					m_l[0].l_e[i] = el_cl_E->at(index);
 					m_l[0].l_pt[i] = electronGetEt(index);
+					m_l[0].l_EtRaw[i] = electronGetRawEt(index);
 					m_l[0].l_eta[i] = electronGetEtaDirection(index);
 					m_l[0].l_phi[i] = electronGetPhiDirection(index);
+					m_l[0].l_etas2[i] = el_etas2->at(index);
+					m_l[0].l_phis2[i] = el_phis2->at(index);
+
+					m_l[0].l_id_theta[i] = -999999;
+					m_l[0].l_id_qoverp[i] = -999999;
 
 					m_l[0].l_z0[i] = el_trackz0pvunbiased->at(index);
 					m_l[0].l_d0[i] = el_trackd0pvunbiased->at(index) - d0Bias;
-					m_l[0].l_clIso20[i] = el_Etcone20_at(index) / electronGetEt(index);
-					m_l[0].l_tkIso20[i] = el_ptcone20->at(index) / electronGetEt(index);
+					m_l[0].l_clIso20[i] = el_Etcone20_at(index);
+					m_l[0].l_tkIso20[i] = el_ptcone20->at(index);
+					m_l[0].l_clIso30[i] = el_Etcone30_at(index);
+					m_l[0].l_tkIso30[i] = el_ptcone30->at(index);
 					m_l[0].l_d0sigma[i] = fabs((el_trackd0pvunbiased->at(index) - d0Bias) / el_tracksigd0pvunbiased->at(index));
-
-					for(Int_t j = i + 1; j < elIndexNr; j++)
-					{
-						Int_t xedni = elIndexArray[j];
-
-						Float_t deltaR_track = sqrtf(__dR2(
-							el_tracketa->at(index), el_tracketa->at(xedni)
-							,
-							el_trackphi->at(index), el_trackphi->at(xedni)
-						));
-#ifdef __YEAR2012
-						Float_t deltaR_clust = sqrtf(__dR2(
-							el_etas2->at(index), el_etas2->at(xedni)
-							,
-							el_phis2->at(index), el_phis2->at(xedni)
-						));
-#endif
-						if(deltaR_track < 0.20f) {
-							m_l[0].l_tkIso20[i] -= el_trackpt->at(xedni) / electronGetEt(index);
-						}
-#ifdef __YEAR2011
-						if(deltaR_track < 0.18f) {
-							m_l[0].l_clIso20[i] -= electronGetEt(xedni) / electronGetEt(index);
-						}
-#endif
-#ifdef __YEAR2012
-						if(deltaR_clust < 0.18f) {
-							m_l[0].l_clIso20[i] -= electronGetRawEt(xedni) / electronGetEt(index);
-						}
-#endif
-					}
-
-					/**/
 
 					nTRTTotal     = el_nTRTHits     ->at(index) + el_nTRTOutliers     ->at(index);
 					nTRTTotalHigh = el_nTRTHighTHits->at(index) + el_nTRTHighTOutliers->at(index);
@@ -478,10 +473,6 @@ void TLeptonFinder::Loop(void)
 
 #endif
 
-					//--------------------------------------//
-					// Zleading leptons Id check		//
-					//--------------------------------------//
-					if ((el_isEMOk_at(index) & (1<<1)) == 2 ){ isOkLeadZ++;}
 					break;
 
 				default:
@@ -526,8 +517,15 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_charge[i] = mu_staco_charge->at(index);
 					m_l[1].l_e[i] = mu_staco_E->at(index);
 					m_l[1].l_pt[i] = mu_staco_pt->at(index);
+					m_l[1].l_EtRaw[i] = -999999;
 					m_l[1].l_eta[i] = mu_staco_eta->at(index);
 					m_l[1].l_phi[i] = mu_staco_phi->at(index);
+
+					m_l[1].l_etas2[i] = -999999;
+					m_l[1].l_phis2[i] = -999999;
+
+					m_l[1].l_id_theta[i] = mu_staco_id_theta->at(index);
+					m_l[1].l_id_qoverp[i] = mu_staco_id_qoverp->at(index);
 
 					m_l[1].l_z0[i] = mu_staco_trackz0pvunbiased->at(index);
 
@@ -540,31 +538,10 @@ void TLeptonFinder::Loop(void)
 						m_l[1].l_d0sigma[i] = fabs((mu_staco_trackd0pvunbiased->at(index)) / mu_staco_tracksigd0pvunbiased->at(index));
 					}
 
-					m_l[1].l_clIso20[i] = mu_staco_etcone20->at(index) / mu_staco_pt->at(index);
-					m_l[1].l_tkIso20[i] = mu_staco_ptcone20->at(index) / mu_staco_pt->at(index);
-
-
-					if(mu_staco_isStandAloneMuon->at(index) != false)
-					{
-						for(Int_t j = i + 1; j < muCB_PLUS_STIndexNr; j++)
-						{
-							Int_t xedni = muCB_PLUS_STIndexArray[j];
-
-							if(mu_staco_isStandAloneMuon->at(xedni) != false)
-							{
-								Float_t deltaR = sqrtf(__dR2(
-									mu_staco_eta->at(index), mu_staco_eta->at(xedni)
-									,
-									mu_staco_phi->at(index), mu_staco_phi->at(xedni)
-								));
-
-								if(deltaR < 0.20f)
-								{
-									m_l[1].l_tkIso20[i] -= ((mu_staco_id_qoverp_exPV->at(xedni) != 0.0f) ? sinf(mu_staco_id_theta_exPV->at(xedni)) / fabs(mu_staco_id_qoverp_exPV->at(xedni)) : 0.0f) / mu_staco_pt->at(index);
-								}
-							}
-						}
-					}
+					m_l[1].l_clIso20[i] = mu_staco_etcone20->at(index);
+					m_l[1].l_tkIso20[i] = mu_staco_ptcone20->at(index);
+					m_l[1].l_clIso30[i] = mu_staco_etcone30->at(index);
+					m_l[1].l_tkIso30[i] = mu_staco_ptcone30->at(index);
 
 					m_l[1].l_f1[i] = -999999;
 					m_l[1].l_rphi[i] = -999999;
@@ -605,31 +582,26 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_charge[i] = mu_calo_charge->at(index);
 					m_l[1].l_e[i] = mu_calo_E->at(index);
 					m_l[1].l_pt[i] = mu_calo_pt->at(index);
+					m_l[1].l_EtRaw[i] = -999999;
 					m_l[1].l_eta[i] = mu_calo_eta->at(index);
 					m_l[1].l_phi[i] = mu_calo_phi->at(index);
+
+					m_l[1].l_etas2[i] = -999999;
+					m_l[1].l_phis2[i] = -999999;
+
+					m_l[1].l_id_theta[i] = mu_calo_id_theta->at(index);
+					m_l[1].l_id_qoverp[i] = mu_calo_id_qoverp->at(index);
+
 
 					m_l[1].l_z0[i] = mu_calo_trackz0pvunbiased->at(index);
 					m_l[1].l_d0[i] = mu_calo_trackd0pvunbiased->at(index) - d0Bias;
 
-					m_l[1].l_clIso20[i] = mu_calo_etcone20->at(index) / mu_calo_pt->at(index);
-					m_l[1].l_tkIso20[i] = mu_calo_ptcone20->at(index) / mu_calo_pt->at(index);
+					m_l[1].l_clIso20[i] = mu_calo_etcone20->at(index);
+					m_l[1].l_tkIso20[i] = mu_calo_ptcone20->at(index);
+					m_l[1].l_clIso20[i] = mu_calo_etcone30->at(index);
+					m_l[1].l_tkIso20[i] = mu_calo_ptcone30->at(index);
+
 					m_l[1].l_d0sigma[i] = fabs((mu_calo_trackd0pvunbiased->at(index) - d0Bias) / mu_calo_tracksigd0pvunbiased->at(index));
-
-					for(Int_t j = i + 1; j < muCaloIndexNr; j++)
-					{
-						Int_t xedni = muCaloIndexArray[j];
-
-						Float_t deltaR = sqrtf(__dR2(
-							mu_calo_eta->at(index), mu_calo_eta->at(xedni)
-							,
-							mu_calo_phi->at(index), mu_calo_phi->at(xedni)
-						));
-
-						if(deltaR < 0.20f)
-						{
-							m_l[1].l_tkIso20[i] -= ((mu_calo_id_qoverp_exPV->at(xedni) != 0.0f) ? sinf(mu_calo_id_theta_exPV->at(xedni)) / fabs(mu_calo_id_qoverp_exPV->at(xedni)) : 0.0f) / mu_calo_pt->at(index);
-						}
-					}
 
 					m_l[1].l_f1[i] = -999999;
 					m_l[1].l_rphi[i] = -999999;
@@ -661,7 +633,7 @@ void TLeptonFinder::Loop(void)
 
 		/*---------------------------------------------------------*/
 
-		if( ((elIndexNr >= 2) && (isOkLeadZ >= 2))
+		if( ( (elIndexNr >= 2) && (isOK_id >= 2) )
 		     ||
 		    (muCB_PLUS_STIndexNr >= 2)
 		 ) {
@@ -672,6 +644,13 @@ void TLeptonFinder::Loop(void)
 
 		/*---------------------------------------------------------*/
 	}
+	std::cout << "#############################################################################" << std::endl;
+	std::cout << "# HIGGS                                                                  #" << std::endl;
+	std::cout << "#############################################################################" << std::endl;
+	std::cout << "before any cut   : " << higgsNr0 << std::endl;
+	std::cout << "LAr error        : " << higgsNr1 << std::endl;
+	std::cout << "vertex           : " << higgsNr2 << std::endl;
+	std::cout << "trigger          : " << higgsNr3 << std::endl;
 
 	std::cout << "#############################################################################" << std::endl;
 	std::cout << "# ELECTRONS                                                                  #" << std::endl;

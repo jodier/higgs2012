@@ -69,14 +69,22 @@ class TLeptonFinder: public TLeptonAnalysis
 			tree->Branch("l_charge", m_l[i].l_charge, "l_charge[n]/F");
 			tree->Branch("l_e", m_l[i].l_e, "l_e[n]/F");
 			tree->Branch("l_pt", m_l[i].l_pt, "l_pt[n]/F");
+			tree->Branch("l_EtRaw", m_l[i].l_EtRaw, "l_EtRaw[n]/F");
 			tree->Branch("l_eta", m_l[i].l_eta, "l_eta[n]/F");
+			tree->Branch("l_etas2", m_l[i].l_etas2, "l_etas2[n]/F");
 			tree->Branch("l_phi", m_l[i].l_phi, "l_phi[n]/F");
+			tree->Branch("l_phis2", m_l[i].l_phis2, "l_phis2[n]/F");
+
+			tree->Branch("l_id_theta", m_l[i].l_id_theta, "l_id_theta[n]/F");
+			tree->Branch("l_id_qoverp", m_l[i].l_id_qoverp, "l_id_qoverp[n]/F");
 
 			tree->Branch("l_z0", m_l[i].l_z0, "l_z0[n]/F");
 			tree->Branch("l_d0", m_l[i].l_d0, "l_d0[n]/F");
 
 			tree->Branch("l_tkIso20", m_l[i].l_tkIso20, "l_tkIso20[n]/F");
 			tree->Branch("l_clIso20", m_l[i].l_clIso20, "l_clIso20[n]/F");
+			tree->Branch("l_tkIso30", m_l[i].l_tkIso30, "l_tkIso30[n]/F");
+			tree->Branch("l_clIso30", m_l[i].l_clIso30, "l_clIso30[n]/F");
 			tree->Branch("l_d0sigma", m_l[i].l_d0sigma, "l_d0sigma[n]/F");
 
 			tree->Branch("l_f1", m_l[i].l_f1, "l_f1[n]/F");
@@ -132,14 +140,23 @@ class TLeptonFinder: public TLeptonAnalysis
 		Float_t l_charge[MAX];
 		Float_t l_e[MAX];
 		Float_t l_pt[MAX];
+		Float_t l_EtRaw[MAX];
 		Float_t l_eta[MAX];
 		Float_t l_phi[MAX];
+
+		Float_t l_etas2[MAX];
+		Float_t l_phis2[MAX];
+
+		Float_t l_id_theta[MAX];
+		Float_t l_id_qoverp[MAX];
 
 		Float_t l_z0[MAX];
 		Float_t l_d0[MAX];
 
 		Float_t l_clIso20[MAX];
 		Float_t l_tkIso20[MAX];
+		Float_t l_clIso30[MAX];
+		Float_t l_tkIso30[MAX];
 		Float_t l_d0sigma[MAX];
 
 		Float_t l_f1[MAX];

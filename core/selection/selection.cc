@@ -484,7 +484,7 @@ void TLeptonAnalysis::D0smearObject(Int_t index, TLeptonType type)
 			continue;					\
 		}							\
 									\
-		if(el_isEMOk_at(index) == 0x00) {		\
+		if((el_isEMOk_at(index) & (1 << 3)) != 8) {		\
 			continue;					\
 		}
 
@@ -498,7 +498,6 @@ Bool_t TLeptonAnalysis::checkObject(
 	Float_t __mu_calo_pt
 ) {
 	Int_t n;
-
 	switch(type)
 	{
 		/*---------------------------------------------------------*/
@@ -515,6 +514,7 @@ Bool_t TLeptonAnalysis::checkObject(
 
 			elNr3++;
 
+			//if((el_isEMOk_at(index) & (1 << 3)) != 8) {
 			if(el_isEMOk_at(index) == 0x00) {
 				goto __error;
 			}
@@ -906,7 +906,7 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 
 				default:
 					return false;
-			}
+			}           
 
 		}
 

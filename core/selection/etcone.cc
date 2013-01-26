@@ -33,6 +33,24 @@ Float_t TLeptonAnalysis::el_Etcone20_at(Int_t index)
 	);
 #endif
 }
+/*-------------------------------------------------------------------------*/
+Float_t TLeptonAnalysis::el_Etcone30_at(Int_t index)
+{
+#ifdef __YEAR2012
+	return CaloIsoCorrection::GetPtEDCorrectedTopoIsolation(
+		el_ED_median->at(index),
+		el_cl_E->at(index),
+		el_etas2->at(index),
+		el_etap->at(index),
+		el_cl_eta->at(index),
+		30,
+		__isMC,
+		el_topoEtcone30->at(index),
+		false,
+		CaloIsoCorrection::ELECTRON
+	);
+#endif
+}
 
 /*-------------------------------------------------------------------------*/
 
