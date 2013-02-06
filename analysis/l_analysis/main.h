@@ -29,6 +29,7 @@ class TLeptonFinder: public TLeptonAnalysis
 		/*---------------------------------------------------------*/
 		/* General Informations					   */
 		/*---------------------------------------------------------*/
+		m_tree0.Branch("NbEvtSample", &m_NbEvtSample, "NbEvtSample/I");
 
 		m_tree0.Branch("RunNumber", &m_RunNumber, "RunNumber/I");
 		m_tree0.Branch("EventNumber", &m_EventNumber, "EventNumber/I");
@@ -69,6 +70,7 @@ class TLeptonFinder: public TLeptonAnalysis
 			tree->Branch("l_charge", m_l[i].l_charge, "l_charge[n]/F");
 			tree->Branch("l_e", m_l[i].l_e, "l_e[n]/F");
 			tree->Branch("l_pt", m_l[i].l_pt, "l_pt[n]/F");
+			tree->Branch("l_trackpt", m_l[i].l_trackpt, "l_trackpt[n]/F");
 			tree->Branch("l_EtRaw", m_l[i].l_EtRaw, "l_EtRaw[n]/F");
 			tree->Branch("l_eta", m_l[i].l_eta, "l_eta[n]/F");
 			tree->Branch("l_etas2", m_l[i].l_etas2, "l_etas2[n]/F");
@@ -91,6 +93,7 @@ class TLeptonFinder: public TLeptonAnalysis
 			tree->Branch("l_rphi", m_l[i].l_rphi, "l_rphi[n]/F");
 			tree->Branch("l_nBlayerHits", m_l[i].l_nBlayerHits, "l_nBlayerHits[n]/I");
 			tree->Branch("l_nPixelHits", m_l[i].l_nPixelHits, "l_nPixelHits[n]/I");
+			tree->Branch("l_nTRTTotal", m_l[i].l_nTRTTotal, "l_nTRTTotal[n]/F");
 			tree->Branch("l_rTRT", m_l[i].l_rTRT, "l_rTRT[n]/F");
 
 			/**/
@@ -110,6 +113,7 @@ class TLeptonFinder: public TLeptonAnalysis
 
   private:
 
+	Int_t m_NbEvtSample;
 	Int_t m_RunNumber;
 	Int_t m_EventNumber;
 	Int_t m_LumiBlock;
@@ -140,6 +144,7 @@ class TLeptonFinder: public TLeptonAnalysis
 		Float_t l_charge[MAX];
 		Float_t l_e[MAX];
 		Float_t l_pt[MAX];
+		Float_t l_trackpt[MAX];
 		Float_t l_EtRaw[MAX];
 		Float_t l_eta[MAX];
 		Float_t l_phi[MAX];
@@ -163,6 +168,7 @@ class TLeptonFinder: public TLeptonAnalysis
 		Float_t l_rphi[MAX];
 		Int_t l_nBlayerHits[MAX];
 		Int_t l_nPixelHits[MAX];
+		Float_t l_nTRTTotal[MAX];
 		Float_t l_rTRT[MAX];
 
 		Float_t l_type[MAX];

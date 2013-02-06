@@ -121,7 +121,6 @@ namespace core
 
 #include <MuonEfficiencyCorrections/AnalysisMuonConfigurableScaleFactors.h>
 #include <MuonMomentumCorrections/SmearingClass.h>
-#include <MuonIsolationCorrection/CorrectCaloIso.h>
 
 #include <egammaAnalysisUtils/EnergyRescalerUpgrade.h>
 #include <egammaAnalysisUtils/egammaSFclass.h>
@@ -237,7 +236,7 @@ class TLeptonAnalysis: public TNTuple
 
 	egammaSFclass *m_egammaSF;
 
-	CorrectCaloIso *m_correctCaloIso;
+	//CorrectCaloIso *m_correctCaloIso;
 	ElectronLikelihoodTool  *m_ElectronLikelihoodTool;
 	MultiLeptonMenu m_MultiLeptonMenu;
 
@@ -315,7 +314,7 @@ class TLeptonAnalysis: public TNTuple
 		/* VERTEX POSITION REWEIGHTING				   */
 		/*---------------------------------------------------------*/
 #if defined( __YEAR2012) && defined(__IS_MC)
-		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-14/share/zvtx_weights_2011_2012.root");
+		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-20/share/zvtx_weights_2011_2012.root");
 #endif
 
 		/*---------------------------------------------------------*/
@@ -351,7 +350,7 @@ class TLeptonAnalysis: public TNTuple
 		/* VERTEX POSITION REWEIGHTING				   */
 		/*---------------------------------------------------------*/
 #if defined( __YEAR2012) && defined(__IS_MC)
-		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-14/share/zvtx_weights_2011_2012.root");
+		m_VertexPositionReweighting = new VertexPositionReweightingTool(VertexPositionReweightingTool::MC12a, "./tools/egammaAnalysisUtils-00-04-20/share/zvtx_weights_2011_2012.root");
 #endif
 
 		/*---------------------------------------------------------*/
@@ -404,10 +403,10 @@ class TLeptonAnalysis: public TNTuple
 		/* MUON SMEARING					   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2011
-		m_stacoSM = new MuonSmear::SmearingClass("Data11", "staco", "q_pT", "Rel17", "./tools/MuonMomentumCorrections-00-07-01/share/");
+		m_stacoSM = new MuonSmear::SmearingClass("Data11", "staco", "q_pT", "Rel17", "./tools/MuonMomentumCorrections-00-08-05/share/");
 #endif
 #ifdef __YEAR2012
-		m_stacoSM = new MuonSmear::SmearingClass("Data12", "staco", "q_pT", "Rel17.2", "./tools/MuonMomentumCorrections-00-07-01/share/");
+		m_stacoSM = new MuonSmear::SmearingClass("Data12", "staco", "q_pT", "Rel17.2Repro", "./tools/MuonMomentumCorrections-00-08-05/share/");
 		m_stacoSM->UseScale(1);
 		m_stacoSM->UseImprovedCombine();
 
@@ -416,23 +415,23 @@ class TLeptonAnalysis: public TNTuple
 		/* MUON SCALE FACTORS					   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2011
-		m_stacoSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-11/share/", "STACO_CB_plus_ST_2011_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverPeriods);
+		m_stacoSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-12/share/", "STACO_CB_plus_ST_2011_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverPeriods);
 		m_stacoSCF->Initialise();
 
-		m_stacoSASCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-11/share/", "STACOHighEta.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::Default);
+		m_stacoSASCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-12/share/", "STACOHighEta.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::Default);
 		m_stacoSASCF->Initialise();
 
-		m_caloMuSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-11/share/", "CaloTag_2011_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverPeriods);
+		m_caloMuSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-12/share/", "CaloTag_2011_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverPeriods);
 		m_caloMuSCF->Initialise();
 #endif
 #ifdef __YEAR2012
-		m_stacoSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-11/share/", "STACO_CB_plus_ST_2012_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
+		m_stacoSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-12/share/", "STACO_CB_plus_ST_2012_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
 		m_stacoSCF->Initialise();
 
-		m_stacoSASCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-11/share/", "STACO_CB_plus_ST_2012_SFms.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
+		m_stacoSASCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-12/share/", "STACO_CB_plus_ST_2012_SFms.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
 		m_stacoSASCF->Initialise();
 
-		m_caloMuSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-11/share/", "CaloTag_2012_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
+		m_caloMuSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/MuonEfficiencyCorrections-02-01-12/share/", "CaloTag_2012_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
 		m_caloMuSCF->Initialise();
 #endif
 
@@ -440,17 +439,17 @@ class TLeptonAnalysis: public TNTuple
 		/* ELECTRON LIKELIHOOD ID				   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2012
-		m_ElectronLikelihoodTool = new ElectronLikelihoodTool("./tools/egammaAnalysisUtils-00-04-14/share/ElectronLikelihoodPdfs.root");
+		m_ElectronLikelihoodTool = new ElectronLikelihoodTool("./tools/egammaAnalysisUtils-00-04-20/share/ElectronLikelihoodPdfs.root");
 #endif
 	
 		/*---------------------------------------------------------*/
 		/* ELECTRON ENERGY RESCALER				   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2011
-		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-04-14/share/EnergyRescalerData.root","2011","es2011a");
+		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-04-20/share/EnergyRescalerData.root","2011","es2011a");
 #endif
 #ifdef __YEAR2012
-		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-04-14/share/EnergyRescalerData.root","2012","es2012");
+		m_energyRescaler.Init("./tools/egammaAnalysisUtils-00-04-20/share/EnergyRescalerData.root","2012","es2012");
 #endif
 		/*---------------------------------------------------------*/
 		/* ELECTRON SCALE FACTORS				   */
@@ -462,7 +461,7 @@ class TLeptonAnalysis: public TNTuple
 		/* ELECTRON ISOLATION					   */
 		/*---------------------------------------------------------*/
 
-		m_correctCaloIso = new CorrectCaloIso();
+		//m_correctCaloIso = new CorrectCaloIso();
 
 		/*---------------------------------------------------------*/
 		/* TRIGGER SCALE FACTORS				   */
@@ -501,7 +500,7 @@ class TLeptonAnalysis: public TNTuple
 
 		delete m_egammaSF;
 
-		delete m_correctCaloIso;
+		//delete m_correctCaloIso;
 
 		delete m_triggerNavigationVariables;
 		delete m_elTriggerMatching;
@@ -598,7 +597,7 @@ class TLeptonAnalysis: public TNTuple
 	/* SELECTION							   */
 	/*-----------------------------------------------------------------*/
 
-	void smearObject(
+	double smearObject(
 		Int_t index,
 		TLeptonType type
 	);

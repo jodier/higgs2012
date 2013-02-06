@@ -7,7 +7,11 @@
 /*-------------------------------------------------------------------------*/
 
 Float_t TLeptonAnalysis::el_Etcone20_at(Int_t index)
-{
+{	
+	if(core::SM == false)
+	{
+		return el_Etcone20->at(index);
+	}
 #ifdef __YEAR2011
 	return CaloIsoCorrection::GetNPVCorrectedIsolation(
 		nPV2,

@@ -68,6 +68,8 @@ void TLeptonFinder::Loop(void)
 	// Higgs cutflow
 	//---------------------------------------------------------//
 
+	Int_t NbEventSample = 0;
+
 	Int_t higgsNr0 = 0;
 	Int_t higgsNr1 = 0;
 	Int_t higgsNr2 = 0;
@@ -75,9 +77,13 @@ void TLeptonFinder::Loop(void)
 
 	//---------------------------------------------------------//
 
-	for(Long64_t event = 0; event < eventNr; event++)
-//	for(Long64_t event = 0; event < 10000; event++)
+//	for(Long64_t event = 0; event < eventNr; event++)
+	for(Long64_t event = 0; event < 1000; event++)
 	{
+		/*---------------------------------------------------------*/
+
+		NbEventSample++ ; 
+
 		/*---------------------------------------------------------*/
 		LoadEvent(event, eventNr);
 
@@ -95,7 +101,7 @@ void TLeptonFinder::Loop(void)
 #endif
 		/*---------------------------------------------------------*/
 
-		fixeEnergy();
+		//fixeEnergy();
 
 		/*---------------------------------------------------------*/
 		/* AT LEAST 3 PRIMARY TRACKS AND LAR ERROR		   */
@@ -137,6 +143,7 @@ void TLeptonFinder::Loop(void)
 		/*---------------------------------------------------------*/
 		/* SELECTIONS						   */
 		/*---------------------------------------------------------*/
+		//if (EventNumber != 28491) continue;
 
 		elIndexNr = 0;
 		muCB_PLUS_STIndexNr = 0;
@@ -258,6 +265,12 @@ void TLeptonFinder::Loop(void)
 
 				for(Int_t i = 0; i < el_n; i++)
 				{
+//					cout << "######electron index " <<i<< endl;
+//					cout << "el_author " << el_author->at(i) << endl;
+//					cout << "l_pt[i] " << electronGetEt(i)<< endl;
+//					cout << "eta[i]" << electronGetEtaDirection(i) << endl;
+//					cout << "isLM " << ((el_isEMOk_at(i) & (1<<3)) == 8) << endl;
+
 					if(checkObject(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
 					{
 						if(checkOverlapping(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt,
@@ -343,7 +356,6 @@ void TLeptonFinder::Loop(void)
 						for(Int_t j = 0; j < tmp3; j++)
 						{
 							Int_t xedni = elIndexArray[j];
-							//if((el_isEMOk_at(xedni) & (1<<0)) != 1) continue; //LH
 							if((el_isEMOk_at(xedni) & (1<<3)) != 8) continue; //ML
 							if(__dR2(el_Unrefittedtrack_eta->at(xedni), calo_eta, el_Unrefittedtrack_phi->at(xedni), calo_phi) < 0.02f * 0.02f)
 							{
@@ -380,7 +392,7 @@ void TLeptonFinder::Loop(void)
 		/*- Event informations					  -*/
 		/*---------------------------------------------------------*/
 		/*---------------------------------------------------------*/
-
+		m_NbEvtSample = NbEventSample;
 		m_RunNumber = RunNumber;
 		m_EventNumber = EventNumber;
 		m_LumiBlock = lbn;
@@ -422,14 +434,18 @@ void TLeptonFinder::Loop(void)
 
 					m_l[0].l_lepton[i] = TYPE_ELECTRON;
 					m_l[0].l_id[i] = el_isEMOk_at(index);
+
 					m_l[0].l_tight[i] = el_tight->at(index) != 0;
 					m_l[0].l_triggerMatch[i] = triggerMatch(index, TYPE_ELECTRON);
 					m_l[0].l_truthMatch[i] = truthMatch(index, TYPE_ELECTRON);
 
 					m_l[0].l_charge[i] = el_charge->at(index);
-					m_l[0].l_e[i] = el_cl_E->at(index);
+
+					m_l[0].l_e[i] = smearObject(index, TYPE_ELECTRON);
 					m_l[0].l_pt[i] = electronGetEt(index);
+					m_l[0].l_trackpt[i] = el_trackpt->at(index);
 					m_l[0].l_EtRaw[i] = electronGetRawEt(index);
+
 					m_l[0].l_eta[i] = electronGetEtaDirection(index);
 					m_l[0].l_phi[i] = electronGetPhiDirection(index);
 					m_l[0].l_etas2[i] = el_etas2->at(index);
@@ -453,6 +469,7 @@ void TLeptonFinder::Loop(void)
 					m_l[0].l_rphi[i] = el_rphi->at(index);
 					m_l[0].l_nBlayerHits[i] = el_nBLHits->at(index);
 					m_l[0].l_nPixelHits[i] = el_nPixHits->at(index);
+					m_l[0].l_nTRTTotal[i] = nTRTTotal;
 					m_l[0].l_rTRT[i] = nTRTTotal > 0 ? float(nTRTTotalHigh) / float(nTRTTotal) : 0.0f;
 
 					/**/
@@ -517,6 +534,7 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_charge[i] = mu_staco_charge->at(index);
 					m_l[1].l_e[i] = mu_staco_E->at(index);
 					m_l[1].l_pt[i] = mu_staco_pt->at(index);
+					m_l[1].l_trackpt[i] = -999999;
 					m_l[1].l_EtRaw[i] = -999999;
 					m_l[1].l_eta[i] = mu_staco_eta->at(index);
 					m_l[1].l_phi[i] = mu_staco_phi->at(index);
@@ -548,7 +566,7 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_nBlayerHits[i] = -999999;
 					m_l[1].l_nPixelHits[i] = -999999;
 					m_l[1].l_rTRT[i] = -999999;
-
+					m_l[1].l_nTRTTotal[i] = -999999;
 					/**/
 
 					m_l[1].l_type[i] = -999999;
@@ -582,6 +600,7 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_charge[i] = mu_calo_charge->at(index);
 					m_l[1].l_e[i] = mu_calo_E->at(index);
 					m_l[1].l_pt[i] = mu_calo_pt->at(index);
+					m_l[1].l_trackpt[i] = -999999;
 					m_l[1].l_EtRaw[i] = -999999;
 					m_l[1].l_eta[i] = mu_calo_eta->at(index);
 					m_l[1].l_phi[i] = mu_calo_phi->at(index);
@@ -608,6 +627,7 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_nBlayerHits[i] = -999999;
 					m_l[1].l_nPixelHits[i] = -999999;
 					m_l[1].l_rTRT[i] = -999999;
+					m_l[1].l_nTRTTotal[i] = -999999;
 
 					/**/
 
@@ -644,6 +664,7 @@ void TLeptonFinder::Loop(void)
 
 		/*---------------------------------------------------------*/
 	}
+	std::cout << "Nb evt sample    : " << NbEventSample << std::endl;
 	std::cout << "#############################################################################" << std::endl;
 	std::cout << "# HIGGS                                                                  #" << std::endl;
 	std::cout << "#############################################################################" << std::endl;

@@ -12,7 +12,7 @@
 
 /*-------------------------------------------------------------------------*/
 
-void TLeptonAnalysis::fixeEnergy(void)
+/*void TLeptonAnalysis::fixeEnergy(void)
 {
 	if(core::ER == false)
 	{
@@ -21,16 +21,13 @@ void TLeptonAnalysis::fixeEnergy(void)
 
 	for(Int_t i = 0; i < el_n; i++)
 	{
-#ifndef __IS_MC
 		el_cl_E->at(i) = m_energyRescaler.applyEnergyCorrection(
 			el_cl_eta->at(i),
 			el_cl_E->at(i),
 			egRescaler::EnergyRescalerUpgrade::Electron,
-			egRescaler::EnergyRescalerUpgrade::Nominal,
-			1.0,
-			RunNumber
+			egRescaler::EnergyRescalerUpgrade::Nominal
 		);
-#endif
+
 #ifdef __YEAR2011
 		el_cl_E->at(i) = el_cl_E->at(i) * m_energyRescaler.applyMCCalibration(
 			el_cl_eta->at(i),
@@ -40,7 +37,7 @@ void TLeptonAnalysis::fixeEnergy(void)
 #endif
 	}
 }
-
+*/
 /*-------------------------------------------------------------------------*/
 
 Float_t TLeptonAnalysis::eventGetWeight1(void)
@@ -66,8 +63,12 @@ Float_t TLeptonAnalysis::eventGetWeight1(void)
 Float_t TLeptonAnalysis::eventGetWeight2(void)
 {
 #ifdef __IS_MC
+  #ifdef __YEAR2011
 	Float_t weight = m_pileupReweighting->GetCombinedWeight(RunNumber, mc_channel_number, averageIntPerXing);
+  #endif
   #ifdef __YEAR2012
+	Float_t mu = (lbn==1&&int(averageIntPerXing+0.5)==1)?0.:averageIntPerXing;
+	Float_t weight = m_pileupReweighting->GetCombinedWeight(RunNumber, mc_channel_number, mu);
 	weight *= m_VertexPositionReweighting->GetWeight(mc_vx_z->at(2));
   #endif
 	return weight;
@@ -193,7 +194,12 @@ Float_t TLeptonAnalysis::electronGetEt(Int_t index)
 {
 	Int_t n = el_nPixHits->at(index) + el_nSCTHits->at(index);
 
-	return n >= 4 ? el_cl_E->at(index) / coshf(el_tracketa->at(index)) : el_cl_pt->at(index);
+	if(core::SM == false)
+	{
+		return n >= 4 ? el_cl_E->at(index) / coshf(el_tracketa->at(index)) : el_cl_pt->at(index);
+	}
+	else
+		return n >= 4 ? smearObject(index, TYPE_ELECTRON) / coshf(el_tracketa->at(index)) : el_cl_pt->at(index);
 }
 
 /*-------------------------------------------------------------------------*/
@@ -207,16 +213,17 @@ Float_t TLeptonAnalysis::electronGetRawEt(Int_t index)
 
 /*-------------------------------------------------------------------------*/
 
-void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
+double TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 {
-#ifdef __IS_MC
+
 	if(core::SM == false)
 	{
-		return;
+		return 1.0;
 	}
 
 	float pT_old;
 	float pT_new;
+	double el_E_cl_afterER;
 
 	switch(type)
 	{
@@ -225,20 +232,42 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 		/*---------------------------------------------------------*/
 
 		case TYPE_ELECTRON:
-			m_energyRescaler.SetRandomSeed(EventNumber + 100 * index);
 
-			el_cl_E->at(index) = el_cl_E->at(index) * m_energyRescaler.getSmearingCorrection(
-				el_cl_eta->at(index),
-				el_cl_E->at(index), egRescaler::EnergyRescalerUpgrade::NOMINAL);
-			break;
+#ifdef __YEAR2011
+			el_cl_E->at(index) = (el_cl_E->at(index)) * fabs(m_energyRescaler.applyMCCalibration(
+										el_cl_eta->at(index),
+										el_cl_E->at(index)/ coshf(el_tracketa->at(index)),
+										egRescaler::EnergyRescalerUpgrade::Electron));
+#endif
+
+#ifdef __IS_MC
+			el_E_cl_afterER = el_cl_E->at(index);
+			m_energyRescaler.SetRandomSeed(EventNumber + 100 * index);
+			return (el_E_cl_afterER) * fabs(m_energyRescaler.getSmearingCorrection(el_cl_eta->at(index),
+												el_E_cl_afterER, 
+												egRescaler::EnergyRescalerUpgrade::NOMINAL));
+#else
+
+			el_E_cl_afterER = m_energyRescaler.applyEnergyCorrection(el_cl_eta->at(index),
+											el_cl_E->at(index),
+											egRescaler::EnergyRescalerUpgrade::Electron,
+											egRescaler::EnergyRescalerUpgrade::Nominal);
+			return el_E_cl_afterER;
+#endif
+
+
+
+
 
 		/*---------------------------------------------------------*/
 		/* TYPE_MUON_CB_PLUS_ST					   */
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_CB_PLUS_ST:
+#ifdef __IS_MC
 			if(fabs(mu_staco_eta->at(index)) > 2.7f)
 			{
+				return 1.0;
 				break;
 			}
 
@@ -275,23 +304,19 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 			mu_staco_E->at(index) = (pT_new / pT_old) * mu_staco_E->at(index);
 			mu_staco_pt->at(index) = pT_new;
 
-			break;
-
+#endif
+			return 1.0;
 		/*---------------------------------------------------------*/
 		/* TYPE_MUON_STANDALONE					   */
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_STANDALONE:
-			if(fabs(mu_staco_eta->at(index)) > 2.7f)
-			{
-				break;
-			}
-
+#ifdef __IS_MC
 			pT_old = pT_new = mu_staco_pt->at(index);
 
 			m_stacoSM->SetSeed(EventNumber, index);
 
-			/**/ if(true)
+			/**/ if(mu_staco_isStandAloneMuon->at(index) != false)
 			{
 				m_stacoSM->Event(
 					pT_old,
@@ -305,13 +330,14 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 			mu_staco_E->at(index) = (pT_new / pT_old) * mu_staco_E->at(index);
 			mu_staco_pt->at(index) = pT_new;
 
-			break;
-
+#endif
+			return 1.0;
 		/*---------------------------------------------------------*/
 		/* TYPE_MUON_CALO					   */
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_CALO:
+#ifdef __IS_MC
 			pT_old = pT_new = mu_calo_pt->at(index);
 
 			m_stacoSM->SetSeed(EventNumber, index);
@@ -330,11 +356,12 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 			mu_calo_E->at(index) = (pT_new / pT_old) * mu_calo_E->at(index);
 			mu_calo_pt->at(index) = pT_new;
 
-			break;
-
+#endif
+			return 1.0;
+		default:
+			return 1.0;
 		/*---------------------------------------------------------*/
 	}
-#endif
 }
 
 /*-------------------------------------------------------------------------*/
@@ -342,6 +369,10 @@ void TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 void TLeptonAnalysis::Z0smearObject(Int_t index, TLeptonType type)
 {
 #if defined( __YEAR2012) && defined(__IS_MC)
+	if(core::SM == false)
+	{
+		return;
+	}
 
 	smearZ0_rand.SetSeed(EventNumber  + 100 *index);
 	Double_t smear_Z0 = 0.0;
@@ -411,6 +442,10 @@ void TLeptonAnalysis::Z0smearObject(Int_t index, TLeptonType type)
 void TLeptonAnalysis::D0smearObject(Int_t index, TLeptonType type)
 {
 #if defined( __YEAR2012) && defined(__IS_MC)
+	if(core::SM == false)
+	{
+		return;
+	}
 
 	smearD0_rand.SetSeed(EventNumber  + 100 *index);
 	Double_t smear_D0 = 0.0;
@@ -496,8 +531,11 @@ Bool_t TLeptonAnalysis::checkObject(
 	Float_t __el_et,
 	Float_t __mu_staco_pt,
 	Float_t __mu_calo_pt
+
 ) {
+
 	Int_t n;
+	Bool_t isML = false;
 	switch(type)
 	{
 		/*---------------------------------------------------------*/
@@ -505,6 +543,9 @@ Bool_t TLeptonAnalysis::checkObject(
 		/*---------------------------------------------------------*/
 
 		case TYPE_ELECTRON:
+
+			isML = (el_isEMOk_at(index) & (1 << 3)) == 8;
+
 			if(el_author->at(index) != 1
 			   &&
 			   el_author->at(index) != 3
@@ -519,33 +560,31 @@ Bool_t TLeptonAnalysis::checkObject(
 				goto __error;
 			}
 
-			elNr4++;
-
-			smearObject(index, type);
+			if(isML) elNr4++;
 
 			if(fabs(el_cl_eta->at(index)) > 2.47f) {
 				goto __error;
 			}
 
-			elNr5++;
+			if(isML) elNr5++;
 
 			if(electronGetEt(index) < __el_et) {
 				goto __error;
 			}
 
-			elNr6++;
+			if(isML) elNr6++;
 
 			if((el_OQ->at(index) & 1446) != 0) {
 				goto __error;
 			}
 
-			elNr7++;
+			if(isML) elNr7++;
 
 			if(fabs(el_trackz0pvunbiased->at(index)) > 10.0f) {
 				goto __error;
 			}
 
-			elNr8++;
+			if(isML) elNr8++;
 
 			break;
 
@@ -798,8 +837,10 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 	Float_t __mu_calo_pt,
 	Int_t muonIndexNr, Int_t muonIndexArray[], TLeptonType muonTypeArray[]
 ) {
+	Bool_t isML = false;
 	if(type == TYPE_ELECTRON)
 	{
+		isML = (el_isEMOk_at(index) & (1 << 3)) == 8;
 		/*---------------------------------------------------------*/
 		/* ELECTRONS (TRACKS) 1/2				   */
 		/*---------------------------------------------------------*/
@@ -840,7 +881,7 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 			}
 		}
 
-		elNr9++;
+		if(isML) elNr9++;
 
 		/*---------------------------------------------------------*/
 		/* ELECTRONS (CLUSTERS) 2/2				   */
@@ -867,7 +908,7 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 			}
 		}
 #endif
-		elNr10++;
+		if(isML) elNr10++;
 
 		/*---------------------------------------------------------*/
 		/* MUONS						   */
@@ -910,7 +951,7 @@ Bool_t TLeptonAnalysis::checkOverlapping(
 
 		}
 
-		elNr11++;
+		if(isML) elNr11++;
 
 		/*---------------------------------------------------------*/
 	}
