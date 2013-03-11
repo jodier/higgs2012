@@ -77,8 +77,8 @@ void TLeptonFinder::Loop(void)
 
 	//---------------------------------------------------------//
 
-//	for(Long64_t event = 0; event < eventNr; event++)
-	for(Long64_t event = 0; event < 1000; event++)
+	for(Long64_t event = 0; event < eventNr; event++)
+//	for(Long64_t event = 0; event < 1000; event++)
 	{
 		/*---------------------------------------------------------*/
 
@@ -447,6 +447,8 @@ void TLeptonFinder::Loop(void)
 					m_l[0].l_EtRaw[i] = electronGetRawEt(index);
 
 					m_l[0].l_eta[i] = electronGetEtaDirection(index);
+					m_l[0].l_cl_eta[i] = el_cl_eta->at(index);
+
 					m_l[0].l_phi[i] = electronGetPhiDirection(index);
 					m_l[0].l_etas2[i] = el_etas2->at(index);
 					m_l[0].l_phis2[i] = el_phis2->at(index);
@@ -541,6 +543,7 @@ void TLeptonFinder::Loop(void)
 
 					m_l[1].l_etas2[i] = -999999;
 					m_l[1].l_phis2[i] = -999999;
+					m_l[1].l_cl_eta[i] = -999999;
 
 					m_l[1].l_id_theta[i] = mu_staco_id_theta->at(index);
 					m_l[1].l_id_qoverp[i] = mu_staco_id_qoverp->at(index);
@@ -607,6 +610,7 @@ void TLeptonFinder::Loop(void)
 
 					m_l[1].l_etas2[i] = -999999;
 					m_l[1].l_phis2[i] = -999999;
+					m_l[1].l_cl_eta[i] = -999999;
 
 					m_l[1].l_id_theta[i] = mu_calo_id_theta->at(index);
 					m_l[1].l_id_qoverp[i] = mu_calo_id_qoverp->at(index);

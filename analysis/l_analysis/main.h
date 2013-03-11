@@ -74,6 +74,7 @@ class TLeptonFinder: public TLeptonAnalysis
 			tree->Branch("l_EtRaw", m_l[i].l_EtRaw, "l_EtRaw[n]/F");
 			tree->Branch("l_eta", m_l[i].l_eta, "l_eta[n]/F");
 			tree->Branch("l_etas2", m_l[i].l_etas2, "l_etas2[n]/F");
+			tree->Branch("l_cl_eta", m_l[i].l_cl_eta, "l_cl_eta[n]/F");
 			tree->Branch("l_phi", m_l[i].l_phi, "l_phi[n]/F");
 			tree->Branch("l_phis2", m_l[i].l_phis2, "l_phis2[n]/F");
 
@@ -151,6 +152,8 @@ class TLeptonFinder: public TLeptonAnalysis
 
 		Float_t l_etas2[MAX];
 		Float_t l_phis2[MAX];
+
+		Float_t l_cl_eta[MAX];
 
 		Float_t l_id_theta[MAX];
 		Float_t l_id_qoverp[MAX];

@@ -95,7 +95,7 @@ Float_t TLeptonAnalysis::eventGetWeight3(Int_t index, TLeptonType type)
 		/* TYPE_ELECTRON					   */
 		/*---------------------------------------------------------*/
 
-		case TYPE_ELECTRON:
+		case TYPE_ELECTRON:{
 			et = electronGetEt(index);
 			eta = el_cl_eta->at(index);
 
@@ -103,12 +103,19 @@ Float_t TLeptonAnalysis::eventGetWeight3(Int_t index, TLeptonType type)
 			{
 				break;
 			}
+
+			//const Root::TResult &sf_ID = m_egSFclass_ID->calculate(PATCore::ParticleDataType::Full,m_pileupReweighting->GetRandomRunNumber(RunNumber),eta,et);
+			//weight = sf_ID.getScaleFactor();
+			//weight = 1.0;
+
 #ifdef __YEAR2011
 			weight = \
 				m_egammaSF->scaleFactor(eta, et, 4, 0, 6, 1, m_pileupReweighting->GetRandomRunNumber(RunNumber)).first
 				*
 				m_egammaSF->scaleFactor(eta, et, 5, 0, 6, 1, m_pileupReweighting->GetRandomRunNumber(RunNumber)).first
 			;
+
+
 #endif
 #ifdef __YEAR2012
 			weight = \
@@ -116,7 +123,10 @@ Float_t TLeptonAnalysis::eventGetWeight3(Int_t index, TLeptonType type)
 				*
 				m_egammaSF->scaleFactor(eta, et, 30, 0, 8, 1, m_pileupReweighting->GetRandomRunNumber(RunNumber)).first
 			;
+
 #endif
+
+			}
 			break;
 
 		/*---------------------------------------------------------*/
@@ -215,12 +225,6 @@ Float_t TLeptonAnalysis::electronGetRawEt(Int_t index)
 
 double TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 {
-
-	if(core::SM == false)
-	{
-		return 1.0;
-	}
-
 	float pT_old;
 	float pT_new;
 	double el_E_cl_afterER;
@@ -232,132 +236,153 @@ double TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 		/*---------------------------------------------------------*/
 
 		case TYPE_ELECTRON:
+			if(core::SM == false)
+			{
+				return el_cl_E->at(index);
+			}
+			if(core::SM == true){
 
 #ifdef __YEAR2011
-			el_cl_E->at(index) = (el_cl_E->at(index)) * fabs(m_energyRescaler.applyMCCalibration(
+				el_cl_E->at(index) = (el_cl_E->at(index)) * fabs(m_energyRescaler.applyMCCalibration(
 										el_cl_eta->at(index),
 										el_cl_E->at(index)/ coshf(el_tracketa->at(index)),
 										egRescaler::EnergyRescalerUpgrade::Electron));
 #endif
 
 #ifdef __IS_MC
-			el_E_cl_afterER = el_cl_E->at(index);
-			m_energyRescaler.SetRandomSeed(EventNumber + 100 * index);
-			return (el_E_cl_afterER) * fabs(m_energyRescaler.getSmearingCorrection(el_cl_eta->at(index),
+				el_E_cl_afterER = el_cl_E->at(index);
+				m_energyRescaler.SetRandomSeed(EventNumber + 100 * index);
+				return (el_E_cl_afterER) * fabs(m_energyRescaler.getSmearingCorrection(el_cl_eta->at(index),
 												el_E_cl_afterER, 
 												egRescaler::EnergyRescalerUpgrade::NOMINAL));
 #else
 
-			el_E_cl_afterER = m_energyRescaler.applyEnergyCorrection(el_cl_eta->at(index),
+				el_E_cl_afterER = m_energyRescaler.applyEnergyCorrection(el_cl_eta->at(index),
 											el_cl_E->at(index),
 											egRescaler::EnergyRescalerUpgrade::Electron,
 											egRescaler::EnergyRescalerUpgrade::Nominal);
-			return el_E_cl_afterER;
+				return el_E_cl_afterER;
 #endif
-
-
-
-
+			}
 
 		/*---------------------------------------------------------*/
 		/* TYPE_MUON_CB_PLUS_ST					   */
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_CB_PLUS_ST:
-#ifdef __IS_MC
-			if(fabs(mu_staco_eta->at(index)) > 2.7f)
+			if(core::SM == false)
 			{
 				return 1.0;
-				break;
 			}
+			if(core::SM == true){
+#ifdef __IS_MC
+				if(fabs(mu_staco_eta->at(index)) > 2.7f)
+				{
+					return 1.0;
+					break;
+				}
 
-			pT_old = pT_new = mu_staco_pt->at(index);
+				pT_old = pT_new = mu_staco_pt->at(index);
 
-			m_stacoSM->SetSeed(EventNumber, index);
+				m_stacoSM->SetSeed(EventNumber, index);
 
-			/**/ if(mu_staco_isCombinedMuon->at(index) != false)
-			{
+				/**/ if(mu_staco_isCombinedMuon->at(index) != false)
+				{
 
-				Float_t pt_MS = (mu_staco_me_qoverp->at(index) != 0.0f) ? sin(mu_staco_me_theta->at(index)) / fabs(mu_staco_me_qoverp->at(index)) : 0.0f;
-				Float_t pt_ID = (mu_staco_id_qoverp->at(index) != 0.0f) ? sin(mu_staco_id_theta->at(index)) / fabs(mu_staco_id_qoverp->at(index)) : 0.0f;
+					Float_t pt_MS = (mu_staco_me_qoverp->at(index) != 0.0f) ? sin(mu_staco_me_theta->at(index)) / fabs(mu_staco_me_qoverp->at(index)) : 0.0f;
+					Float_t pt_ID = (mu_staco_id_qoverp->at(index) != 0.0f) ? sin(mu_staco_id_theta->at(index)) / fabs(mu_staco_id_qoverp->at(index)) : 0.0f;
 
-				m_stacoSM->Event(
-					pt_MS,
-					pt_ID,
-					pT_old,
-					mu_staco_eta->at(index)
-				);
+					m_stacoSM->Event(
+						pt_MS,
+						pt_ID,
+						pT_old,
+						mu_staco_eta->at(index)
+					);
 
-				pT_new = m_stacoSM->pTCB();
-			}
-			else if(mu_staco_isSegmentTaggedMuon->at(index) != false)
-			{
-				m_stacoSM->Event(
-					pT_old,
-					mu_staco_eta->at(index),
-					"ID"
-				);
+					pT_new = m_stacoSM->pTCB();
+				}
+				else if(mu_staco_isSegmentTaggedMuon->at(index) != false)
+				{
+					m_stacoSM->Event(
+						pT_old,
+						mu_staco_eta->at(index),
+						"ID"
+					);
 
-				pT_new = m_stacoSM->pTID();
-			}
+					pT_new = m_stacoSM->pTID();
+				}
 
-			mu_staco_E->at(index) = (pT_new / pT_old) * mu_staco_E->at(index);
-			mu_staco_pt->at(index) = pT_new;
+				mu_staco_E->at(index) = (pT_new / pT_old) * mu_staco_E->at(index);
+				mu_staco_pt->at(index) = pT_new;
 
 #endif
-			return 1.0;
+				return 1.0;
+			}
 		/*---------------------------------------------------------*/
 		/* TYPE_MUON_STANDALONE					   */
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_STANDALONE:
-#ifdef __IS_MC
-			pT_old = pT_new = mu_staco_pt->at(index);
-
-			m_stacoSM->SetSeed(EventNumber, index);
-
-			/**/ if(mu_staco_isStandAloneMuon->at(index) != false)
+			if(core::SM == false)
 			{
-				m_stacoSM->Event(
-					pT_old,
-					mu_staco_eta->at(index),
-					"MS"
-				);
-
-				pT_new = m_stacoSM->pTMS();
+				return 1.0;
 			}
+			if(core::SM == true){
 
-			mu_staco_E->at(index) = (pT_new / pT_old) * mu_staco_E->at(index);
-			mu_staco_pt->at(index) = pT_new;
+#ifdef __IS_MC
+				pT_old = pT_new = mu_staco_pt->at(index);
+
+				m_stacoSM->SetSeed(EventNumber, index);
+
+				/**/ if(mu_staco_isStandAloneMuon->at(index) != false)
+				{
+					m_stacoSM->Event(
+						pT_old,
+						mu_staco_eta->at(index),
+						"MS"
+					);
+
+					pT_new = m_stacoSM->pTMS();
+				}
+
+				mu_staco_E->at(index) = (pT_new / pT_old) * mu_staco_E->at(index);
+				mu_staco_pt->at(index) = pT_new;
 
 #endif
-			return 1.0;
+				return 1.0;
+			}
 		/*---------------------------------------------------------*/
 		/* TYPE_MUON_CALO					   */
 		/*---------------------------------------------------------*/
 
 		case TYPE_MUON_CALO:
-#ifdef __IS_MC
-			pT_old = pT_new = mu_calo_pt->at(index);
-
-			m_stacoSM->SetSeed(EventNumber, index);
-
-			/**/ if(true)
+			if(core::SM == false)
 			{
-				m_stacoSM->Event(
-					pT_old,
-					mu_calo_eta->at(index),
-					"ID"
-				);
-
-				pT_new = m_stacoSM->pTID();
+				return 1.0;
 			}
+			if(core::SM == true){
+#ifdef __IS_MC
+				pT_old = pT_new = mu_calo_pt->at(index);
 
-			mu_calo_E->at(index) = (pT_new / pT_old) * mu_calo_E->at(index);
-			mu_calo_pt->at(index) = pT_new;
+				m_stacoSM->SetSeed(EventNumber, index);
+
+				/**/ if(true)
+				{
+					m_stacoSM->Event(
+						pT_old,
+						mu_calo_eta->at(index),
+						"ID"
+					);
+
+					pT_new = m_stacoSM->pTID();
+				}
+
+				mu_calo_E->at(index) = (pT_new / pT_old) * mu_calo_E->at(index);
+				mu_calo_pt->at(index) = pT_new;
 
 #endif
-			return 1.0;
+				return 1.0;
+			}
 		default:
 			return 1.0;
 		/*---------------------------------------------------------*/
@@ -493,7 +518,7 @@ void TLeptonAnalysis::D0smearObject(Int_t index, TLeptonType type)
 	switch(type)
 	{
 		case TYPE_ELECTRON:
-			el_trackz0pvunbiased->at(index) = el_trackd0pvunbiased->at(index) + smear_D0;
+			el_trackd0pvunbiased->at(index) = el_trackd0pvunbiased->at(index) + smear_D0;
 			break;
 
 		case TYPE_MUON_CB_PLUS_ST:

@@ -18,12 +18,13 @@ ROOTLDFLAGS   = $(shell $(ROOTCONFIG) --ldflags)
 
 ATLASFLAGS = -DSTANDALONE \
 -I tools/PATCore-00-00-09 \
--I tools/HiggsZZ4lUtils-00-01-33 \
+-I tools/HiggsZZ4lUtils-00-01-37 \
 -I tools/PileupReweighting-00-02-09 \
 -I tools/TrigMuonEfficiency-00-02-32 \
 -I tools/egammaAnalysisUtils-00-04-20 \
 -I tools/MuonMomentumCorrections-00-08-05 \
--I tools/MuonEfficiencyCorrections-02-01-12
+-I tools/MuonEfficiencyCorrections-02-01-12 \
+-I tools/ElectronEfficiencyCorrection-00-00-09
 
 ATLASLIBS = -L./tools \
 -lPATCore \
@@ -32,8 +33,8 @@ ATLASLIBS = -L./tools \
 -lTrigMuonEfficiency \
 -legammaAnalysisUtils \
 -lMuonMomentumCorrections \
--lMuonEfficiencyCorrections
-
+-lMuonEfficiencyCorrections \
+-lElectronEfficiencyCorrection
 #############################################################################
 
 CXX           =g++

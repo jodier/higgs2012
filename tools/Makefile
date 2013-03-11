@@ -18,7 +18,7 @@ ROOTLDFLAGS   = $(shell $(ROOTCONFIG) --ldflags)
 
 ATLASFLAGS    =\
 -I PATCore-00-00-09 \
--I HiggsZZ4lUtils-00-01-33 \
+-I HiggsZZ4lUtils-00-01-37 \
 -I PileupReweighting-00-02-09 \
 -I TrigMuonEfficiency-00-02-32 \
 -I egammaAnalysisUtils-00-04-20 \
@@ -42,14 +42,14 @@ OBJS1         =\
 PATCore-00-00-09/Root/TResult.o
 
 OBJS2         =\
-HiggsZZ4lUtils-00-01-33/Root/BkgCrossSection.o \
-HiggsZZ4lUtils-00-01-33/Root/ElectronMCClassification.o \
-HiggsZZ4lUtils-00-01-33/Root/ElectronRecoClassification.o \
-HiggsZZ4lUtils-00-01-33/Root/GetQuadVertexIndex.o \
-HiggsZZ4lUtils-00-01-33/Root/HiggsCrossSection.o \
-HiggsZZ4lUtils-00-01-33/Root/McOverlapRemoval.o \
-HiggsZZ4lUtils-00-01-33/Root/MzzWeightFromMCFM.o \
-HiggsZZ4lUtils-00-01-33/Root/ElectronLikelihoodToolHSG2Helper.o
+HiggsZZ4lUtils-00-01-37/Root/BkgCrossSection.o \
+HiggsZZ4lUtils-00-01-37/Root/ElectronMCClassification.o \
+HiggsZZ4lUtils-00-01-37/Root/ElectronRecoClassification.o \
+HiggsZZ4lUtils-00-01-37/Root/GetQuadVertexIndex.o \
+HiggsZZ4lUtils-00-01-37/Root/HiggsCrossSection.o \
+HiggsZZ4lUtils-00-01-37/Root/McOverlapRemoval.o \
+HiggsZZ4lUtils-00-01-37/Root/MzzWeightFromMCFM.o \
+HiggsZZ4lUtils-00-01-37/Root/ElectronLikelihoodToolHSG2Helper.o
 
 OBJS3         =\
 PileupReweighting-00-02-09/Root/TPileupReweighting.o
@@ -88,9 +88,12 @@ MuonEfficiencyCorrections-02-01-12/Root/AnalysisMuonConfigurableScaleFactors.o \
 MuonEfficiencyCorrections-02-01-12/Root/AnalysisMuonEfficiencyScaleFactors.o \
 MuonEfficiencyCorrections-02-01-12/Root/EtaPhiBinning.o
 
+OBJS8         =\
+ElectronEfficiencyCorrection-00-00-09/Root/TElectronEfficiencyCorrectionTool.o
+
 #############################################################################
 
-all: $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6) $(OBJS7)
+all: $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6) $(OBJS7) $(OBJS8)
 
 	gcc -O2 -o hash hash.c
 
@@ -101,11 +104,12 @@ all: $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6) $(OBJS7)
 	$(AR) -rcs libegammaAnalysisUtils.a $(OBJS5)
 	$(AR) -rcs libMuonMomentumCorrections.a $(OBJS6)
 	$(AR) -rcs libMuonEfficiencyCorrections.a $(OBJS7)
+	$(AR) -rcs libElectronEfficiencyCorrection.a $(OBJS8)
 
 #############################################################################
 
 clean:
-	rm -fr $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6) $(OBJS7) libPATCore.a libHiggsZZ4lUtils.a libPileupReweighting.a libTrigMuonEfficiency.a libegammaAnalysisUtils.a libMuonMomentumCorrections.a libMuonEfficiencyCorrections.a hash
+	rm -fr $(OBJS1) $(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6) $(OBJS7) $(OBJS8) libPATCore.a libHiggsZZ4lUtils.a libPileupReweighting.a libTrigMuonEfficiency.a libegammaAnalysisUtils.a libMuonMomentumCorrections.a libMuonEfficiencyCorrections.a libElectronEfficiencyCorrection.a hash
 
 #############################################################################
 

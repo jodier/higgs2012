@@ -116,6 +116,7 @@ namespace core
 }
 
 /*-------------------------------------------------------------------------*/
+//#include <PATCore/TResult.h>
 
 #include <PileupReweighting/TPileupReweighting.h>
 
@@ -124,6 +125,8 @@ namespace core
 
 #include <egammaAnalysisUtils/EnergyRescalerUpgrade.h>
 #include <egammaAnalysisUtils/egammaSFclass.h>
+
+#include <ElectronEfficiencyCorrection/TElectronEfficiencyCorrectionTool.h>
 #include <egammaAnalysisUtils/VertexPositionReweightingTool.h>
 #include <egammaAnalysisUtils/ElectronLikelihoodTool.h>
 #include <egammaAnalysisUtils/egammaPIDdefs.h>
@@ -235,8 +238,8 @@ class TLeptonAnalysis: public TNTuple
 	egRescaler::EnergyRescalerUpgrade m_energyRescaler;
 
 	egammaSFclass *m_egammaSF;
+	Root::TElectronEfficiencyCorrectionTool *m_egSFclass_ID; 
 
-	//CorrectCaloIso *m_correctCaloIso;
 	ElectronLikelihoodTool  *m_ElectronLikelihoodTool;
 	MultiLeptonMenu m_MultiLeptonMenu;
 
@@ -456,12 +459,13 @@ class TLeptonAnalysis: public TNTuple
 		/*---------------------------------------------------------*/
 
 		m_egammaSF = new egammaSFclass();
-
-		/*---------------------------------------------------------*/
-		/* ELECTRON ISOLATION					   */
-		/*---------------------------------------------------------*/
-
-		//m_correctCaloIso = new CorrectCaloIso();
+//#ifdef __YEAR2011
+//		m_egSFclass_ID->addFileName("ElectronEfficiencyCorrection-00-00-09/data/efficiencySF.offline.Loose.2011.7TeV.rel17p0.v01.root");
+//#endif
+//#ifdef __YEAR2012
+//		m_egSFclass_ID->addFileName("ElectronEfficiencyCorrection-00-00-09/data/efficiencySF.offline.Multilepton.2012.8TeV.rel17p2.v02.root");
+//#endif
+//		m_egSFclass_ID->initialize();
 
 		/*---------------------------------------------------------*/
 		/* TRIGGER SCALE FACTORS				   */
@@ -496,11 +500,8 @@ class TLeptonAnalysis: public TNTuple
 		delete m_stacoSASCF;
 		delete m_caloMuSCF;
 
-	//	delete m_energyRescaler;
-
 		delete m_egammaSF;
-
-		//delete m_correctCaloIso;
+		delete m_egSFclass_ID;
 
 		delete m_triggerNavigationVariables;
 		delete m_elTriggerMatching;
