@@ -104,10 +104,14 @@ Float_t TLeptonAnalysis::eventGetWeight3(Int_t index, TLeptonType type)
 				break;
 			}
 
-			//const Root::TResult &sf_ID = m_egSFclass_ID->calculate(PATCore::ParticleDataType::Full,m_pileupReweighting->GetRandomRunNumber(RunNumber),eta,et);
-			//weight = sf_ID.getScaleFactor();
-			//weight = 1.0;
+			const Root::TResult &sf_ID = m_egSFclass_ID->calculate(PATCore::ParticleDataType::Full,m_pileupReweighting->GetRandomRunNumber(RunNumber),eta,et);
 
+			const Root::TResult &sf_Reco = m_egSFclass_Reco->calculate(PATCore::ParticleDataType::Full,m_pileupReweighting->GetRandomRunNumber(RunNumber),eta,et);
+;
+			weight = sf_ID.getScaleFactor() * sf_Reco.getScaleFactor();
+
+			//weight = 1.0;
+/*
 #ifdef __YEAR2011
 			weight = \
 				m_egammaSF->scaleFactor(eta, et, 4, 0, 6, 1, m_pileupReweighting->GetRandomRunNumber(RunNumber)).first
@@ -125,7 +129,7 @@ Float_t TLeptonAnalysis::eventGetWeight3(Int_t index, TLeptonType type)
 			;
 
 #endif
-
+*/
 			}
 			break;
 

@@ -9,7 +9,7 @@ ROOTCONFIG    = root-config
 
 #############################################################################
 
-ROOTLIBS      = $(shell $(ROOTCONFIG) --libs)
+ROOTLIBS      = $(shell $(ROOTCONFIG) --libs) $(shell root-config --libdir)/libTMVA.so $(shell root-config --libdir)/libMathMore.so
 ROOTGLIBS     = $(shell $(ROOTCONFIG) --glibs)
 ROOTCFLAGS    = $(shell $(ROOTCONFIG) --cflags)
 ROOTLDFLAGS   = $(shell $(ROOTCONFIG) --ldflags)
@@ -17,24 +17,17 @@ ROOTLDFLAGS   = $(shell $(ROOTCONFIG) --ldflags)
 #############################################################################
 
 ATLASFLAGS = -DSTANDALONE \
--I tools/PATCore-00-00-09 \
--I tools/HiggsZZ4lUtils-00-01-37 \
--I tools/PileupReweighting-00-02-09 \
--I tools/TrigMuonEfficiency-00-02-32 \
--I tools/egammaAnalysisUtils-00-04-20 \
--I tools/MuonMomentumCorrections-00-08-05 \
--I tools/MuonEfficiencyCorrections-02-01-12 \
--I tools/ElectronEfficiencyCorrection-00-00-09
+-I tools/packages/RootCore/include/
 
-ATLASLIBS = -L./tools \
--lPATCore \
--lHiggsZZ4lUtils \
--lPileupReweighting \
--lTrigMuonEfficiency \
--legammaAnalysisUtils \
--lMuonMomentumCorrections \
--lMuonEfficiencyCorrections \
--lElectronEfficiencyCorrection
+ATLASLIBS = -L./tools/packages/RootCore/lib tools/packages/RootCore/lib/*.so
+#-lPATCore \
+#-lHiggsZZ4lUtils \
+#-lPileupReweighting \
+#-lTrigMuonEfficiency \
+#-legammaAnalysisUtils \
+#-lMuonMomentumCorrections \
+#-lMuonEfficiencyCorrections \
+#-lElectronEfficiencyCorrection
 #############################################################################
 
 CXX           =g++
@@ -69,7 +62,6 @@ ALL: core $(OBJS2) $(OBJS2)
 #############################################################################
 
 clean:
-#	@cd $(DIR)/tools && make clean && cd $(DIR)
 
 	rm -fr $(OBJS1) $(OBJS2) libcore.a l_analysis
 
@@ -78,7 +70,7 @@ clean:
 CLEAN:
 	@cd $(DIR)/tools && make clean && cd $(DIR)
 
-	rm -fr $(OBJS1) $(OBJS2) tools/*.a l_analysis
+	#rm -fr $(OBJS1) $(OBJS2) tools/*.a l_analysis
 
 #############################################################################
 
