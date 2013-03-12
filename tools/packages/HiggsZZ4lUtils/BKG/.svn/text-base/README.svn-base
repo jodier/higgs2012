@@ -1,0 +1,9 @@
+a program to calculate the expected Z+ee background in the signal region.
+=== 2mu2e ====
+MU_data.txt
+MU3_purity.txt
+MU3_effi.txt
+=== 4e ====
+EL_data.txt
+EL2_purity.txt
+EL2_effi.txt

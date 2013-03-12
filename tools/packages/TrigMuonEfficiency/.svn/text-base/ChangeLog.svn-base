@@ -1,0 +1,384 @@
+2013-02-01 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * tagging as TrigMuonEfficiency-00-02-32
+  * eliminated harmless warnings when -pedantic option is set
+
+2013-01-28 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * tagging as TrigMuonEfficiency-00-02-30
+  * can specify version string of the efficiency files for ElectronEfficiencyCorrection
+
+2013-01-25 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * tagging as TrigMuonEfficiency-00-02-29
+  * compatible with ElectronEfficiencyCorrection-00-00-08
+  * out of period protection with setMaxPeriod()
+  * extends data periods till the end of 2012 for muon trigger scale factors
+
+2013-01-23 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * tagging as TrigMuonEfficiency-00-02-28
+  * requirements file updated for ElectronEfficiencyCorrection
+  * no contribution of CaloMuon to SF calculation
+
+2013-01-22 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * tagging as TrigMuonEfficiency-00-02-26
+  * mapping between set number and electron trigger has been updated
+
+2013-01-21 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * tagging as TrigMuonEfficiency-00-02-25
+  * code changes for ElectronEfficiencyCorrection
+
+2013-1-08  Fabien Tarrade  <tarrade @cern.ch>
+	* adding SMK for e-mu 2011 trigger
+	* tagging as TrigMuonEfficiency-00-02-23
+	
+2013-01-05  Fabien Tarrade  <tarrade @cern.ch>
+	* adding SMK for electron and muon chain for period up to M (full 2012 dataset)
+	* tagging as TrigMuonEfficiency-00-02-22
+	
+2012-12-18 Attila Krasznahorkay <Attila.Krasznahorkay@cern.ch>
+	* Added a protection to the scale factor tool that makes it
+	  possible to use multiple instances of the tool inside the
+	  same process without problems.
+	* Tagging as TrigMuonEfficiency-00-02-21
+
+2012-12-17 Attila Krasznahorkay <Attila.Krasznahorkay@cern.ch>
+	* Removing compilation warnings. (Visible when compiling the code
+	  on MacOS X with clang.)
+	* Tagging as TrigMuonEfficiency-00-02-20
+
+2012-12-04 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * statistical (systematic) error only from getMuonEfficiency()
+  * minor update of getSfReplicaMuon() (SF was data[ii]/mc, now data[ii]/mc[ii])
+  * trigger matching for mu40_MSonly_tight_barrel
+  * python friendly trigger matching classes
+
+2012-11-28  Fabien Tarrade  <tarrade @cern.ch>
+	* adding SMK for electron and muon chain for period up to I (first periods)
+	* tagging as TrigMuonEfficiency-00-02-18
+
+2012-10-30 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * Major code clean-up of LeptonTrggerSF
+  * - GetTriggerSF(runNumber, useGeV, muons, muonQuality, statisticalOnlyMuon);
+  *   returns contribution of statistical errors of the scale factor
+  * - createMcReplicaMuon(n, <trigger>);
+  *   creates n Monte Carlo Replicas of efficiency with Gaus(eff_ij, stat_ij);
+  * - getSfReplicaMuon(runNumber, useGeV, muons, muonQuality, ii);
+  *   returns SF evaluated with MC replica with index ii
+
+2012-10-15  Marilyn Marx  <marx@cern.ch>
+	* LeptronTriggerSF: updating electrons for HCP (egamma rel 10 and 11), needs at least egammaAnalysisUtils-00-03-55
+	* tagging as TrigMuonEfficiency-00-02-17
+
+2012-10-15  Fabien Tarrade  <tarrade @cern.ch>
+	* adding SMK for electron and muon chain for period up to G (first periods)
+	* tagging as TrigMuonEfficiency-00-02-16
+
+2012-09-27  Marilyn Marx  <marx@cern.ch>
+	* LeptonTriggerSF: updating for data up to period E
+	* tagging as TrigMuonEfficiency-00-02-15
+
+2012-09-17 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * EF_mu24_j65_a4tchad_EFxe40_tclcw added in MuonChainIdMap.h
+
+2012-09-17 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * forced check of TriggerNavigationVariables
+  * added setTriggerNavigationVariables() for ease of use in D3PDReader framework
+
+2012-08-14 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * added "+" after TriggerNavigationVariables in LinkDef.h
+
+2012-08-14 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * LeptonTriggerMatching class introduced to remove duplicated codes in
+    ElectronTriggerMatching and MuonTriggerMatching
+
+2012-08-19  Marilyn Marx  <marx@cern.ch>
+	* LeptonTriggerSF: adjust approximation for && between single and mu13 chains (ready to use for mu24i_tight||mu36_tight||2mu13)
+	* tagging as TrigMuonEfficiency-00-02-13
+
+2012-08-15  Marilyn Marx  <marx@cern.ch>
+	* LeptonTriggerSF: small adjustment for dimuon chains (mu18_tight slightly less efficient than mu24i_tight||mu36_tight)
+	* tagging as TrigMuonEfficiency-00-02-12	
+
+2012-08-16  Fabien Tarrade  <tarrade @cern.ch>
+	* adding SMK for electron and muon chain
+	* tagging as TrigMuonEfficiency-00-02-11
+
+2012-08-15  Marilyn Marx  <marx@cern.ch>
+	* LeptonTriggerSF
+	   * adding dimuon triggers (only for events with exactly 2 muons for now) - NEW! should be tested!
+	   * extending periods by CtoD
+	   * refer to https://twiki.cern.ch/twiki/bin/viewauth/Atlas/TrigMuonEfficiency for details on trigger chain names and root files
+	* tagging as TrigMuonEfficiency-00-02-10
+
+2012-08-14  Marilyn Marx  <marx@cern.ch>
+	* tagging as TrigMuonEfficiency-00-02-09 (safety tag before changes for dimuon triggers)	
+
+2012-08-14 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * support of EF_mu18_tight_mu8_EFFS with index information (experimntal)
+  * support of EF_2mu13, EF_mu15 and EF_mu8 with index information
+  * files under skeleton directory in sync with main codes
+
+2012-08-13  Marilyn Marx  <marx@cern.ch>
+	* LeptonTriggerSF: adding possibility to specify certain muon quality (to e.g. make warnings go away if use muid root file)
+	
+2012-07-30 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * GetTriggerSF methods with new signatures
+	* updated phi boundary check
+	* tagging as TrigMuonEfficiency-00-02-08
+
+2012-07-08 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * added ElEff_XXX() methods for backward compatibility
+	* tagging as TrigMuonEfficiency-00-02-07
+
+2012-07-07 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * more informative error message when input root file is not found
+  * matching with EF_mu15 implemented for 2012
+  * enabled extraction of egamma trigger scale factor for AFII samples
+	* tagging as TrigMuonEfficiency-00-02-06
+
+2012-06-21  Marilyn Marx  <marx@cern.ch>
+	* LeptonTriggerSF: removing upper run number bound for now to avoid conflicts
+	* tagging as TrigMuonEfficiency-00-02-05
+
+2012-06-20  Marilyn Marx  <marx@cern.ch>
+	* LeptonTriggerSF: adjusting systematic uncertainty calculation (spotted by Goetz Gaycken)
+	* tagging as TrigMuonEfficiency-00-02-04
+
+2012-06-17  Marilyn Marx  <marx@cern.ch>
+	* LeptonTriggerSF: adding ML (multilepton) sets from egammaSFclass
+	* tagging as TrigMuonEfficiency-00-02-03
+
+2012-06-15 Attila Krasznahorkay <Attila.Krasznahorkay@cern.ch>
+	* Removed the std::cout and std::cerr outputs from
+	  LeptonTriggerSF. They are replaced by ROOT's output
+	  functions.
+	* Tagging as TrigMuonEfficiency-00-02-02
+
+2012-06-14  Fabien Tarrade  <tarrade @cern.ch>
+	* new SMK for 2012 data
+	* tagging as TrigMuonEfficiency-00-02-01
+
+2012-06-12  Marilyn Marx  <marx@cern.ch>
+	* LeptonTriggerSF: adding egammaSFclass numbers for 2012 data (e24vhi_medium1||e60_medium1)
+	* tagging as TrigMuonEfficiency-00-02-00
+
+2012-06-12 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+	* TrigMuonEff::Configuraiton introduced to make the tool more configurable
+	* EF_mu24i_tight, EF_mu24i_tight_or_EF_mu36_tight available. Or is the default.
+
+2012-05-23  Marilyn Marx  <marx@cern.ch>
+	* adding loose and combined muon SFs for period A-B4, EF_mu24i_tight
+	* tagging as TrigMuonEfficiency-00-01-24
+
+2012-05-23  Fabien Tarrade  <tarrade @cern.ch>
+	* new SMK for 2012 data
+	* fix for SMK 325 for ElectonChainId
+	* tagging as TrigMuonEfficiency-00-01-22
+
+2012-05-23 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * files under skeleton directory updated for D3PDReader framework
+    No changes if you do not use util/setup.sh
+
+2012-05-21 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * EF_mu24_tight and L2_mu18_tight added in MuonChainIdMap.h for 2012
+  * LeptonTriggerSF changed to handle 2012 SF files (only for muons)
+  * trig_RoI_EF_mu_TrigMuonEFIsolationContainer/Status variables added for 2012 isolated muon trigger matching
+  * tagging as TrigMuonEfficiency-00-01-20
+
+2012-05-08  Fabien Tarrade  <tarrade @cern.ch>
+	* adding a macro from Elizabeth Gallas to get the SMK for data from the COMA database 
+	  util/GetSMK_from_COOL.py 
+	* updating electron and muon ChainIdMap.h
+	  with all SMK for 2011 data
+	  some of the new SMK for 2012 data
+	  SMK for MC12a Monte Carlo
+	  as a safty all trigger are also in the default SMK=-1
+	* Tagging as TrigMuonEfficiency-00-01-18
+
+2012-04-22 Attila Krasznahorkay <Attila.Krasznahorkay@cern.ch>
+	* The Et thresholds required from the online electrons and muons
+	  were mixed up by mistake in LeptonTriggerSF. It is fixed now.
+	* Tagging as TrigMuonEfficiency-00-01-17
+
+2012-04-21 Attila Krasznahorkay <Attila.Krasznahorkay@cern.ch>
+	* Made the HSG3TrigLeptonSFTool class a bit nicer as well.
+	* Made the error/fatal messages of LeptonTriggerSF print the
+	  line number that they are coming from.
+	* Tagging as TrigMuonEfficiency-00-01-16
+
+2012-04-21 Attila Krasznahorkay <Attila.Krasznahorkay@cern.ch>
+	* Cleaned up the LeptonTriggerSF class. First and foremost, the
+	  ROOT file with the efficiency histograms no longer needs to
+	  stay opened until the destruction of the object.
+	* Also removed a lot of the code that made the class pass around
+	  information between its functions using member variables.
+	* Interesting thing: Saw some initialization issues when making
+	  egammaSFclass a simple member variable of LeptonTriggerSF.
+	  This was resolved by creating the egammaSFclass object on the
+	  heap rather.
+	* Will maybe clean up the HSG3 tool next...
+	* Tagging as TrigMuonEfficiency-00-01-15
+
+2012-04-12 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: fixing small bug in calculation of SF error (SF itself was correct, the error, if anything, will get smaller this way) [spotted by Swagato Banerjee]
+	* tagging as TrigMuonEfficiency-00-01-14
+
+2012-02-27 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * di-electron matching implemented
+  * di-electron trigger chains added in ElectronChainIdMap.h
+  * tagging as TrigMuonEfficiency-00-01-12
+
+2012-02-14 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * retrieve electron chains from TrigConfTree in ElectronTriggerMatching.cxx
+  * tagging as TrigMuonEfficiency-00-01-11
+
+2012-02-14 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: concerns trigger systematics - added possibility for only electron or only muon trigger variations (var=3/4 electron up/down, var=5/6 muon up/down)
+	* tagging as TrigMuonEfficiency-00-01-10	
+
+2012-02-10 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * update of ElectronChainIdMap.h for EF_e45_medium1
+  * tagging as TrigMuonEfficiency-00-01-09
+
+2012-02-10 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: adding new SF for loose++, needs at least egammaAnalysisUtils-00-02-75
+	* tagging as TrigMuonEfficiency-00-01-08
+
+2012-02-09 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: protection for electron with fabs(eta)>2.47 to avoid error message from egammaSFclass
+	* tagging as TrigMuonEfficiency-00-01-07
+
+2012-02-08 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: fixing small bug in systematics if GetTriggerSF is called via vector of lepton qualities (was always set to 0)
+	* tagging as TrigMuonEfficiency-00-01-06
+
+2012-02-03 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: adding some more comments to ease reading
+	* tagging as TrigMuonEfficiency-00-01-05
+
+2012-02-02 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: adding possibility to have different lepton qualities in one event (for e.g. WZ diboson analyses)
+	
+2012-02-02 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * update of ElectronChainIdMap.h for mc11b' di-electron trigger
+
+2012-02-01 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: adding possibility to run up/down 1 sigma variation on SF for systematic studies (int var=0 central, var=1 up, var=2 down)
+	* tagging as TrigMuonEfficiency-00-01-03
+
+2012-01-31 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: changing TH2D* to TH2F*
+	
+2012-01-31 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * preparation for EF_e22vh_medium1 matching in MC samples
+  * added egammaAnalysisUtils in include path of Makefile.StandAlone
+
+2012-01-30 Lynn Marx <marx@cern.ch>
+	* adding some libraries to trigger matching
+
+2012-01-29 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: updating from rel=5 to rel=6 in egammaSFclass (only works when used with egammaAnalysisUtils-00-02-69 or higher)
+	* tagging as TrigMuonEfficiency-00-01-02
+
+2012-01-27 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: splitting m_minimum_phi into m_phi_boundary_barrel and m_phi_boundary_endcap
+	* tagging as TrigMuonEfficiency-00-01-00
+	* fixing accidental bug in phi treatement
+	* tagging as TrigMuonEfficiency-00-01-01
+
+2012-01-26 Takashi Kubota <takashi.kubota@cern.ch>
+	* Updated scale factor rootfile (for Moriond 2012)
+	  - using MC11b Monte Carlo	
+	  - share/muon_trigger_sf.root
+        * Updated "HSG3 specific part", modified following codes
+	  - Root/LeptonTriggerSF.cxx
+	  - Root/HSG3TrigLeptonSFTool.cxx
+	  - TrigMuonEfficiency/LeptonTriggerSF.h
+
+2012-01-25 Lynn Marx <marx@cern.ch>
+	* LeptonTriggerSF: making electron plateau threshold trigger dependent (21 or 23GeV) as suggested on common W/Z twiki
+	* LeptonTriggerSF: adding uncertainty on SF, GetTriggerSF() is now a pair<double,double> rather than double
+	* LeptonTriggerSF: making enums instead of ints for lepton quality
+	
+2012-01-23 Lynn Marx <marx@cern.ch>
+	* tagging as TrigMuonEfficiency-00-00-16 as safety tag before major updates
+	* LeptonTriggerSF: major updates for Moriond2012 using new root file for loose, combined muons, different binning, nominal period split B-I, J-M without L3,L4, L3-L4
+	
+2012-01-22 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * introduced TriggerNavigationVariables.h
+  * tagging as TrigMuonEfficiency-00-00-15
+
+2012-01-19 Lynn Marx <marx@cern.ch>
+	* removing unused electron_SF_VV.h
+
+2012-01-16 Lynn Marx <marx@cern.ch>
+	* adding loose++ SFs and mc eff for electrons
+	* tagging as TrigMuonEfficiency-00-00-14
+
+2012-01-08 Lynn Marx <marx@cern.ch>
+	* updating LeptonTriggerSF further for use with electrons
+	* tagging as TrigMuonEfficiency-00-00-13
+
+2011-12-16 Lynn Marx <marx@cern.ch>
+	* tagging as TrigMuonEfficiency-00-00-12 before adding electron changes
+	* updating LeptonTriggerSF so that it reads electron MC eff and SFs from egammaSFclass
+
+2011-12-20 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * dimuon trigger matching implemented
+  * tagging as TrigMuonEfficiency-00-00-11
+
+2011-12-20 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * updated instructions in doc directory
+  * tagging as TrigMuonEfficiency-00-00-10
+
+2011-12-16 Lynn Marx <marx@cern.ch>
+	* moving closefile(); to avoid crash if using destructor
+	* adding namespace TrigMuonEff to avoid previous declaration of enums in WhichPeriod tool
+	* tagging as TrigMuonEfficiency-00-00-09
+
+2011-11-20 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * electron trigger matching class incuded
+  * LinkDef.h and setup.sh changed not to let user edit the file
+  * tagging as TrigMuonEfficiency-00-00-08
+
+2011-12-07 Lynn Marx <marx@cern.ch>
+	* tagging as TrigMuonEfficiency-00-00-07 for stable tag to quote at TGM 07/12/2011
+
+2011-12-05 Lynn Marx <marx@cern.ch>
+	* LinkDef.h: removing MuonTriggerMatching so this compiles in RootCore
+	* added information in doc/MuonTriggerMatching.txt what lines need adding back if MuonTriggerMatching is to be used
+	* removing _VV suffix from LeptonTriggerSF
+
+2011-11-29 Lynn Marx <marx@cern.ch>
+	* fixing bug for muons with pt below threshold
+	* tagging as TrigMuonEfficiency-00-00-06
+
+2011-11-20 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+	* fixed phi range bug
+  * tagging as TrigMuonEfficiency-00-00-05
+
+2011-11-19 Takashi Kubota <Takashi.Kubota@cern.ch>
+	* adopted HSG3TrigLeptonSFTool 
+	* update share/muon_trigger_sf.root, reference muon is HSG3 one
+
+2011-11-18 Takashi Kubota <Takashi.Kubota@cern.ch>
+	* adopted HSG3TrigLeptonSFTool to Lynn's change
+	* add std::pair<double, double> LeptonTriggerSF_VV::MuEffErr_CB() with common systematics of 1 %
+
+2011-11-17 Lynn Marx <marx@cern.ch>
+	* reverting accidental overwrite in LeptonTriggerSF
+
+2011-11-18 Takashi Kubota <Takashi.Kubota@cern.ch>
+	* imported HSG3TrigLeptonSFTool
+	* put new muon_trigger_sf.root in share
+
+2011-11-17 Lynn Marx <marx@cern.ch>
+	* removing singleton, adding dir for reading in root files in LeptonTriggerSF
+	* updating LeptonTriggerSF to have code from /Physics/StandardModel/ElectroWeak/Common/Software/LeptonTriggerSF/branches/LeptonTriggerSF-00-00-01-branch rather than /Physics/StandardModel/ElectroWeak/Common/Software/LeptonTriggerSF/tags/LeptonTriggerSF-00-00-01
+	* creating share folder to store muon_trigger_sf.root (or other root files)
+
+2011-11-16 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * MuonTriggerMatching code changed to work in D3PDReader framework
+  * tagging as TrigMuonEfficiency-00-00-02
+
+2011-11-16 Takashi Matsushita <Takashi.Matsushita@cern.ch>
+  * integration of /Physics/StandardModel/ElectroWeak/Common/Software/LeptonTriggerSF/tags/LeptonTriggerSF-00-00-01 and /PhysicsAnalysis/D3PDMaker/TrigMuonD3PDMaker/tags/TrigMuonD3PDMaker-00-00-48/macros/MuonTriggerTool
+  * tagging as TrigMuonEfficiency-00-00-01

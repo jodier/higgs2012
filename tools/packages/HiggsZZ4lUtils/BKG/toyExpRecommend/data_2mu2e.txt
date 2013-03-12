@@ -1,0 +1,9 @@
+EE  9 
+EC  3 
+EF  5 
+CE  6 
+CC  2 
+CF  10
+FE  4 
+FC  4 
+FF  17

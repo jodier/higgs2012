@@ -1,0 +1,144 @@
+2012-12-11  Will Buttinger <will@cern.ch>
+      * Root/TPileupReweighting.cxx: New GetRandomRunNumber method that accepts a mu value, so only runs with the given mu value are considered (weighted by lumi with that mu value)
+      * cmt/requirements: fix for slc6 compiling
+      * cmt/MakeFile.Standalone: fix for slc6 compiling
+      * Tag: PileupReweighting-00-02-09
+
+2012-10-26  Will Buttinger <will@cern.ch>
+      * Root/TPileupReweighting.cxx: New WriteToFile method that takes a TFile*
+                                       New debugging information handling
+                                       New tolerance parameter for unrepresented data... set to 5%
+
+2012-10-15  Will Buttinger <will@cern.ch>
+      * Root/TPileupReweighting.cxx: Prevented double-counting of luminosity when loading spurious prw config files
+                                         Still allowing use of spurious prw files (prints a warning... see AddPeriod method)... may rule out in future
+                                     Changed most TFile to TFile::Open 
+                                       Added a unit test
+
+2012-07-10  Will Buttinger <will@cern.ch>
+      * Tag: PileupReweighting-00-02-06. Fixed some old backward compatibility issues. If your code wasn't crashing before, there is no difference to this new version
+
+2012-05-17  Will Buttinger <will@cern.ch>
+      * Tag: PileupReweighting-00-02-04. Added mc12a default file and made tool pick up default binning from the config file
+      * Tag: PileupReweighting-00-02-05. added missing return statement in UsePeriodConfig
+
+2012-03-01  Emil Obreshkov <Emil.Obreshkov@cern.ch>
+       * Tag: PileupReweighting-00-02-03 . cmt/Makefile.Standalone - add support for cross-compilation
+
+2012-02-11  Will Buttinger <will@cern.ch>
+      * Tag: PileupReweighting-00-02-02. Memory leak fixes and a few extra methods. No functional changes (I hope).
+
+2012-01-10  Will Buttinger <will@cern.ch>
+       * Root/TPileupReweighting.cxx: Fixed bug effecting users who have no data in some mc periods.
+                                      Added MC11c UsePeriodConfig option
+                                      Added ability to get Lumi fractions for trigger weighting
+       * share/*defaults : Renamed to *.prw.root format
+       * Tag: PileupReweighting-00-02-01
+
+2011-12-14  Will Buttinger <will@cern.ch>
+       * Tag: PileupReweighting-00-02-00 . Big internal code restructuring, some functions have changed name
+
+2011-11-24  Will Buttinger <will@cern.ch>
+       * Root/TPileupReweighting.cxx: Fixed bug where old-style reweighting caused double delete
+                                       Extended lumivector to periods L and M too
+       * Tag: PileupReweighting-00-01-02
+
+2011-11-23  Will Buttinger <will@cern.ch>
+       * Root/TPileupReweighting.cxx: Minor changes to error messages. 
+       * share/mc11a_defaults.root: Converted from TH1F to TH1D
+       * Tag: PileupReweighting-00-01-01 
+
+2011-11-20  Will Buttinger <will@cern.ch>
+       * Root/TPileupReweighting.cxx: Converted package over to ExtendedPileupReweighting. 
+                  See https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/ExtendedPileupReweighting
+       * Tag: PileupReweighting-00-01-00
+
+
+2011-09-12  Karsten Koeneke  <kkoeneke@pb-d-128-141-37-88.cern.ch>
+
+	* Root/TPileupReweighting.cxx: Cleanup and proper pointer deletion.
+	* Tag: PileupReweighting-00-00-17
+
+2011-08-02  Karsten Koeneke  <kkoeneke@lxplus424.cern.ch>
+
+	* cmt/Makefile.RootCore: Adding RootCore support.
+	* Tag: PileupReweighting-00-00-16
+
+2011-06-27  Karsten Koeneke  <kkoeneke@KarstenKoenekeMacBookPro.local>
+
+	* cmt/Makefile.Standalone: Update makefile and package structure
+	* Tag: PileupReweighting-00-00-15
+
+2011-06-14  Karsten Koeneke  <kkoeneke@tcx110.naf.desy.de>
+
+	* PileupReweighting/TPileupReweighting.h: Add default constructor and ClassImp
+	* Tag: PileupReweighting-00-00-14
+
+2011-05-30  Karsten Koeneke  <kkoeneke@KarstenKoenekeMacBookPro.local>
+
+	* ROOT/TPileupReweighting.cxx (getPileupWeight): Correct treatment of MC10b histogram.
+	* Tag: PileupReweighting-00-00-13
+
+2011-05-18  Karsten Koeneke  <kkoeneke@lxplus211.cern.ch>
+
+	* ROOT/TPileupReweighting.cxx (initialize): Cache the current ROOT directory and return to it at the end.
+	* Tag: PileupReweighting-00-00-12
+
+2011-05-16  Karsten Koeneke  <kkoeneke@lxplus315.cern.ch>
+
+	* src/PileupReweighting.cxx: Fix error printout.
+	* Root/TPileupReweighting.cxx: Fix error printout.
+	* cmt/Makefile.Standalone: Improve makefile
+	* Tag: PileupReweighting-00-00-11
+
+2011-05-11  Karsten Koeneke  <kkoeneke@lxplus435.cern.ch>
+
+	* ROOT/TPileupReweighting.cxx (initialize): Fix MC bin boundary at 0.5 issue.
+	* Tag: PileupReweighting-00-00-10
+
+2011-05-03  Karsten Koeneke  <kkoeneke@lxplus448.cern.ch>
+
+	* ROOT/TPileupReweighting.cxx (getPileupWeight): Fix bug in computation and close unneeded ROOT files.
+	* Tag: PileupReweighting-00-00-09
+
+2011-04-29  Karsten Koeneke  <kkoeneke@lxplus432.cern.ch>
+
+	* cmt/Makefile.Standalone (LINKLIBS): Add lRIO, lTree to LINKLIBS
+	* Tag: PileupReweighting-00-00-08
+
+2011-04-28  Karsten Koeneke  <kkoeneke@lxplus436.cern.ch>
+
+	* cmt/Makefile.Standalone: Ease library name.
+	* Tag: PileupReweighting-00-00-07
+
+2011-04-28  Karsten Koeneke  <kkoeneke@lxplus436.cern.ch>
+
+	* ROOT/TPileupReweighting.cxx: Test for a correct Monte Carlo histogram binning and simplify the weight calculation.
+	* Tag: PileupReweighting-00-00-06
+
+2011-04-28  Karsten Koeneke  <kkoeneke@lxplus436.cern.ch>
+
+	* ROOT/TPileupReweighting.cxx: Deal with different axis ranges and also integrate data distribution if MC mu is integral.
+	* Tag: PileupReweighting-00-00-05
+
+2011-04-27  Karsten Koeneke  <kkoeneke@lxplus410.cern.ch>
+
+	* ROOT/TPileupReweighting.cxx: Fix bug with absolut value.
+	* Tag: PileupReweighting-00-00-04
+
+2011-04-27  Karsten Koeneke  <kkoeneke@lxplus410.cern.ch>
+
+	* ROOT/TPileupReweighting.cxx: Fix problem with different number of bins for data and MC histograms. Introduce special mu=100 case for MC10b Monte Carlo.
+	* Tag: PileupReweighting-00-00-03
+
+2011-04-18  Karsten Koeneke  <kkoeneke@lxplus437.cern.ch>
+
+	* src/PileupReweightingAlg.cxx: Use TPileupReweighting for computation.
+	* Tag: PileupReweighting-00-00-02
+
+2011-04-14  Karsten Koeneke  <kkoeneke@lxplus434.cern.ch>
+
+	* First version
+	* Tag: PileupReweighting-00-00-01
+	
+

@@ -1,0 +1,6 @@
+#ifndef HIGGSZZ4LUTILS_HIGGSZZ4LUTILSDICT_H
+#define HIGGSZZ4LUTILS_HIGGSZZ4LUTILSDICT_H
+
+#include "HiggsZZ4lUtils/HiggsCrossSection.h"
+#endif
+

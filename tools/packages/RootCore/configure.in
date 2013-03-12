@@ -1,0 +1,49 @@
+AC_INIT(configure.in)
+
+AC_ARG_VAR(CXXFLAGS, [additional compiler flags])
+AC_ARG_VAR(LDFLAGS, [additional linker flags])
+
+
+USE_PEDANTIC=0
+AC_ARG_ENABLE([pedantic],
+    AS_HELP_STRING([--disable-pedantic], [Disable all pedantic compilation]))
+
+AS_IF([test "x$enable_pedantic" = "xforce"], [
+    USE_PEDANTIC=2
+],[test "x$enable_pedantic" != "xno"], [
+    USE_PEDANTIC=1
+])
+AC_SUBST(USE_PEDANTIC)
+
+
+root_prefix=`root-config --prefix`
+if test "x$root_prefix" == "x" ; then
+   root_prefix=$ROOTSYS
+fi
+if test "x$root_prefix" == "x" ; then
+   AC_MSG_ERROR([could not locate cern root])
+fi
+if test "x$ROOTSYS" == "x" ; then
+   ROOTSYS=$root_prefix
+fi
+
+ROOT_MAKE="`root-config --etcdir`/Makefile.arch"
+if test \! -f $ROOT_MAKE ; then
+   ROOT_MAKE=$root_prefix/share/doc/root/test/Makefile.arch
+fi
+if test \! -f $ROOT_MAKE ; then
+   ROOT_MAKE=`find "$root_prefix/." -name Makefile.arch | head -n 1`
+fi
+if test \! -f "$ROOT_MAKE" ; then
+   AC_MSG_ERROR([could not locate Makefile.arch])
+fi
+AC_SUBST(ROOT_MAKE)
+
+ROOT_CORE_DIR=`pwd`
+AC_SUBST(ROOT_CORE_DIR)
+AC_SUBST(ROOTSYS)
+
+AC_OUTPUT([Makefile-common])
+AC_OUTPUT([Makefile-single])
+AC_OUTPUT([scripts/setup.sh])
+AC_OUTPUT([scripts/setup.csh])

@@ -1,0 +1,16 @@
+package MuonEfficiencyCorrections
+
+author Oliver Kortner <Oliver.Kortner@CERN.CH>
+
+public
+
+use AtlasPolicy AtlasPolicy-*
+use AtlasROOT   AtlasROOT-*    External
+
+apply_tag ROOTMathLibs
+apply_tag ROOTGraphicsLibs
+
+library MuonEfficiencyCorrections "../Root/*.cxx"
+
+apply_pattern installed_library 
+apply_pattern declare_runtime files="*.txt"

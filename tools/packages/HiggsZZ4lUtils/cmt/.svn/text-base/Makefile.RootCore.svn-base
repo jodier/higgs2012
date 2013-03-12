@@ -1,0 +1,8 @@
+PACKAGE          = HiggsZZ4lUtils
+PACKAGE_PRELOAD  = Hist Physics MathMore
+PACKAGE_CXXFLAGS = 
+PACKAGE_LDFLAGS  = 
+PACKAGE_BINFLAGS = 
+PACKAGE_DEP      = egammaAnalysisUtils
+
+include $(ROOTCOREDIR)/Makefile-common

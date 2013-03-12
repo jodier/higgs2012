@@ -1,0 +1,59 @@
+## automatically generated CMT requirements file
+package ElectronEfficiencyCorrection
+author  kkoeneke
+
+## for athena policies: this has to be the first use statement
+use AtlasPolicy 	AtlasPolicy-*
+
+## for gaudi tools, services and objects
+use AtlasPyROOT                 AtlasPyROOT-*           External
+use AtlasROOT                   AtlasROOT-*             External
+use AthenaBaseComps             AthenaBaseComps-*       Control
+use EventKernel                 EventKernel-*           Event
+use PATCore                     PATCore-*               PhysicsAnalysis/AnalysisCommon
+use egammaEvent                 egammaEvent-*           Reconstruction/egamma
+use UserDataUtils               UserDataUtils-*         PhysicsAnalysis/AnalysisCommon
+
+## put here your package dependencies...
+private
+use  GaudiInterface             GaudiInterface-*                External
+use  AthenaKernel               AthenaKernel-*                  Control
+use  Navigation                 Navigation-*                    Control
+use  CaloEvent                  CaloEvent-*                     Calorimeter
+use  EventInfo                  EventInfo-*                     Event
+use  PathResolver               PathResolver-*                  Tools
+end_private
+##
+
+## macros   
+apply_tag       ROOTBasicLibs
+apply_tag       ROOTMathLibs
+
+macro_append ROOT_linkopts " -lPyROOT"
+
+## declare the directories CMT should know about
+branches ElectronEfficiencyCorrection python share src Root data
+
+
+# Create a named installed library
+library ElectronEfficiencyCorrectionLib *.cxx ../Root/*.cxx
+apply_pattern named_installed_library library=ElectronEfficiencyCorrectionLib
+
+
+## create a component library
+library ElectronEfficiencyCorrection *.cxx components/*.cxx
+macro_append ElectronEfficiencyCorrection_dependencies " ElectronEfficiencyCorrectionLib"
+apply_pattern component_library
+
+## install our python modules
+apply_pattern declare_python_modules files="*.py"
+
+## install our job options files
+apply_pattern declare_joboptions files="*.py"
+
+## install the xml files (in the data/ directory)
+apply_pattern declare_xmls extras="-s=../data *.root"
+
+## For reflex dictionary generation
+use AtlasReflex   AtlasReflex-*   External -no_auto_imports
+apply_pattern lcgdict dict=ElectronEfficiencyCorrection selectionfile=selection.xml headerfiles="..\/ElectronEfficiencyCorrection/ElectronEfficiencyCorrectionDict.h"

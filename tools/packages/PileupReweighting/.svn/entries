@@ -1,0 +1,80 @@
+10
+
+dir
+540640
+svn+ssh://svn.cern.ch/reps/atlasoff/PhysicsAnalysis/AnalysisCommon/PileupReweighting/tags/PileupReweighting-00-02-09
+svn+ssh://svn.cern.ch/reps/atlasoff
+
+
+
+2012-12-11T12:05:34.582557Z
+529930
+will
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4525493e-7705-40b1-a816-d608a930855b
+
+python
+dir
+
+share
+dir
+
+Root
+dir
+
+cmt
+dir
+
+src
+dir
+
+ChangeLog
+file
+
+
+
+
+2013-03-12T15:03:53.000000Z
+5990662a8bf874bff235a660455e57bc
+2012-12-11T11:58:33.138781Z
+529926
+will
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6320
+
+PileupReweighting
+dir
+

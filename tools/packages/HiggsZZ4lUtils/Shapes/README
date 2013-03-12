@@ -1,0 +1,53 @@
+########################################
+## in this repository the  codes/macros to 
+## prepare the interpolated signal points 
+## and smooth background shapes is stored
+#########################################
+##
+## May 25, 2012
+#########################################
+#### ZZ shape ####
+the input for the smoothing routines (using RooKeysPDF)
+is a small tree with the following format.
+
+TTree*tree=new TTree("tree","tree");
+tree->Branch("mass", &mass, "mass/D");
+tree->Branch("weight", &weightNN, "weight/D");
+
+mass   : is the mass of the candidate in GeV
+weight : is the total weight of the event
+
+the tree should contain all events passing the analysis selection
+a separate file for each final stage (4mu,2e2mu,2mu2e,4e) should be provided
+
+#### Signal interpolation ####
+The mass points where the Higgs hypothesis is tested are :
+        - 110-160 : 500 MeV steps
+        - 160-290 : 2 GeV steps
+        - 290-350 : 5 GeV steps
+        - 350-400 : 10 GeV steps
+        - 400-600 : 20 GeV steps                                                                                                                                                                                                             
+===> vector of interpolated points 
+std::vector<double> higgsMassesResult;
+for(double mass=110.;mass<160;mass+=0.5)
+ higgsMassesResult.push_back(mass);
+for(double mass=160.;mass<290;mass+=2.)
+ higgsMassesResult.push_back(mass);
+for(double mass=290.;mass<350;mass+=5.)
+ higgsMassesResult.push_back(mass);
+for(double mass=350.;mass<400;mass+=10.)
+ higgsMassesResult.push_back(mass);
+for(double mass=400.;mass<=600;mass+=20.)
+ higgsMassesResult.push_back(mass);
+
+#### Bin width for input m4l histograms #### 
+===> base binning: (2000,0,1000) mass in GeV
+int nrb = 1;
+if(higgsMasses[i]>=500.)
+ nrb = 20;
+else if(higgsMasses[i]>=400.)
+ nrb = 10;
+else if(higgsMasses[i]>=300.)
+ nrb = 5;
+else if(higgsMasses[i]>=180.)
+ nrb = 2;

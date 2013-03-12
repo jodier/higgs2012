@@ -1,0 +1,7 @@
+#ifndef MUONMOMENTUMCORRECTIONS_MUONMOMENTUMCORRECTIONSDICT_H
+#define MUONMOMENTUMCORRECTIONS_MUONMOMENTUMCORRECTIONSDICT_H 1
+
+#include "MuonMomentumCorrections/SmearingClass.h"
+#include "MuonMomentumCorrections/MuonResolutionAndMomentumScaleFactors.h"
+
+#endif //> not MUONMOMENTUMCORRECTIONS_MUONMOMENTUMCORRECTIONSDICT_H

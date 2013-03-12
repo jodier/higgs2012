@@ -1,0 +1,29 @@
+#!/bin/sh
+
+CONFFILE=config.RootCore
+OUTFILE=configured
+HEADERFILE=../PATCore/config.h
+
+test -e $OUTFILE -a $OUTFILE -nt $0 -a $OUTFILE -nt $CONFFILE -a $OUTFILE -nt $ROOTCOREBIN/packages && exit 0
+
+echo configuring PATCore package
+
+rm -f $OUTFILE $OUTFILE-
+touch $OUTFILE-
+
+echo '#ifndef PAT_CORE_CONFIG_H' >>$OUTFILE-
+echo '#define PAT_CORE_CONFIG_H' >>$OUTFILE-
+
+echo >>$OUTFILE-
+echo '// whether we have D3PDReader present' >>$OUTFILE-
+echo '// this can be turned of in' $CONFFILE >>$OUTFILE-
+test "`$ROOTCOREDIR/scripts/get_field.sh $CONFFILE USE_D3PDREADER`" = "yes" && $ROOTCOREDIR/scripts/test_cc.sh compile <<EOF || /bin/echo -n '// ' >>$OUTFILE-
+  #include <D3PDReader/Event.h>
+EOF
+echo '#define PAT_CORE_D3PDREADER' >>$OUTFILE-
+
+echo >>$OUTFILE-
+echo '#endif' >>$OUTFILE-
+
+(test \! -e $HEADERFILE || test "`cat $OUTFILE-`" != "`cat $HEADERFILE`") && cp $OUTFILE- $HEADERFILE
+mv $OUTFILE- $OUTFILE

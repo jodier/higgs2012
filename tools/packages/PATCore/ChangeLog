@@ -1,0 +1,30 @@
+2013-01-24  Karsten Koeneke  <karsten.koeneke@cern.ch>
+
+	* PATCore/TAccept.h: Use TString for instance name
+	* PATCore/TResult.h: Use TString for instance name
+	* tag as PATCore-00-00-09
+
+2012-12-07  Karsten Koeneke  <karsten.koeneke@cern.ch>
+
+	* scripts/CreateNewSelectorSkeleton.py: Add the assignment in the code generator
+	* PATCore/TAccept.h: Create assignment operator
+	* PATCore/TResult.h: Create assignment operator
+	* tag as PATCore-00-00-08
+
+2012-08-20  Karsten Koeneke  <karsten.koeneke@cern.ch>
+
+	* PATCore/selection.xml: Remove classes that are already provided by libSTLRflx
+	* fix https://savannah.cern.ch/bugs/?96854
+	* tag as PATCore-00-00-05
+
+2012-08-16  Karsten Koeneke  <karsten.koeneke@cern.ch>
+
+	* Add enums for the ParticleDataType and ParticleType
+	* tag as PATCore-00-00-04
+
+2012-08-10  Karsten Koeneke  <karsten.koeneke@cern.ch>
+
+	* Create package as a merger of ObjectCalculatorCore and ObjectSelectorCore
+	* tag as PATCore-00-00-02
+
+

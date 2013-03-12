@@ -1,0 +1,5 @@
+PACKAGE          = MuonEfficiencyCorrections
+PACKAGE_CXXFLAGS = 
+PACKAGE_LDFLAGS  = 
+
+include $(ROOTCOREDIR)/Makefile-common

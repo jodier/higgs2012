@@ -1,0 +1,83 @@
+10
+
+dir
+540640
+svn+ssh://svn.cern.ch/reps/atlasoff/PhysicsAnalysis/AnalysisCommon/PATCore/tags/PATCore-00-00-09
+svn+ssh://svn.cern.ch/reps/atlasoff
+
+
+
+2013-01-24T16:27:58.983635Z
+534640
+kkoeneke
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4525493e-7705-40b1-a816-d608a930855b
+
+python
+dir
+
+share
+dir
+
+Root
+dir
+
+cmt
+dir
+
+scripts
+dir
+
+src
+dir
+
+ChangeLog
+file
+
+
+
+
+2013-03-12T15:03:43.000000Z
+4bf2d4bc88d8776feb4af284d444d013
+2013-01-24T16:27:58.983635Z
+534640
+kkoeneke
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+962
+
+PATCore
+dir
+

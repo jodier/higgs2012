@@ -1,0 +1,217 @@
+2013-01-29 Federico.Sforza@CERN.CH
+	* Systematic handling of the smearing correction is now working and 
+	validated.
+	* Fix of the region file loading.
+	* Fix of some values in final_scale_factors_MC12_smearing
+	* Tagging MuonMomentumCorrections-00-08-01
+
+2013-01-21 Oliver.Kortner@CERN.CH, Federico.Sforza@CERN.CH
+    * Adding class MuonResolutionAndMomentumScaleFactors for Higgs mass
+      measurement including calibration files for Moriond 2013.
+    * Update of smearing and scale corrections for SmearingClass for Moriond
+      2013.
+    * Tagging MuonMomentumCorrections-00-08-00
+
+2012-08-08 Antonio.Salvucci@CERN.ch
+    * Tagging MuonMomentumCorrections-00-07-00
+    * Final corrections for 2011 data (Release 17)
+    * Corrections for 2012 data (Release 17.2)
+    * MSUP,MSDOW,IDUP,IDDOWN functions revised for standalone (MS and ID) scale
+
+2012-08-07 Antonio.Salvucci@CERN.ch
+    * Added Final corrections for 2011 Data (Release 17)
+    * Added corrections for 2012 Data (Release 17.2)
+
+2012-08-01 Antonio.Salvucci@CERN.ch
+    * Fixed 2010, 2011 and 2012 compatibility when defining eta regions
+    * third chain algortithm name changed form muon to muons
+    * Added first part of Rel17.2 corrections
+    * Added some other enum functions (Release,Data,Algorithm)
+    * Updated README file
+
+2012-07-06 Antonio.Salvucci@CERN.ch
+    * Revised structure for 2012 and 2011 compatibility (update)
+    * MSUP,MSDOW,IDUP,IDDOWN functions revised for standalone (MS and ID) scale
+    * third chain algorithm changed from muons to muon    
+
+2012-07-02 Antonio.Salvucci@CERN.ch
+    * Revised structure for 2012 and 2011 compatibility
+
+2012-06-27 massimiliano.bellomo@cern.ch
+    * Protection against improper use of MSUP, MSDOWN, IDUP, IDDOWN added.
+    * Tagging MuonMomentumCorrections-00-06-08.
+
+2012-06-26 Oliver.Kortner@CERN.CH
+    * Fix for use of MeV in MSUP, MSDOWN, IDUP, IDDOWN.
+    * Tagging MuonMomentumCorrections-00-06-07.
+
+2012-06-25 Oliver.Kortner@CERN.CH
+    * Final bug fix for systematic studies with preliminary 2012
+      recommendations.
+    * Tagging MuonMomentumCorrections-00-06-06.
+
+2012-06-20 Oliver.Kortner@CERN.CH
+    * Bug fix in error column for p1_ID in the Data12*preli* files.
+    * Tagging MuonMomentumCorrections-00-06-05.
+
+2012-06-20 Oliver.Kortner@CERN.CH
+    * Bug fix to unapply scale corrections for preliminary 2012 recommendations.
+    * Tagging MuonMomentumCorrections-00-06-04
+
+2012-05-22 Oliver.Kortner@CERN.CH
+    * Uploading correct version of SmearingClass.cxx.
+    * Tagging MuonMomentumCorrections-00-06-01.
+
+2012-05-21 Oliver.Kortner@CERN.CH
+    * Reading of more complex detector regions added.
+    * Preliminary corrections for 2012 data.
+    * Tagging MuonMomentumCorrections-00-06-00.
+
+2012-03-08 Antonio.Salvucci@CERN.CH
+    * Fixed bug related to scale systematic function name	
+
+2012-03-01 Mike Flowerdew <flowerde@cern.ch>
+    * Added ExpectedResolution methods to SmearingClass
+    * Added lines to find default directory for RootCore users
+
+2012-02-19 Antonio.Salvucci@CERN.CH
+    * Tagging MuonMomentumCorrections-00-05-03
+
+2012-02-16 Antonio.Salvucci@CERN.CH
+    * Revised Combine Method
+    * Added Enum Variables for Systematic studies
+
+2012-02-12 Antonio.Salvucci@CERN.CH
+    * Fixed a small problem (comma in line 46) in the header file
+    * Tagging MuonMomentumCorrections-00-05-02
+
+2012-02-12 Antonio.Salvucci@CERN.CH
+    * Fixed a bug in ImprovedCombine method
+    * Tagging MuonMomentumCorrections-00-05-01
+
+2012-02-08 Antonio.Salvucci@CERN.CH
+    * Fixed problem related to uninitialized variables
+
+2012-01-26 Antonio.Salvucci@CERN.CH
+    * Fixed warnings of shadow variables
+
+2012-01-10 Antonio.Salvucci@CERN.CH
+    * Using enum for MS,ID and CB smearing
+    * Fixed problems related ro ROOTCORE/Proof
+
+2011-12-21 Edward.Moyse@CERN.CH
+    * Merged MuonMomentumCorrections?-00-04-02-branch to trunk
+    * Tagging MuonMomentumCorrections-00-05-00
+
+2011-12-05 Antonio.Salvucci@CERN.CH
+    * Fixed seed compilation problem
+    * Tagging MuonMomentumCorrections-00-04-02
+
+2011-11-04 Oliver.Kortner@CERN.CH
+    * Preliminary scales for rel17 have been added.
+    * Tagging MuonMomentumCorrections-00-04-01.
+
+2011-11-01 Antonio.Salvucci@CERN.CH
+    * Added preliminary results rel17
+    * New structure for constructors
+
+2011-10-17 Antonio.Salvucci@CERN.CH
+    * Tagging MuonMomentumCorrections-00-03-05
+    * Fixed problem with RootCore compilation
+
+2011-10-16 Antonio.Salvucci@CERN.CH
+    * Tagging MuonMomentumCorrections-00-03-04
+    * small fix on a bool variable
+
+2011-10-16 Antonio.Salvucci@CERN.CH
+    * Tagging MuonMomentumCorrections-00-03-03
+    * Added namespace MuonSmear
+    * Added Improved Combine
+
+2011-09-05 Mike Flowerdew <flowerde@cern.ch>
+    * Reflex dictionary support
+    * Added MuonMomentumCorrections/selection.xml and
+      MuonMomentumCorrections/MuonMomentumCorrectionsDict.h
+
+2011-08-09 Antonio.Salvucci@CERN.CH
+    * Tagging MuonMomentumCorrections-00-03-02
+    * Fixed compilation problem under RootCore package
+
+2011-08-04 Antonio.Salvucci@CERN.CH
+    * Tagging MuonMomentumCorrections-00-03-01
+    * Athena PAT package structure
+    * bug fix on constructors
+
+2011-07-20 Antonio.Salvucci@CERN.CH
+    * Tagging MuonMomentumCorrections-00-03-00
+    * Athena package structure
+    * q/pT smearing
+
+2011-07-13 Antonio.Salvucci@CERN.CH
+    * Added Makefile.Standalone
+
+2011-07-11 Antonio.Salvucci@CERN.CH
+    * Updated constructors
+    * Definition of Initialize and Finalize as private    
+
+2011-07-08 Antonio.Salvucci@CERN.CH
+    * Added default constructor
+    * Added q/pT smearing
+    * Extended CSC region up to eta=2.7
+    * Fixed nan values problems
+    * Created Athena package structure
+
+2011-06-21 Antonio.Salvucci@CERN.CH
+    * Bug fix data files
+    * Added Destructors
+    * Tagging MuonMomentumCorrections-00-02-06
+
+2011-06-19 Antonio.Salvucci@CERN.CH
+    * Added slection muid/staco
+    * Created SmearingClass.cxx file
+    * Memory leak fix (gRand->Delete() added)
+    * Tagging MuonMomentumCorrections-00-02-05
+
+2011-06-08 Oliver.Kortner@CERN.CH
+    * Scales added
+    * Tagging MuonMonentumCorrections-00-02-04
+
+2011-06-08 Antonio.Salvucci@CERN.CH
+    * Updated momentum resolution values for Rel16.6
+    * Tagging MuonMonentumCorrections-00-02-03
+
+2011-05-12 Oliver.Kortner@CERN.CH
+    * Missing precompiler statement added to SmearingClass.h
+    * Tagging MuonMomentumCorrections-00-02-02.
+
+2011-05-01 Oliver.Kortner@CERN.CH
+    * Correcting numbers for combined muon momentum scale
+    * Tagging MuonMomentumCorrections-00-02-01
+
+2011-05-01 Oliver.Kortner@CERN.CH
+    * Preliminary version for PLHC analyses uploaded.
+    * Tagging MuonMomentumCorrections-00-02-00
+
+2011-03-24 claudio.gatti@lnf.infn.it
+    * rel 16: Full Correlation Matrix
+    * Tagged MuonMomentumCorrections-00-01-02
+
+
+2011-03-21 claudio.gatti@lnf.infn.it
+    * updated rel 15 code
+
+2011-03-11 claudio.gatti@lnf.infn.it
+    * bug fixing for class rel 16
+    * Tagged MuonMomentumCorrections-00-01-01
+
+
+2011-02-21 atlas-perf-muon-conveners -at- cern.ch
+    * update package to hold smearing class for release 16
+      (still preliminary)
+    * Tagged MuonMomentumCorrections-00-01-00
+
+
+2011-02-21 atlas-perf-muon-conveners -at- cern.ch
+    * add release 15 smearing class and proof of principle plots from Claudio
+    * Tagged MuonMomentumCorrections-00-00-00
+

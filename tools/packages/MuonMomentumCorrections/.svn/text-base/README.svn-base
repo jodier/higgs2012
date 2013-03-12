@@ -1,0 +1,126 @@
+INSTRUCTIONS: MuonMomentumCorrections-00-07-01
+
+******** What's new **********
+   
+   - Perfomed 2010, 2011 and 2012 compatibility when defining eta regions
+   - Loading corrections separately for Data10 and Data11 and Data12
+   - MSUP,MSDOW,IDUP,IDDOWN function revised for standalone (MS and ID) scale
+   - Final correction for 2011 Data (Release 17)
+   - Corrections for 2012 Data (Release 17.2)
+
+   
+******** Initialization  **********
+
+NB: due to a namespace, you can use in your code
+    a) using namespace MuonSmear
+    b) MuonSmear:: 
+
+In this guide it's supposed to use the second choice!
+
+There are several ways to create a Smearing Class Object:
+ 
+1) MuonSmear::SmearingClass mcp_smear() or MuonSmear::SmearingClass *mcp_smear = new SmearingClass();
+
+   DEFAULT CONSTRUCTOR!!!
+     The 'SmearingClass' Object is only defined, so the class is not configured!
+   
+   To configure the class use:
+
+   mcp_smear.SetAlgoSmearRelDir(DataType,Author,SmearType,Release,FilePath) or
+   mcp_smear->SetAlgoSmearRelDir(DataType,Author,SmearType,Release,FilePath)
+
+   where DataType (as string):  is the type of Data you would to use 
+   	 	      		("Data10" or "Data11" or "Data12")
+         Author (as string):    is the algorithm's name 
+	 	    		("muid" or "staco" or "muons")
+	 SmearType (as string): is the smearing momentum type 
+	 	       		("pT" or "q_pT")
+	 Release (as string):   is the software release 
+	 	     		("Rel16.6" or "Rel17" or "Rel17.2_preliminary" or "Rel17.2")
+	 FilePath (as string):  is the path to data files 
+	 	      		(e.g. dir="/home/salvucci/smearing/data/")
+	                        To use the default path, leave it blank ("")
+	 	      
+
+2) MuonSmear::SmearingClass mcp_smear(DataType,Author,SmearType,Release,FilePath) or
+   MuonSmear::SmearingClass *mcp_smear = new SmearingClass(DataType,Author,SmearType,Release,FilePath)
+
+   where DataType (as string):  is the type of Data you would to use 
+   	 	      		("Data10" or "Data11" or "Data12")
+         Author (as string):    is the algorithm's name 
+	 	    		("muid" or "staco" or "muons")
+	 SmearType (as string): is the smearing momentum type 
+	 	       		("pT" or "q_pT")
+	 Release (as string):   is the software release 
+	 	     		("Rel16.6" or "Rel17" or "Rel17.2_preliminary" or "Rel17.2")
+	 FilePath (as string):  is the path to data files 
+	 	      		(e.g. dir="/home/salvucci/smearing/data/")
+	                        To use the default path, leave it blank ("")
+
+
+NB: Algorithm 'muons' is available ONLY for 2012! Please don't initialize class with
+    	      Author=="muons" and DataType!="Data12" and Release!="Rel17.2"
+
+
+
+********** MUON SCALE CORRECTIONS (Only 2011 samples) ***********
+
+To enable scale corrections use:     mcp_smear.UseScale(1); or mcp_smear->UseScale(1);
+
+*OPTIONAL scale corrections*
+To enable advanced (charge-dependent) muon scale corrections that result in better data/MC agreement
+
+mcp_smear.RestrictCurvatureCorrections(2.5); or mcp_smear->RestrictCurvatureCorrections(2.5);
+mcp_smear.FillScales("KC"); or mcp_smear->FillScales("KC");
+
+
+
+********** IMPROVED COMBINE *************
+
+It's a new feature that corrects strange smearing cases in high pT range. To enable use:
+
+mcp_smear.UseImprovedCombine(); or mcp_smear->UseImprovedCombine();
+
+
+
+********** USAGE INSIDE EVENT LOOP **************
+
+To use corrections inside the event loop use:
+
+   for(int i=0;i< n_your_muons;i++) {
+
+   //Retrieve Charge, Eta, PtCB, PtMS and PtID from containers/ntuples
+   Double charge = myAODAnalysisMuon.charge();
+   Double eta = myAODAnalysisMuon.eta();
+   Double ptcb = myAODAnalysisMuon.pt();
+   Double ptms = myAODAnalysisMuon.muonExtrapolatedTrackParticle()->pt();
+   Double ptid = myAODAnalysisMuon.inDetTrackParticle()->pt();
+
+   // Use the MC event number to set seed so that the random numbers are reproducible by different analyzers
+   mcp_smear.SetSeed(EventNumber,i);  or mcp_smear->SetSeed(EventNumber,i);
+   mcp_smear.Event(ptms,ptid,ptcb,eta,charge); or mcp_smear->Event(ptms,ptid,ptcb,eta,charge);
+
+   // Get Smeared & Scaled Pts
+   double pTCB_smeared = mcp_smear.pTCB(); or mcp_smear->pTCB();
+   double pTMS_smeared = mcp_smear.pTMS(); or mcp_smear->pTMS();
+   double pTID_smeared = mcp_smear.pTID(); or mcp_smear->pTID();
+
+N.B.: when you're using "q/pT" smearing, you can check is there is or not a charge flip calling the methods
+      mcp_smear.ChargeFlipMS(); or mcp_smear->ChargeFlipMS();
+      mcp_smear.ChargeFlipID(); or mcp_smear->ChargeFlipID();
+      mcp_smear.ChargeFlipCB(); or mcp_smear->ChargeFlipCB();
+      that return +1 for no charge flip or -1 for charge flip.
+
+
+
+************ SYSTEMATIC UNCERTAINTY STUDIES ***************
+
+Concerning this, use:
+
+      //Change the Pts UP or DOWN (ID or MS)
+      mcp_smear.PTVar(pTMS_smeared, pTID_smeared, pTCB_smeared, THESTRING); or
+      mcp_smear->PTVar(pTMS_smeared, pTID_smeared, pTCB_smeared, THESTRING);
+
+where "THESTRING" is "MSLOW", "MSUP", "IDLOW" or "IDUP"
+
+Add the previous lines before the end of event loop.

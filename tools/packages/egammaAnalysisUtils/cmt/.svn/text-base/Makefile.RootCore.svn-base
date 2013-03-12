@@ -1,0 +1,8 @@
+PACKAGE          = egammaAnalysisUtils
+PACKAGE_PRELOAD  = Hist Physics TMVA
+PACKAGE_CXXFLAGS = 
+PACKAGE_LDFLAGS  = 
+PACKAGE_BINFLAGS = 
+PACKAGE_DEP      = 
+
+include $(ROOTCOREDIR)/Makefile-common
