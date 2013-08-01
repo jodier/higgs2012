@@ -123,13 +123,15 @@ namespace core
 #include <MuonMomentumCorrections/SmearingClass.h>
 
 #include <egammaAnalysisUtils/EnergyRescalerUpgrade.h>
-//#include <egammaAnalysisUtils/egammaSFclass.h>
 
 #include <ElectronEfficiencyCorrection/TElectronEfficiencyCorrectionTool.h>
 #include <egammaAnalysisUtils/VertexPositionReweightingTool.h>
-#include <egammaAnalysisUtils/ElectronLikelihoodTool.h>
+//#include <egammaAnalysisUtils/ElectronLikelihoodTool.h>
+#include "ElectronPhotonSelectorTools/TElectronLikelihoodTool.h" 
 #include <egammaEvent/egammaPIDdefs.h>
-#include <egammaAnalysisUtils/MultiLeptonMenu.h>
+
+//#include <egammaAnalysisUtils/MultiLeptonMenu.h>
+#include "ElectronPhotonSelectorTools/TElectronMultiLeptonSelector.h"
 
 #include <TrigMuonEfficiency/TriggerNavigationVariables.h>
 #include <TrigMuonEfficiency/ElectronTriggerMatching.h>
@@ -236,12 +238,11 @@ class TLeptonAnalysis: public TNTuple
 
 	egRescaler::EnergyRescalerUpgrade m_energyRescaler;
 
-	//egammaSFclass *m_egammaSF;
 	Root::TElectronEfficiencyCorrectionTool *m_egSFclass_ID;
 	Root::TElectronEfficiencyCorrectionTool *m_egSFclass_Reco;
 
-	ElectronLikelihoodTool  *m_ElectronLikelihoodTool;
-	MultiLeptonMenu m_MultiLeptonMenu;
+	Root::TElectronLikelihoodTool *m_ElectronLH;
+	Root::TElectronMultiLeptonSelector* ml_2013;
 
 	TriggerNavigationVariables *m_triggerNavigationVariables;
 	ElectronTriggerMatching *m_elTriggerMatching;
@@ -437,12 +438,23 @@ class TLeptonAnalysis: public TNTuple
 		m_caloMuSCF = new Analysis::AnalysisMuonConfigurableScaleFactors("./tools/packages/MuonEfficiencyCorrections/share/", "CaloTag_2012_SF.txt", "MeV", Analysis::AnalysisMuonConfigurableScaleFactors::AverageOverRuns);
 		m_caloMuSCF->Initialise();
 #endif
+		/*---------------------------------------------------------*/
+		/* ELECTRON MULTILEPTON ID				   */
+		/*---------------------------------------------------------*/
+#ifdef __YEAR2012
+		ml_2013 =new Root::TElectronMultiLeptonSelector(); 
+		ml_2013->initialize(); 
 
+#endif
 		/*---------------------------------------------------------*/
 		/* ELECTRON LIKELIHOOD ID				   */
 		/*---------------------------------------------------------*/
 #ifdef __YEAR2012
-		m_ElectronLikelihoodTool = new ElectronLikelihoodTool("./tools/packages/egammaAnalysisUtils/share/ElectronLikelihoodPdfs.root");
+
+		m_ElectronLH = new Root::TElectronLikelihoodTool();
+		m_ElectronLH->setPDFFileName("./tools/packages/ElectronPhotonSelectorTools/data/ElectronLikelihoodPdfs.root");
+		m_ElectronLH->setOperatingPoint(LikeEnum::Loose);
+		m_ElectronLH->initialize();
 #endif
 	
 		/*---------------------------------------------------------*/
@@ -458,7 +470,6 @@ class TLeptonAnalysis: public TNTuple
 		/* ELECTRON SCALE FACTORS				   */
 		/*---------------------------------------------------------*/
 
-		//m_egammaSF = new egammaSFclass();
 		m_egSFclass_ID = new Root::TElectronEfficiencyCorrectionTool;
 		m_egSFclass_Reco = new Root::TElectronEfficiencyCorrectionTool;
 
@@ -473,12 +484,6 @@ class TLeptonAnalysis: public TNTuple
 #endif
 		m_egSFclass_ID->initialize();
 		m_egSFclass_Reco->initialize();
-
-		/*---------------------------------------------------------*/
-		/* TRIGGER SCALE FACTORS				   */
-		/*---------------------------------------------------------*/
-
-		/* TODO */
 
 		/*---------------------------------------------------------*/
 		/* TRIGGER MATCHING					   */
@@ -507,7 +512,6 @@ class TLeptonAnalysis: public TNTuple
 		delete m_stacoSASCF;
 		delete m_caloMuSCF;
 
-		//delete m_egammaSF;
 		delete m_egSFclass_ID;
 		delete m_egSFclass_Reco;
 
@@ -589,6 +593,10 @@ class TLeptonAnalysis: public TNTuple
 	Float_t eventGetWeight1(void);
 	Float_t eventGetWeight2(void);
 	Float_t eventGetWeight3(
+		Int_t index,
+		TLeptonType type
+	);
+	Float_t eventGetWeight4(
 		Int_t index,
 		TLeptonType type
 	);

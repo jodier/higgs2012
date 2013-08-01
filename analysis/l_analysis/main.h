@@ -19,12 +19,14 @@ class TLeptonFinder: public TLeptonAnalysis
 	TTree m_tree0;
 	TTree m_tree1;
 	TTree m_tree2;
+	TTree m_tree3;
 
 	TLeptonFinder(TChain *chain): TLeptonAnalysis(chain)
 	{
 		m_tree0.SetName("event");
 		m_tree1.SetName("el");
 		m_tree2.SetName("mu");
+		m_tree3.SetName("FSRcorrection");
 
 		/*---------------------------------------------------------*/
 		/* General Informations					   */
@@ -32,6 +34,7 @@ class TLeptonFinder: public TLeptonAnalysis
 		m_tree0.Branch("NbEvtSample", &m_NbEvtSample, "NbEvtSample/I");
 
 		m_tree0.Branch("RunNumber", &m_RunNumber, "RunNumber/I");
+		m_tree0.Branch("mcRunNumber", &m_mcRunNumber, "RunNumber/I");
 		m_tree0.Branch("EventNumber", &m_EventNumber, "EventNumber/I");
 		m_tree0.Branch("LumiBlock", &m_LumiBlock, "LumiBlock/I");
 
@@ -41,6 +44,9 @@ class TLeptonFinder: public TLeptonAnalysis
 
 		m_tree0.Branch("elTrigger", &m_elTrigger, "elTrigger/I");
 		m_tree0.Branch("muTrigger", &m_muTrigger, "muTrigger/I");
+
+		m_tree0.Branch("Evtweight", &m_Evtweight, "Evtweight/F");
+		m_tree0.Branch("PUzvertexWeight", &m_PUzvertexWeight, "PUzvertexWeight/F");
 
 		/*---------------------------------------------------------*/
 		/* LEPTON Informations					   */
@@ -56,9 +62,7 @@ class TLeptonFinder: public TLeptonAnalysis
 
 			tree->Branch("n", &m_l[i].n, "n" "/I");
 
-			tree->Branch("weight1", m_l[i].weight1, "weight1[n]/F");
-			tree->Branch("weight2", m_l[i].weight2, "weight2[n]/F");
-			tree->Branch("weight3", m_l[i].weight3, "weight3[n]/F");
+			tree->Branch("l_IdRecoSF", m_l[i].l_IdRecoSF, "l_IdRecoSF[n]/F");
 
 			tree->Branch("l_lepton", m_l[i].l_lepton, "l_lepton[n]/I");
 			tree->Branch("l_id", m_l[i].l_id, "l_id[n]/I");
@@ -79,6 +83,7 @@ class TLeptonFinder: public TLeptonAnalysis
 			tree->Branch("l_phis2", m_l[i].l_phis2, "l_phis2[n]/F");
 
 			tree->Branch("l_id_theta", m_l[i].l_id_theta, "l_id_theta[n]/F");
+			tree->Branch("l_id_phi", m_l[i].l_id_phi, "l_id_phi[n]/F");
 			tree->Branch("l_id_qoverp", m_l[i].l_id_qoverp, "l_id_qoverp[n]/F");
 
 			tree->Branch("l_z0", m_l[i].l_z0, "l_z0[n]/F");
@@ -86,8 +91,6 @@ class TLeptonFinder: public TLeptonAnalysis
 
 			tree->Branch("l_tkIso20", m_l[i].l_tkIso20, "l_tkIso20[n]/F");
 			tree->Branch("l_clIso20", m_l[i].l_clIso20, "l_clIso20[n]/F");
-			tree->Branch("l_tkIso30", m_l[i].l_tkIso30, "l_tkIso30[n]/F");
-			tree->Branch("l_clIso30", m_l[i].l_clIso30, "l_clIso30[n]/F");
 			tree->Branch("l_d0sigma", m_l[i].l_d0sigma, "l_d0sigma[n]/F");
 
 			tree->Branch("l_f1", m_l[i].l_f1, "l_f1[n]/F");
@@ -107,7 +110,22 @@ class TLeptonFinder: public TLeptonAnalysis
 			tree->Branch("l_truth_mothertype", m_l[i].l_truth_mothertype, "l_truth_mothertype[n]/F");
 		}
 
-		/*---------------------------------------------------------*/
+		//---------------------------------------------------------
+		// FSR Correction variable
+		//---------------------------------------------------------
+
+		m_tree3.Branch("ph_eta", &m_ph_eta);
+		m_tree3.Branch("ph_phi", &m_ph_phi);
+		m_tree3.Branch("ph_Et", &m_ph_Et);
+		m_tree3.Branch("ph_f1", &m_ph_f1);
+		m_tree3.Branch("ph_author", &m_ph_author);
+		m_tree3.Branch("el_cl_eta", &m_el_cl_eta);
+		m_tree3.Branch("el_cl_phi", &m_el_cl_phi);
+		m_tree3.Branch("el_cl_pt", &m_el_cl_pt);
+		m_tree3.Branch("el_f1", &m_el_f1);
+		m_tree3.Branch("el_tracktheta", &m_el_tracktheta);
+		m_tree3.Branch("el_trackphi", &m_el_trackphi);
+
 	}
 
 	void Loop(void);
@@ -116,6 +134,7 @@ class TLeptonFinder: public TLeptonAnalysis
 
 	Int_t m_NbEvtSample;
 	Int_t m_RunNumber;
+	Int_t m_mcRunNumber;
 	Int_t m_EventNumber;
 	Int_t m_LumiBlock;
 
@@ -126,14 +145,17 @@ class TLeptonFinder: public TLeptonAnalysis
 	Int_t m_elTrigger;
 	Int_t m_muTrigger;
 
+	Float_t m_Evtweight;
+	Float_t m_PUzvertexWeight;
+
+	//--//
+
 	struct __lepton_s
 	{
 
 		Int_t n;
 
-		Float_t weight1[MAX];
-		Float_t weight2[MAX];
-		Float_t weight3[MAX];
+		Float_t l_IdRecoSF[MAX];
 
 		Int_t l_lepton[MAX];
 		Int_t l_id[MAX];
@@ -156,6 +178,7 @@ class TLeptonFinder: public TLeptonAnalysis
 		Float_t l_cl_eta[MAX];
 
 		Float_t l_id_theta[MAX];
+		Float_t l_id_phi[MAX];
 		Float_t l_id_qoverp[MAX];
 
 		Float_t l_z0[MAX];
@@ -163,8 +186,6 @@ class TLeptonFinder: public TLeptonAnalysis
 
 		Float_t l_clIso20[MAX];
 		Float_t l_tkIso20[MAX];
-		Float_t l_clIso30[MAX];
-		Float_t l_tkIso30[MAX];
 		Float_t l_d0sigma[MAX];
 
 		Float_t l_f1[MAX];
@@ -182,6 +203,22 @@ class TLeptonFinder: public TLeptonAnalysis
 		Float_t l_truth_mothertype[MAX];
 
 	} m_l[2];
+
+	//--//
+
+	std::vector<float>   *m_ph_eta;
+	std::vector<float>   *m_ph_phi;
+	std::vector<float>   *m_ph_Et;
+	std::vector<float>   *m_ph_f1;
+	std::vector<int>     *m_ph_author;
+	std::vector<float>   *m_el_cl_eta;
+	std::vector<float>   *m_el_cl_phi;
+	std::vector<float>   *m_el_cl_pt;
+	std::vector<float>   *m_el_f1;
+	std::vector<float>   *m_el_tracktheta;
+	std::vector<float>   *m_el_trackphi;
+
+
 
 };
 

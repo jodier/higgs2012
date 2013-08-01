@@ -62,13 +62,15 @@ Float_t TLeptonAnalysis::eventGetWeight1(void)
 
 Float_t TLeptonAnalysis::eventGetWeight2(void)
 {
+	Float_t weight = -99999.0;
+	
 #ifdef __IS_MC
   #ifdef __YEAR2011
-	Float_t weight = m_pileupReweighting->GetCombinedWeight(RunNumber, mc_channel_number, averageIntPerXing);
+	weight = m_pileupReweighting->GetCombinedWeight(RunNumber, mc_channel_number, averageIntPerXing);
   #endif
   #ifdef __YEAR2012
 	Float_t mu = (lbn==1&&int(averageIntPerXing+0.5)==1)?0.:averageIntPerXing;
-	Float_t weight = m_pileupReweighting->GetCombinedWeight(RunNumber, mc_channel_number, mu);
+	weight = m_pileupReweighting->GetCombinedWeight(RunNumber, mc_channel_number, mu);
 	weight *= m_VertexPositionReweighting->GetWeight(mc_vx_z->at(2));
   #endif
 	return weight;
@@ -191,6 +193,7 @@ Float_t TLeptonAnalysis::electronGetEtaDirection(Int_t index)
 	Int_t n = el_nPixHits->at(index) + el_nSCTHits->at(index);
 
 	return n >= 4 ? el_tracketa->at(index) : el_cl_eta->at(index);
+
 }
 
 /*-------------------------------------------------------------------------*/
@@ -208,12 +211,7 @@ Float_t TLeptonAnalysis::electronGetEt(Int_t index)
 {
 	Int_t n = el_nPixHits->at(index) + el_nSCTHits->at(index);
 
-	if(core::SM == false)
-	{
-		return n >= 4 ? el_cl_E->at(index) / coshf(el_tracketa->at(index)) : el_cl_pt->at(index);
-	}
-	else
-		return n >= 4 ? smearObject(index, TYPE_ELECTRON) / coshf(el_tracketa->at(index)) : el_cl_pt->at(index);
+	return n >= 4 ? smearObject(index, TYPE_ELECTRON) / coshf(el_tracketa->at(index)) : el_cl_pt->at(index);
 }
 
 /*-------------------------------------------------------------------------*/
@@ -383,7 +381,6 @@ double TLeptonAnalysis::smearObject(Int_t index, TLeptonType type)
 
 				mu_calo_E->at(index) = (pT_new / pT_old) * mu_calo_E->at(index);
 				mu_calo_pt->at(index) = pT_new;
-
 #endif
 				return 1.0;
 			}
@@ -482,7 +479,7 @@ void TLeptonAnalysis::D0smearObject(Int_t index, TLeptonType type)
 	Int_t nBL = 0;
 	Double_t eta = 0.0;
 	Double_t pt = 0.0;
-
+	Double_t theta = 0.0;
 	switch(type)
 	{
 		case TYPE_ELECTRON:
@@ -493,8 +490,9 @@ void TLeptonAnalysis::D0smearObject(Int_t index, TLeptonType type)
 
 		case TYPE_MUON_CB_PLUS_ST:
 			nBL = mu_staco_nBLHits->at(index);
-			eta = mu_staco_eta->at(index);
-			pt = mu_staco_pt->at(index);
+			theta = mu_staco_id_theta->at(index);
+			eta = -log(tan(theta/2));
+			pt = sin(theta) / fabs(mu_staco_id_qoverp->at(index));
 			break;
 
 		case TYPE_MUON_STANDALONE:
@@ -502,8 +500,9 @@ void TLeptonAnalysis::D0smearObject(Int_t index, TLeptonType type)
 
 		case TYPE_MUON_CALO:
 			nBL = mu_calo_nBLHits->at(index);
-			eta = mu_calo_eta->at(index);
-			pt = mu_calo_pt->at(index);
+			theta = mu_calo_id_theta->at(index);
+			eta = -log(tan(theta/2));
+			pt = sin(theta) / fabs(mu_calo_id_qoverp->at(index));
 			break;
 	}
 

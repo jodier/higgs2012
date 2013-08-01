@@ -1,8 +1,0 @@
-svn+ssh://svn.cern.ch/reps/atlasoff/Reconstruction/egamma/egammaAnalysis/egammaAnalysisUtils/tags/egammaAnalysisUtils-00-04-20
-svn+ssh://svn.cern.ch/reps/atlasoff/PhysicsAnalysis/ElectronPhotonID/ElectronEfficiencyCorrection/tags/ElectronEfficiencyCorrection-00-00-09
-svn+ssh://svn.cern.ch/reps/atlasoff/PhysicsAnalysis/HiggsPhys/HSG2/HiggsZZ4lUtils/tags/HiggsZZ4lUtils-00-01-37
-svn+ssh://svn.cern.ch/reps/atlasoff/PhysicsAnalysis/MuonID/MuonIDAnalysis/MuonEfficiencyCorrections/tags/MuonEfficiencyCorrections-02-01-12
-svn+ssh://svn.cern.ch/reps/atlasoff/PhysicsAnalysis/MuonID/MuonIDAnalysis/MuonMomentumCorrections/tags/MuonMomentumCorrections-00-08-05
-svn+ssh://svn.cern.ch/reps/atlasoff/PhysicsAnalysis/AnalysisCommon/PATCore/tags/PATCore-00-00-09
-svn+ssh://svn.cern.ch/reps/atlasoff/PhysicsAnalysis/AnalysisCommon/PileupReweighting/tags/PileupReweighting-00-02-09
-svn+ssh://svn.cern.ch/reps/atlasoff/Trigger/TrigAnalysis/TrigMuonEfficiency/tags/TrigMuonEfficiency-00-02-32

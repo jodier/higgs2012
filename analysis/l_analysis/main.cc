@@ -31,6 +31,7 @@ void core::execute(TChain *chain)
 	algo.m_tree0.Write();
 	algo.m_tree1.Write();
 	algo.m_tree2.Write();
+	algo.m_tree3.Write();
 
 	file.Close();
 
@@ -68,8 +69,6 @@ void TLeptonFinder::Loop(void)
 	// Higgs cutflow
 	//---------------------------------------------------------//
 
-	Int_t NbEventSample = 0;
-
 	Int_t higgsNr0 = 0;
 	Int_t higgsNr1 = 0;
 	Int_t higgsNr2 = 0;
@@ -82,9 +81,6 @@ void TLeptonFinder::Loop(void)
 	{
 		/*---------------------------------------------------------*/
 
-		NbEventSample++ ; 
-
-		/*---------------------------------------------------------*/
 		LoadEvent(event, eventNr);
 
 		if(event == 0)
@@ -143,7 +139,6 @@ void TLeptonFinder::Loop(void)
 		/*---------------------------------------------------------*/
 		/* SELECTIONS						   */
 		/*---------------------------------------------------------*/
-		//if (EventNumber != 28491) continue;
 
 		elIndexNr = 0;
 		muCB_PLUS_STIndexNr = 0;
@@ -265,12 +260,6 @@ void TLeptonFinder::Loop(void)
 
 				for(Int_t i = 0; i < el_n; i++)
 				{
-//					cout << "######electron index " <<i<< endl;
-//					cout << "el_author " << el_author->at(i) << endl;
-//					cout << "l_pt[i] " << electronGetEt(i)<< endl;
-//					cout << "eta[i]" << electronGetEtaDirection(i) << endl;
-//					cout << "isLM " << ((el_isEMOk_at(i) & (1<<3)) == 8) << endl;
-
 					if(checkObject(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt) != false)
 					{
 						if(checkOverlapping(i, TYPE_ELECTRON, __el_et, __mu_staco_pt, __mu_calo_pt,
@@ -392,8 +381,15 @@ void TLeptonFinder::Loop(void)
 		/*- Event informations					  -*/
 		/*---------------------------------------------------------*/
 		/*---------------------------------------------------------*/
-		m_NbEvtSample = NbEventSample;
+
 		m_RunNumber = RunNumber;
+		m_NbEvtSample = eventNr;
+#if defined(__IS_MC)
+		m_mcRunNumber = mc_channel_number;
+#else
+		m_mcRunNumber = 0;
+#endif
+
 		m_EventNumber = EventNumber;
 		m_LumiBlock = lbn;
 
@@ -403,6 +399,9 @@ void TLeptonFinder::Loop(void)
 
 		m_elTrigger = isOkElTrigger;
 		m_muTrigger = isOkMuTrigger;
+
+		m_Evtweight = eventGetWeight1();
+		m_PUzvertexWeight = eventGetWeight2();
 
 		/*---------------------------------------------------------*/
 		/*---------------------------------------------------------*/
@@ -428,9 +427,7 @@ void TLeptonFinder::Loop(void)
 					Z0smearObject(index, TYPE_ELECTRON);
 					D0smearObject(index, TYPE_ELECTRON);
 
-					m_l[0].weight1[i] = eventGetWeight1();
-					m_l[0].weight2[i] = eventGetWeight2();
-					m_l[0].weight3[i] = eventGetWeight3(index, TYPE_ELECTRON);
+					m_l[0].l_IdRecoSF[i] = eventGetWeight3(index, TYPE_ELECTRON);
 
 					m_l[0].l_lepton[i] = TYPE_ELECTRON;
 					m_l[0].l_id[i] = el_isEMOk_at(index);
@@ -454,14 +451,13 @@ void TLeptonFinder::Loop(void)
 					m_l[0].l_phis2[i] = el_phis2->at(index);
 
 					m_l[0].l_id_theta[i] = -999999;
+					m_l[0].l_id_phi[i] = -999999;
 					m_l[0].l_id_qoverp[i] = -999999;
 
 					m_l[0].l_z0[i] = el_trackz0pvunbiased->at(index);
 					m_l[0].l_d0[i] = el_trackd0pvunbiased->at(index) - d0Bias;
 					m_l[0].l_clIso20[i] = el_Etcone20_at(index);
 					m_l[0].l_tkIso20[i] = el_ptcone20->at(index);
-					m_l[0].l_clIso30[i] = el_Etcone30_at(index);
-					m_l[0].l_tkIso30[i] = el_ptcone30->at(index);
 					m_l[0].l_d0sigma[i] = fabs((el_trackd0pvunbiased->at(index) - d0Bias) / el_tracksigd0pvunbiased->at(index));
 
 					nTRTTotal     = el_nTRTHits     ->at(index) + el_nTRTOutliers     ->at(index);
@@ -523,9 +519,7 @@ void TLeptonFinder::Loop(void)
 					Z0smearObject(index, TYPE_MUON_CB_PLUS_ST);
 					D0smearObject(index, TYPE_MUON_CB_PLUS_ST);
 
-					m_l[1].weight1[i] = eventGetWeight1();
-					m_l[1].weight2[i] = eventGetWeight2();
-					m_l[1].weight3[i] = eventGetWeight3(index, muCB_PLUS_STTypeArray[i]);
+					m_l[1].l_IdRecoSF[i] = eventGetWeight3(index, muCB_PLUS_STTypeArray[i]);
 
 					m_l[1].l_lepton[i] = muCB_PLUS_STTypeArray[i];
 					m_l[1].l_id[i] = 0x00;
@@ -546,6 +540,7 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_cl_eta[i] = -999999;
 
 					m_l[1].l_id_theta[i] = mu_staco_id_theta->at(index);
+					m_l[1].l_id_phi[i] = mu_staco_id_phi->at(index);
 					m_l[1].l_id_qoverp[i] = mu_staco_id_qoverp->at(index);
 
 					m_l[1].l_z0[i] = mu_staco_trackz0pvunbiased->at(index);
@@ -561,8 +556,6 @@ void TLeptonFinder::Loop(void)
 
 					m_l[1].l_clIso20[i] = mu_staco_etcone20->at(index);
 					m_l[1].l_tkIso20[i] = mu_staco_ptcone20->at(index);
-					m_l[1].l_clIso30[i] = mu_staco_etcone30->at(index);
-					m_l[1].l_tkIso30[i] = mu_staco_ptcone30->at(index);
 
 					m_l[1].l_f1[i] = -999999;
 					m_l[1].l_rphi[i] = -999999;
@@ -590,9 +583,7 @@ void TLeptonFinder::Loop(void)
 					Z0smearObject(index, TYPE_MUON_CALO);
 					D0smearObject(index, TYPE_MUON_CALO);
 
-					m_l[1].weight1[i] = eventGetWeight1();
-					m_l[1].weight2[i] = eventGetWeight2();
-					m_l[1].weight3[i] = eventGetWeight3(index, TYPE_MUON_CALO);
+					m_l[1].l_IdRecoSF[i] = eventGetWeight3(index, TYPE_MUON_CALO);
 
 					m_l[1].l_lepton[i] = TYPE_MUON_CALO;
 					m_l[1].l_id[i] = 0x00;
@@ -613,6 +604,7 @@ void TLeptonFinder::Loop(void)
 					m_l[1].l_cl_eta[i] = -999999;
 
 					m_l[1].l_id_theta[i] = mu_calo_id_theta->at(index);
+					m_l[1].l_id_phi[i] = mu_calo_id_phi->at(index);
 					m_l[1].l_id_qoverp[i] = mu_calo_id_qoverp->at(index);
 
 
@@ -621,8 +613,6 @@ void TLeptonFinder::Loop(void)
 
 					m_l[1].l_clIso20[i] = mu_calo_etcone20->at(index);
 					m_l[1].l_tkIso20[i] = mu_calo_ptcone20->at(index);
-					m_l[1].l_clIso20[i] = mu_calo_etcone30->at(index);
-					m_l[1].l_tkIso20[i] = mu_calo_ptcone30->at(index);
 
 					m_l[1].l_d0sigma[i] = fabs((mu_calo_trackd0pvunbiased->at(index) - d0Bias) / mu_calo_tracksigd0pvunbiased->at(index));
 
@@ -656,6 +646,39 @@ void TLeptonFinder::Loop(void)
 		}
 
 		/*---------------------------------------------------------*/
+		/*---------------------------------------------------------*/
+		/*- Event informations					  -*/
+		/*---------------------------------------------------------*/
+		/*---------------------------------------------------------*/
+
+//		if (muCB_PLUS_STIndexNr >= 2){
+			m_ph_eta = ph_eta;
+			m_ph_phi = ph_phi;
+			m_ph_Et = ph_Et;
+			m_ph_f1 = ph_f1;
+			m_ph_author = ph_author;
+			m_el_cl_eta = el_cl_eta;
+			m_el_cl_phi = el_cl_phi;
+			m_el_cl_pt = el_cl_pt;
+			m_el_f1 = el_f1;
+			m_el_tracktheta = el_tracktheta;
+			m_el_trackphi = el_trackphi;
+//		}
+/*		else{
+			m_ph_eta = 0;
+			m_ph_phi = 0;
+			m_ph_Et = 0;
+			m_ph_f1 = 0;
+			m_ph_author = 0;
+			m_el_cl_eta = 0;
+			m_el_cl_phi = 0;
+			m_el_cl_pt = 0;
+			m_el_f1 = 0;
+			m_el_tracktheta = 0;
+			m_el_trackphi = 0;
+		}
+*/
+		/*---------------------------------------------------------*/
 
 		if( ( (elIndexNr >= 2) && (isOK_id >= 2) )
 		     ||
@@ -664,11 +687,12 @@ void TLeptonFinder::Loop(void)
 			m_tree0.Fill();
 			m_tree1.Fill();
 			m_tree2.Fill();
+			m_tree3.Fill();
 		}
 
 		/*---------------------------------------------------------*/
 	}
-	std::cout << "Nb evt sample    : " << NbEventSample << std::endl;
+
 	std::cout << "#############################################################################" << std::endl;
 	std::cout << "# HIGGS                                                                  #" << std::endl;
 	std::cout << "#############################################################################" << std::endl;

@@ -53,6 +53,11 @@ public :
    Float_t         averageIntPerXing;
    UInt_t          mc_channel_number;
    UInt_t          larError;
+   std::vector<float>   *ph_eta;
+   std::vector<float>   *ph_phi;
+   std::vector<float>   *ph_Et;
+   std::vector<float>   *ph_f1;
+   std::vector<int>     *ph_author;
    Int_t           el_n;
    std::vector<float>   *el_charge;
    std::vector<int>     *el_author;
@@ -304,6 +309,11 @@ public :
    TBranch        *b_averageIntPerXing;   //!
    TBranch        *b_mc_channel_number;   //!
    TBranch        *b_larError;   //!
+   TBranch        *b_ph_eta;   //!
+   TBranch        *b_ph_phi;   //!
+   TBranch        *b_ph_Et;   //!
+   TBranch        *b_ph_f1;   //!
+   TBranch        *b_ph_author;   //!
    TBranch        *b_el_n;   //!
    TBranch        *b_el_charge;   //!
    TBranch        *b_el_author;   //!
@@ -600,6 +610,12 @@ void THiggsD3PD::Init(TTree *tree)
    // (once per file to be processed).
 
    // Set object pointer
+
+   ph_eta = 0;
+   ph_phi = 0;
+   ph_Et = 0;
+   ph_f1 = 0;
+   ph_author = 0;
    el_charge = 0;
    el_author = 0;
    el_isEM = 0;
@@ -841,6 +857,11 @@ void THiggsD3PD::Init(TTree *tree)
    fChain->SetBranchAddress("averageIntPerXing", &averageIntPerXing, &b_averageIntPerXing);
    fChain->SetBranchAddress("mc_channel_number", &mc_channel_number, &b_mc_channel_number);
    fChain->SetBranchAddress("larError", &larError, &b_larError);
+   fChain->SetBranchAddress("ph_eta", &ph_eta, &b_ph_eta);
+   fChain->SetBranchAddress("ph_phi", &ph_phi, &b_ph_phi);
+   fChain->SetBranchAddress("ph_Et", &ph_Et, &b_ph_Et);
+   fChain->SetBranchAddress("ph_f1", &ph_f1, &b_ph_f1);
+   fChain->SetBranchAddress("ph_author", &ph_author, &b_ph_author);
    fChain->SetBranchAddress("el_n", &el_n, &b_el_n);
    fChain->SetBranchAddress("el_charge", &el_charge, &b_el_charge);
    fChain->SetBranchAddress("el_author", &el_author, &b_el_author);

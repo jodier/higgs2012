@@ -54,10 +54,10 @@ all: core $(OBJS2) $(OBJS2)
 
 #############################################################################
 
-ALL: core $(OBJS2) $(OBJS2)
-	@cd $(DIR)/tools && make all && cd $(DIR)
+#ALL: core $(OBJS2) $(OBJS2)
+#	@cd $(DIR)/tools && make all && cd $(DIR)
 
-	$(LD) $(LDFLAGS) -o l_analysis $(OBJS2) -lcore $(ATLASLIBS) $(LIBS)
+#	$(LD) $(LDFLAGS) -o l_analysis $(OBJS2) -lcore $(ATLASLIBS) $(LIBS)
 
 #############################################################################
 
@@ -67,8 +67,8 @@ clean:
 
 #############################################################################
 
-CLEAN:
-	@cd $(DIR)/tools && make clean && cd $(DIR)
+#CLEAN:
+#	@cd $(DIR)/tools && make clean && cd $(DIR)
 
 	#rm -fr $(OBJS1) $(OBJS2) tools/*.a l_analysis
 

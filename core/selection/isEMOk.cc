@@ -6,9 +6,9 @@
   #include <egammaAnalysisUtils/H4l2011Defs.h>
 #endif
 
-#ifdef __YEAR2012
-  #include <HiggsZZ4lUtils/ElectronLikelihoodToolHSG2Helper.h>
-#endif
+//#ifdef __YEAR2012
+//  #include <HiggsZZ4lUtils/ElectronLikelihoodToolHSG2Helper.h>
+//#endif
 
 /*-------------------------------------------------------------------------*/
 
@@ -51,9 +51,9 @@ UInt_t TLeptonAnalysis::el_isEMOk_at(Int_t index)
 	double f3               = el_f3->at(index);
 	double DEmaxs1          = (el_emaxs1->at(index) + el_Emax2->at(index) == 0) ? 0 : (el_emaxs1->at(index) - el_Emax2->at(index)) / (el_emaxs1->at(index) + el_Emax2->at(index));
 	double deltaEta         = el_deltaeta1->at(index);
-	double d0		= el_trackd0pv->at(index);
+	double d0		= el_trackd0pvunbiased->at(index);
 	double TRratio		= el_TRTHighTOutliersRatio->at(index);
-	double d0sigma		= el_tracksigd0pv->at(index);
+	double d0sigma		= el_tracksigd0pvunbiased->at(index);
 	double rphi		= el_rphi->at(index);
 	double wstot            = el_wstot->at(index);
 	double ws3		= el_ws3->at(index);
@@ -93,51 +93,100 @@ UInt_t TLeptonAnalysis::el_isEMOk_at(Int_t index)
 		}
 
 	}
+	//---------------------------//
+	// LH Loose	 	     //
+	//---------------------------//
+	m_ElectronLH->setOperatingPoint(LikeEnum::Loose);
+	double discriminantLoose = m_ElectronLH->calculate(eta, Et, f3, rHad, rHad1,
+								Reta, w2, f1, DEmaxs1,
+								deltaEta, d0, TRratio,
+								d0sigma, rphi,
+								deltaPoverP, deltaphiRes,nPV2);
 
-	if (m_ElectronLikelihoodTool->passLikelihood(LikeEnum::Loose_BL_Pix,
-		    eta, Et, f3, rHad, rHad1,
-		    Reta, w2, f1, DEmaxs1,
-		    deltaEta, d0, TRratio,
-		    d0sigma, rphi, ws3,
-		    deltaPoverP, deltaphiRes,
-		    nSi, nSiDeadSensors, nPix, nPixDeadSensors,
-		    nBlayer, nBlayerOutliers, expectBlayer,
-		     convBit, nPV2) != false )
+	bool passLHLoose = (bool)m_ElectronLH->accept(discriminantLoose, eta, Et, nSi,
+							nSiDeadSensors, nPix, nPixDeadSensors,
+							nBlayer, nBlayerOutliers, expectBlayer,
+							convBit, nPV2);
+	if (passLHLoose != false)
 		isem |= (1 << 0); 
 
-	if (m_ElectronLikelihoodTool->passLikelihood(LikeEnum::Very_Loose,
-		    eta, Et, f3, rHad, rHad1,
-		    Reta, w2, f1, DEmaxs1,
-		    deltaEta, d0, TRratio,
-		    d0sigma, rphi, ws3,
-		    deltaPoverP, deltaphiRes,
-		    nSi, nSiDeadSensors, nPix, nPixDeadSensors,
-		    nBlayer, nBlayerOutliers, expectBlayer,
-		     convBit, nPV2)  != false )
+
+	//---------------------------//
+	// LH Loose Relaxed - 3.5    //
+	//---------------------------//
+	m_ElectronLH->setOperatingPoint(LikeEnum::LooseRelaxed);
+	double discriminantLooseRelaxed = m_ElectronLH->calculate(eta, Et, f3, rHad, rHad1,
+								Reta, w2, f1, DEmaxs1,
+								deltaEta, d0, TRratio,
+								d0sigma, rphi,
+								deltaPoverP, deltaphiRes,nPV2);
+	bool passLHLooseRelaxed = (bool)m_ElectronLH->accept(discriminantLooseRelaxed, eta, Et, nSi,
+							nSiDeadSensors, nPix, nPixDeadSensors,
+							nBlayer, nBlayerOutliers, expectBlayer,
+							convBit, nPV2);
+
+	if (passLHLooseRelaxed  != false)
 		isem |= (1 << 1);
 
-	if ( (el_loose->at(index) && passLikelihoodThreePointFive(m_ElectronLikelihoodTool,
-		    eta, Et, f3, rHad, rHad1,
-		    Reta, w2, f1, DEmaxs1,
-		    deltaEta, d0, TRratio,
-		    d0sigma, rphi, ws3,
-		    deltaPoverP, deltaphiRes,
-		    nSi, nSiDeadSensors, nPix, nPixDeadSensors,
-		    nBlayer, nBlayerOutliers, expectBlayer,
-		     convBit, nPV2) ) != false )
+	//---------------------------//
+	// LH VeryLoose	 	     //
+	//---------------------------//
+	m_ElectronLH->setOperatingPoint(LikeEnum::VeryLoose);
+	double discriminantVeryLoose = m_ElectronLH->calculate(eta, Et, f3, rHad, rHad1,
+								Reta, w2, f1, DEmaxs1,
+								deltaEta, d0, TRratio,
+								d0sigma, rphi,
+								deltaPoverP, deltaphiRes,nPV2);
+	bool passLHVeryLoose = (bool)m_ElectronLH->accept(discriminantVeryLoose,  eta, Et, nSi,
+							nSiDeadSensors, nPix, nPixDeadSensors,
+							nBlayer, nBlayerOutliers, expectBlayer,
+							convBit, nPV2) ;
+
+	if (passLHVeryLoose != false)
 		isem |= (1 << 2);
 
-	if (m_MultiLeptonMenu.passMultiLepton(
-		    eta, Et,
+	//---------------------------//
+	// ML		 	     //
+	//---------------------------//
+	Root::TAccept taccept;
+	taccept = ml_2013->accept(eta, Et,
 		    rHad, rHad1, Reta, w2,
 		    f1, f3, wstot, DEmaxs1,
 		    deltaEta, nSi, nSiDeadSensors, nPix,
 		    nPixDeadSensors, deltaphiRes, deltaPoverP,
-		    rTRT, nTRTTotal, nBlayer, expectBlayer) != false )
+		    rTRT, nTRTTotal, nBlayer, expectBlayer, 
+                    false);
+	bool isMultilepton = (bool)taccept;
+	if (isMultilepton != false)
 		isem |= (1 << 3);
 
-	if (0 == (m_MultiLeptonMenu.getmask() & MultiLeptonMenu::MaskForZXX))
+	//---------------------------//
+	// Relax ML		     //
+	//---------------------------//
+	Root::TAccept accept = ml_2013->accept(1, 1, 1, 1, 1, 1, 1, 1,
+                                                   1, 1, 1, 1, 1,
+                                                  1, 1, 1, 1, 
+                                                   1, 2, 2, 2);
+
+	unsigned int m_MaskForZXX = 0;
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("Coverage"));
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("RHad"));
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("F3"));
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("Reta"));
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("W2"));
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("Wstot"));
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("DeltaPhiRes"));
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("NSilicon"));
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("NPixel"));
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("NBLayer"));
+	m_MaskForZXX |= ( 0x1 << accept.getCutPosition("TR"));
+
+	unsigned int res    = taccept.getCutResultBitSet().to_ulong();
+        unsigned int notRes = ~res;
+
+	if (0 == (notRes &  m_MaskForZXX))
 		isem |= (1 << 4);
+
 
 #endif
 	return isem;
